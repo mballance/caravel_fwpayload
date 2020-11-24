@@ -1,4 +1,8 @@
 `default_nettype none
+
+`ifndef MPRJ_IO_PADS
+	`define MPRJ_IO_PADS 38
+`endif
 /*
  *-------------------------------------------------------------
  *
@@ -61,7 +65,7 @@ module user_project_wrapper #(
     /*--------------------------------------*/
     /* User project is instantiated  here   */
     /*--------------------------------------*/
-	fwpayload payload (
+	fwpayload mprj (
 		.vdda1(vdda1),	// User area 1 3.3V power
 		.vdda2(vdda2),	// User area 2 3.3V power
 		.vssa1(vssa1),	// User area 1 analog ground

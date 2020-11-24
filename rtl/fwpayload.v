@@ -3,7 +3,10 @@
  * fwpayload.v
  ****************************************************************************/
 
-  
+`ifndef MPRJ_IO_PADS
+	`define MPRJ_IO_PADS 38
+`endif
+
 /**
  * Module: fwpayload
  * 
@@ -64,8 +67,12 @@ module fwpayload(
 	wire				dvalid;
 	wire				dready;
 	
+	localparam RAM_BITS = 8;
+	localparam ROM_BITS = 8;
 
-	fwrisc_rv32imc u_core (
+`ifdef UNDEFINED
+`endif
+	fwrisc_rv32i u_core (
 				.clock(clk),
 				.reset(rst),
 		
@@ -91,6 +98,7 @@ module fwpayload(
 	//   - [68:64] output - select
 	//   - 127 output     - clock
 	//   - 126 output     - reset
+	localparam IVALID_OFF        = 65;
 	localparam REG_PROBE_SEL_OFF = 64;
 	localparam REG_PROBE_OFF     = 32;
 	localparam PC_PROBE_OFF      = 0;
@@ -102,7 +110,7 @@ module fwpayload(
 	
 	assign la_data_out[REG_PROBE_OFF+31:REG_PROBE_OFF] = reg_probe;
 	assign la_data_out[PC_PROBE_OFF+31:PC_PROBE_OFF] = pc_probe;
-	
+	assign la_data_out[IVALID_OFF] = u_core.u_core.instr_complete;
 
 	// 640 pixels
 	// 16x16?
@@ -122,11 +130,11 @@ module fwpayload(
 	// ROM: 'h8000_0000
 	// RAM: 'h8000_8000
 	// LED: 'hC000_0000
-	reg[7:0]			ram_0[1023:0]; // 16k ram
-	reg[7:0]			ram_1[1023:0]; // 16k ram
-	reg[7:0]			ram_2[1023:0]; // 16k ram
-	reg[7:0]			ram_3[1023:0]; // 16k ram
-	reg[31:0]			rom[4095:0];   // 16k rom
+	reg[7:0]			ram_0[(1 << RAM_BITS)-1:0]; // 16k ram
+	reg[7:0]			ram_1[(1 << RAM_BITS)-1:0]; // 16k ram
+	reg[7:0]			ram_2[(1 << RAM_BITS)-1:0]; // 16k ram
+	reg[7:0]			ram_3[(1 << RAM_BITS)-1:0]; // 16k ram
+	reg[31:0]			rom[(1 << ROM_BITS)-1:0];   // 16k rom
 	reg[31:0]			led;
 	reg[31:0]			tx_r;
 	reg					iready_r, dready_r;
@@ -140,6 +148,9 @@ module fwpayload(
 	
 	reg[31:0]			addr_d;
 	reg[31:0]			addr_i;
+	reg[31:0]			led;
+
+	assign io_out[31:0] = led;
 	
 	always @(posedge clk) begin
 		addr_d <= daddr;
@@ -149,10 +160,10 @@ module fwpayload(
 			if (daddr[31:28] == 4'h8 && 
 					daddr[15:12] == 4'h8) begin
 				//				$display("Write to RAM: 'h%08h", daddr[13:2]);
-				if (dwstb[0]) ram_0[daddr[13:2]] <= dwdata[7:0];
-				if (dwstb[1]) ram_1[daddr[13:2]] <= dwdata[15:8];
-				if (dwstb[2]) ram_2[daddr[13:2]] <= dwdata[23:16];
-				if (dwstb[3]) ram_3[daddr[13:2]] <= dwdata[31:24];
+				if (dwstb[0]) ram_0[daddr[RAM_BITS+1:2]] <= dwdata[7:0];
+				if (dwstb[1]) ram_1[daddr[RAM_BITS+1:2]] <= dwdata[15:8];
+				if (dwstb[2]) ram_2[daddr[RAM_BITS+1:2]] <= dwdata[23:16];
+				if (dwstb[3]) ram_3[daddr[RAM_BITS+1:2]] <= dwdata[31:24];
 			end else if (daddr[31:28] == 4'hc) begin
 				if (daddr[3:2] == 4'h0) begin
 					led <= dwdata;
@@ -182,8 +193,8 @@ module fwpayload(
 	 ****************************************************************/
 	reg[1:0] wb_bridge_state = 0;
 
-	always @(posedge clk) begin
-		if (rst == 1) begin
+	always @(posedge wb_clk_i) begin
+		if (wb_rst_i == 1) begin
 			wb_bridge_state <= 0;
 		end else begin
 			case (wb_bridge_state)
@@ -213,9 +224,9 @@ module fwpayload(
 	assign wbs_ack_o = (wb_bridge_state == 2);
 
 	// TODO: allow to read 'ram' too
-	assign storage_mgmt_rd_dat = rom[wbs_adr_i[13:2]];
+	assign storage_mgmt_rd_dat = rom[wbs_adr_i[ROM_BITS+1:2]];
 	
-	always @(posedge clk) begin
+	always @(posedge wb_clk_i) begin
 		if (storage_mgmt_wr_en) begin
 			rom[storage_mgmt_addr[13:2]] <= storage_mgmt_wr_dat;
 		end
@@ -224,10 +235,10 @@ module fwpayload(
 	always @* begin
 		if (addr_d[31:28] == 4'h8 && addr_d[15:12] == 4'h8) begin 
 			drdata = {
-					ram_3[addr_d[13:2]],
-					ram_2[addr_d[13:2]],
-					ram_1[addr_d[13:2]],
-					ram_0[addr_d[13:2]]
+					ram_3[addr_d[RAM_BITS+1:2]],
+					ram_2[addr_d[RAM_BITS+1:2]],
+					ram_1[addr_d[RAM_BITS+1:2]],
+					ram_0[addr_d[RAM_BITS+1:2]]
 				};
 		end else begin
 			drdata = rom[addr_d[13:2]];
@@ -235,13 +246,13 @@ module fwpayload(
 		
 		if (addr_i[31:28] == 4'h8 && addr_i[15:12] == 4'h8) begin
 			idata = {
-					ram_3[addr_d[13:2]],
-					ram_2[addr_d[13:2]],
-					ram_1[addr_d[13:2]],
-					ram_0[addr_d[13:2]]
+					ram_3[addr_i[RAM_BITS+1:2]],
+					ram_2[addr_i[RAM_BITS+1:2]],
+					ram_1[addr_i[RAM_BITS+1:2]],
+					ram_0[addr_i[RAM_BITS+1:2]]
 				};
 		end else begin
-			idata = rom[addr_i[13:2]];
+			idata = rom[addr_i[ROM_BITS+2:2]];
 		end
 	end	
 	
