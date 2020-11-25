@@ -17,9 +17,10 @@ module bringup_tb(input clk);
 	assign clk_r = #5ns ~clk_r;
 `endif
 
-	wire clock = clk;
+	
+	wire clock = clk; 
 	reg[15:0]			reset_cnt;
-	reg[15:0]			reset_key;
+	reg[15:0]			reset_key /*verilator public*/;
 	
 	always @(posedge clock) begin
 		if (reset_key != 16'ha520) begin
@@ -44,9 +45,35 @@ module bringup_tb(input clk);
 	wire wbs_ack_o;
 	wire [31:0] wbs_dat_o;
 	
+	wb_initiator_bfm #(
+			.ADDR_WIDTH(32),
+			.DATA_WIDTH(32)
+		) u_wb (
+			.clock(wb_clk_i),
+			.reset(wb_rst_i),
+			.stb_o(wbs_stb_i),
+			.cyc_o(wbs_cyc_i),
+			.we_o(wbs_we_i),
+			.sel_o(wbs_sel_i),
+			.dat_o(wbs_dat_i),
+			.adr_o(wbs_adr_i),
+			.ack_i(wbs_ack_o),
+			.dat_i(wbs_dat_o)
+		);
+	
 	wire [127:0] la_data_in;
 	wire [127:0] la_data_out;
-	wire [127:0] la_oen = 128'hFFFF_FFFF_FFFF_FFFF__FFFF_FFFF_FFFF_FFFF;
+	wire [127:0] la_oen; //  = 128'hFFFF_FFFF_FFFF_FFFF__FFFF_FFFF_FFFF_FFFF;
+	
+	la_initiator_bfm #(
+			.WIDTH(128)
+		) u_la (
+			.clock(wb_clk_i),
+			.reset(wb_rst_i),
+			.data_in(la_data_out),
+			.data_out(la_data_in),
+			.oen(la_oen)
+		);
 	
 	wire [`MPRJ_IO_PADS-1:0] io_in;
 	wire [`MPRJ_IO_PADS-1:0] io_out;

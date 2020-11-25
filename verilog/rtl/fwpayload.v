@@ -48,12 +48,95 @@ module fwpayload(
 		);
 	
 	wire clk, rst;
+
+	// System interconnect
+	localparam N_INITIATORS = 3;
+	localparam INIT_ID_CORE_I = 0;
+	localparam INIT_ID_CORE_D = 1;
+	localparam INIT_ID_MGMT   = 2;
+	
+	localparam N_TARGETS = 1;
+	localparam TGT_ID_SRAM = 0;
+	wire[31:0]		IC_I_ADR[N_INITIATORS-1:0];
+	wire[31:0]		IC_I_DAT_W[N_INITIATORS-1:0];
+	wire[31:0]		IC_I_DAT_R[N_INITIATORS-1:0];
+	wire			IC_I_CYC[N_INITIATORS-1:0];
+	wire			IC_I_ERR[N_INITIATORS-1:0];
+	wire[3:0]		IC_I_SEL[N_INITIATORS-1:0];
+	wire			IC_I_STB[N_INITIATORS-1:0];
+	wire			IC_I_ACK[N_INITIATORS-1:0];
+	wire			IC_I_WE[N_INITIATORS-1:0];
+	
+	wire[31:0]		IC_T_ADR[N_TARGETS:0];
+	wire[31:0]		IC_T_DAT_W[N_TARGETS:0];
+	wire[31:0]		IC_T_DAT_R[N_TARGETS:0];
+	wire			IC_T_CYC[N_TARGETS:0];
+	wire			IC_T_ERR[N_TARGETS:0];
+	wire[3:0]		IC_T_SEL[N_TARGETS:0];
+	wire			IC_T_STB[N_TARGETS:0];
+	wire			IC_T_ACK[N_TARGETS:0];
+	wire			IC_T_WE[N_TARGETS:0];
+	
+	assign IC_T_ACK[N_TARGETS] = 1;
+	assign IC_T_ERR[N_TARGETS] = 1;
+	assign IC_T_DAT_R[N_TARGETS] = 0;
+	
+	// Interconnect
+	wb_interconnect_NxN #(
+			.WB_ADDR_WIDTH(32),
+			.WB_DATA_WIDTH(32),
+			.N_INITIATORS(N_INITIATORS),
+			.N_TARGETS(N_TARGETS),
+			.I_ADR_MASK({
+				{ 8'hFF, {24{1'b0}} }
+				}),
+			.T_ADR({
+				{ 32'h8000_0000 }
+				})
+		) u_ic (
+			.clk(clk),
+			.rst(rst),
+			.ADR(IC_I_ADR),
+			.DAT_W(IC_I_DAT_W),
+			.DAT_R(IC_I_DAT_R),
+			.CYC(IC_I_CYC),
+			.ERR(IC_I_ERR),
+			.SEL(IC_I_SEL),
+			.STB(IC_I_STB),
+			.ACK(IC_I_ACK),
+			.WE(IC_I_WE),
+			
+			.TADR(IC_T_ADR),
+			.TDAT_W(IC_T_DAT_W),
+			.TDAT_R(IC_T_DAT_R),
+			.TCYC(IC_T_CYC),
+			.TERR(IC_T_ERR),
+			.TSEL(IC_T_SEL),
+			.TSTB(IC_T_STB),
+			.TACK(IC_T_ACK),
+			.TWE(IC_T_WE)
+		);
+
+	/****************************************************************
+	 * Connect management interface to port 1 on the interconnect
+	 ****************************************************************/
+	assign IC_I_ADR[INIT_ID_MGMT] = wbs_adr_i;
+	assign IC_I_DAT_W[INIT_ID_MGMT] = wbs_dat_i;
+	assign wbs_dat_o = IC_I_DAT_R[INIT_ID_MGMT];
+	assign IC_I_CYC[INIT_ID_MGMT] = wbs_cyc_i;
+//	assign IC_I_ERR[INIT_ID_MGMT] = //wbs_cyc_i;
+	assign IC_I_SEL[INIT_ID_MGMT] = wbs_sel_i;
+	assign IC_I_STB[INIT_ID_MGMT] = wbs_stb_i;
+	assign wbs_ack_o = IC_I_ACK[INIT_ID_MGMT];
+	assign IC_I_WE[INIT_ID_MGMT] = wbs_we_i;
 	
 	// Clock/reset control
 	// Allow the logic analyzer to take control of clock/reset
 	// Default to using the caravel clock/reset
-	assign clk = (~la_oen[127]) ? la_data_in[127]: wb_clk_i;
-	assign rst = (~la_oen[126]) ? la_data_in[126]: wb_rst_i;
+//	assign clk = (~la_oen[127]) ? la_data_in[127]: wb_clk_i;
+//	assign rst = (~la_oen[126]) ? la_data_in[126]: wb_rst_i;
+	assign clk = wb_clk_i;
+	assign rst = wb_rst_i;
 	
 	wire[31:0]			iaddr;
 	reg[31:0]			idata;
@@ -70,8 +153,6 @@ module fwpayload(
 	localparam RAM_BITS = 8;
 	localparam ROM_BITS = 8;
 
-`ifdef UNDEFINED
-`endif
 	fwrisc_rv32i u_core (
 				.clock(clk),
 				.reset(rst),
@@ -89,6 +170,7 @@ module fwpayload(
 				.drdata(drdata),
 				.dready(dready)
 			);
+
 	
 	// Probes
 	// - PC 
@@ -135,7 +217,7 @@ module fwpayload(
 	reg[7:0]			ram_2[(1 << RAM_BITS)-1:0]; // 16k ram
 	reg[7:0]			ram_3[(1 << RAM_BITS)-1:0]; // 16k ram
 	reg[31:0]			rom[(1 << ROM_BITS)-1:0];   // 16k rom
-	reg[31:0]			led;
+//	reg[31:0]			led;
 	reg[31:0]			tx_r;
 	reg					iready_r, dready_r;
 	
@@ -189,28 +271,54 @@ module fwpayload(
 	end
 
 	/****************************************************************
-	 * Simple WB to storage bridge
+	 * Simple WB to SRAM bridge
 	 ****************************************************************/
 	reg[1:0] wb_bridge_state = 0;
+	wire[31:0] sram_adr_i = IC_T_ADR[TGT_ID_SRAM];
+	wire[31:0] sram_dat_w = IC_T_DAT_W[TGT_ID_SRAM];
+	wire[31:0] sram_dat_r;
+	assign IC_T_DAT_R[TGT_ID_SRAM] = sram_dat_r;
+	wire       sram_cyc_i = IC_T_CYC[TGT_ID_SRAM];
+	assign     IC_T_ERR[TGT_ID_SRAM] = 0;
+	wire[3:0]  sram_sel_i = IC_T_SEL[TGT_ID_SRAM];
+	wire       sram_stb_i = IC_T_STB[TGT_ID_SRAM];
+	wire       sram_ack_o;
+	assign     IC_T_ACK[TGT_ID_SRAM] = sram_ack_o;
+	wire       sram_we_i  = IC_T_WE[TGT_ID_SRAM];
 
 	always @(posedge wb_clk_i) begin
-		if (wb_rst_i == 1) begin
+		if (rst == 1) begin
 			wb_bridge_state <= 0;
 		end else begin
 			case (wb_bridge_state)
 				0:
-					if (wbs_cyc_i && wbs_stb_i) begin
+					if (sram_cyc_i && sram_stb_i) begin
 						wb_bridge_state <= 1;
 					end
 				1:
 					wb_bridge_state <= 2;
 				2:
+					wb_bridge_state <= 3;
+				3:
 					wb_bridge_state <= 0;
 				default:
 					wb_bridge_state <= 0;
 			endcase
 		end
 	end
+	
+	/****************************************************************
+	 * SRAM
+	 ****************************************************************/
+	spram_32x256 u_sram(
+			.clock(clk),
+			.a_adr(sram_adr_i),
+			.a_dat_i(sram_dat_w),
+			.a_dat_o(sram_dat_r),
+			.a_we(sram_we_i),
+			.a_sel(sram_sel_i));
+	assign sram_ack_o = (wb_bridge_state == 3);
+	
 
 	wire [31:0] storage_mgmt_addr    = wbs_adr_i; // [ADDRESS_WIDTH+(DATA_WIDTH/32):(DATA_WIDTH/32)+1];
 	wire storage_mgmt_rd_en          = (wbs_cyc_i & wbs_stb_i & !wbs_we_i);

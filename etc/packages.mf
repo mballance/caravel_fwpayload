@@ -1,3 +1,4 @@
 
 fwrisc@https://github.com/mballance/fwrisc.git
+wb_sys_ip@https://github.com/mballance/wb_sys_ip.git
 

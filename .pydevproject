@@ -5,5 +5,6 @@
     <pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">
         <path>/${PROJECT_DIR_NAME}/packages/wishbone-bfms/src</path>
         <path>/${PROJECT_DIR_NAME}/dv/bringup/python</path>
+        <path>/${PROJECT_DIR_NAME}/packages/pybfms-logic-analyzer/src</path>
     </pydev_pathproperty>
 </pydev_project>
