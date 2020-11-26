@@ -17,25 +17,42 @@ COMMON_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 PACKAGES_DIR := $(abspath $(COMMON_DIR)/../../packages)
 VLSIM := $(PACKAGES_DIR)/python/bin/vlsim
 PYBFMS_VPI_LIB := $(shell $(PACKAGES_DIR)/python/bin/pybfms lib)
+COCOTB_PREFIX := $(shell $(PACKAGES_DIR)/python/bin/cocotb-config --prefix)
+TIMEOUT?=1ms
+
+DEFINES += IVERILOG HAVE_HDL_CLOCKGEN
+
+ifeq (ms,$(findstring ms,$(TIMEOUT)))
+  timeout=$(shell expr $(subst ms,,$(TIMEOUT)) '*' 1000000)
+else
+  ifeq (us,$(findstring us,$(TIMEOUT)))
+    timeout=$(shell expr $(subst us,,$(TIMEOUT)) '*' 1000)
+  else
+    ifeq (ns,$(findstring ns,$(TIMEOUT)))
+      timeout=$(shell expr $(subst ns,,$(TIMEOUT)) '*' 1)
+    else
+      ifeq (s,$(findstring s,$(TIMEOUT)))
+        timeout=$(shell expr $(subst s,,$(TIMEOUT)) '*' 1000000000)
+      else
+        timeout=error: unknown $(TIMEOUT)
+      endif
+    endif
+  endif
+endif
+
+SIMV_ARGS += +timeout=$(timeout)
 
 SIMV=simv.vvp
 ifneq (,$(DEBUG))
-VLSIM_OPTIONS += --trace-fst
-SIMV_ARGS += +vlsim.trace
-SIMV := simv.debug
-else
-SIMV := simv.ndebug
+SIMV_ARGS += +dumpvars
 endif
-
-# Enable VPI for Verilator
-VLSIM_OPTIONS += --vpi
-VLSIM_OPTIONS += --top-module $(TOP_MODULE)
 
 IVERILOG_OPTIONS += $(foreach inc,$(INCDIRS),-I $(inc))
 IVERILOG_OPTIONS += $(foreach def,$(DEFINES),-D $(def))
-VVP_ARGS += $(foreach vpi,$(VPI_LIBS),-m $(vpi))
+VVP_OPTIONS += $(foreach vpi,$(VPI_LIBS),-m $(vpi))
 
-VPI_LIBS += $(PYBFMS_DPI_LIB)
+VPI_LIBS += $(PYBFMS_VPI_LIB)
+VPI_LIBS += $(COCOTB_PREFIX)/cocotb/libs/libcocotbvpi_icarus.vpl
 
 build : $(SIMV)
 
@@ -43,7 +60,7 @@ $(SIMV) : $(SRCS) pybfms_gen.v
 	iverilog -o $@ $(IVERILOG_OPTIONS) $(SRCS) pybfms_gen.v 
 
 run : $(SIMV)
-	vvp $(SIMV) $(VVP_ARGS)
+	vvp $(VVP_OPTIONS) $(SIMV) $(SIMV_ARGS)
 	
 pybfms_gen.v :
 	$(PACKAGES_DIR)/python/bin/pybfms generate \

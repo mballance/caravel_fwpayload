@@ -1,6 +1,9 @@
 /****************************************************************************
  * bringup_tb.sv
  ****************************************************************************/
+`ifdef IVERILOG
+`timescale 1ns/1ns
+`endif
 
 `ifndef MPRJ_IO_PADS
 	`define MPRJ_IO_PADS 38
@@ -14,13 +17,37 @@ module bringup_tb(input clk);
 	
 `ifdef HAVE_HDL_CLOCKGEN
 	reg clk_r = 0;
-	assign clk_r = #5ns ~clk_r;
+	initial begin
+		forever begin
+			#10;
+			clk_r <= ~clk_r;
+		end
+	end
+	assign clk = clk_r;
 `endif
 
+`ifdef IVERILOG
+		// Icarus requires help with timeout 
+		// and wave capture
+		reg[31:0]               timeout;
+		initial begin
+			if ($test$plusargs("dumpvars")) begin
+				$dumpfile("simx.vcd");
+				$dumpvars(0, bringup_tb);
+			end
+			if (!$value$plusargs("timeout=%d", timeout)) begin
+				timeout=1000;
+			end
+			$display("--> Wait for timeout");
+			# timeout;
+			$display("<-- Wait for timeout");
+			$finish();
+		end		
+`endif
 	
 	wire clock = clk; 
 	reg[15:0]			reset_cnt;
-	reg[15:0]			reset_key /*verilator public*/;
+	reg[15:0]			reset_key /*verilator public*/ = 0;
 	
 	always @(posedge clock) begin
 		if (reset_key != 16'ha520) begin

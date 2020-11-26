@@ -30,8 +30,6 @@ PYTHONPATH := $(BRINGUP_DIR)/python:$(PYTHONPATH)
 export PYTHONPATH
 PATH := $(PACKAGES_DIR)/python/bin:$(PATH)
 export PATH
-COCOTB_PREFIX := $(shell $(PACKAGES_DIR)/python/bin/cocotb-config --prefix)
-VPI_LIBS += $(COCOTB_PREFIX)/cocotb/libs/libcocotbvpi_modelsim.so
 
 
 VLSIM_CLKSPEC += -clkspec clk=10ns
@@ -47,6 +45,9 @@ all : build
 
 clean ::
 	echo "TODO"
+	for sim in $(BRINGUP_DIR)/../common/*.mk; do \
+		$(MAKE) -f $$sim clean; \
+	done
 	
 
 include $(BRINGUP_DIR)/../common/$(SIM).mk

@@ -57,29 +57,35 @@ module fwpayload(
 	
 	localparam N_TARGETS = 1;
 	localparam TGT_ID_SRAM = 0;
-	wire[31:0]		IC_I_ADR[N_INITIATORS-1:0];
-	wire[31:0]		IC_I_DAT_W[N_INITIATORS-1:0];
-	wire[31:0]		IC_I_DAT_R[N_INITIATORS-1:0];
-	wire			IC_I_CYC[N_INITIATORS-1:0];
-	wire			IC_I_ERR[N_INITIATORS-1:0];
-	wire[3:0]		IC_I_SEL[N_INITIATORS-1:0];
-	wire			IC_I_STB[N_INITIATORS-1:0];
-	wire			IC_I_ACK[N_INITIATORS-1:0];
-	wire			IC_I_WE[N_INITIATORS-1:0];
+	// TBD
+	localparam TGT_ID_SPI  = 1;
+	localparam TGT_ID_UART = 2;
+	localparam TGT_ID_GPIO = 3;
+	wire[32*N_INITIATORS-1:0]		IC_I_ADR;
+	wire[32*N_INITIATORS-1:0]		IC_I_DAT_W;
+	wire[32*N_INITIATORS-1:0]		IC_I_DAT_R;
+	wire[N_INITIATORS-1:0]			IC_I_CYC;
+	wire[N_INITIATORS-1:0]			IC_I_ERR;
+	wire[4*N_INITIATORS-1:0]		IC_I_SEL;
+	wire[N_INITIATORS-1:0]			IC_I_STB;
+	wire[N_INITIATORS-1:0]			IC_I_ACK;
+	wire[N_INITIATORS-1:0]			IC_I_WE;
 	
-	wire[31:0]		IC_T_ADR[N_TARGETS:0];
-	wire[31:0]		IC_T_DAT_W[N_TARGETS:0];
-	wire[31:0]		IC_T_DAT_R[N_TARGETS:0];
-	wire			IC_T_CYC[N_TARGETS:0];
-	wire			IC_T_ERR[N_TARGETS:0];
-	wire[3:0]		IC_T_SEL[N_TARGETS:0];
-	wire			IC_T_STB[N_TARGETS:0];
-	wire			IC_T_ACK[N_TARGETS:0];
-	wire			IC_T_WE[N_TARGETS:0];
-	
+	wire[32*(N_TARGETS+1)-1:0]		IC_T_ADR;
+	wire[32*(N_TARGETS+1)-1:0]		IC_T_DAT_W;
+	wire[32*(N_TARGETS+1)-1:0]		IC_T_DAT_R;
+	wire[N_TARGETS:0]				IC_T_CYC;
+	wire[N_TARGETS:0]				IC_T_ERR;
+	wire[4*(N_TARGETS+1)-1:0]		IC_T_SEL;
+	wire[N_TARGETS:0]				IC_T_STB;
+	wire[N_TARGETS:0]				IC_T_ACK;
+	wire[N_TARGETS:0]				IC_T_WE;
+
+	// Interconnect has a default target that
+	// to which unmapped accesses are directed
 	assign IC_T_ACK[N_TARGETS] = 1;
 	assign IC_T_ERR[N_TARGETS] = 1;
-	assign IC_T_DAT_R[N_TARGETS] = 0;
+	assign IC_T_DAT_R[32*N_TARGETS+:32] = 0;
 	
 	// Interconnect
 	wb_interconnect_NxN #(
@@ -120,12 +126,12 @@ module fwpayload(
 	/****************************************************************
 	 * Connect management interface to port 1 on the interconnect
 	 ****************************************************************/
-	assign IC_I_ADR[INIT_ID_MGMT] = wbs_adr_i;
-	assign IC_I_DAT_W[INIT_ID_MGMT] = wbs_dat_i;
-	assign wbs_dat_o = IC_I_DAT_R[INIT_ID_MGMT];
+	assign IC_I_ADR[32*INIT_ID_MGMT+:32] = wbs_adr_i;
+	assign IC_I_DAT_W[32*INIT_ID_MGMT+:32] = wbs_dat_i;
+	assign wbs_dat_o = IC_I_DAT_R[32*INIT_ID_MGMT+:32];
 	assign IC_I_CYC[INIT_ID_MGMT] = wbs_cyc_i;
 //	assign IC_I_ERR[INIT_ID_MGMT] = //wbs_cyc_i;
-	assign IC_I_SEL[INIT_ID_MGMT] = wbs_sel_i;
+	assign IC_I_SEL[4*INIT_ID_MGMT+:4] = wbs_sel_i;
 	assign IC_I_STB[INIT_ID_MGMT] = wbs_stb_i;
 	assign wbs_ack_o = IC_I_ACK[INIT_ID_MGMT];
 	assign IC_I_WE[INIT_ID_MGMT] = wbs_we_i;
@@ -133,42 +139,38 @@ module fwpayload(
 	// Clock/reset control
 	// Allow the logic analyzer to take control of clock/reset
 	// Default to using the caravel clock/reset
-//	assign clk = (~la_oen[127]) ? la_data_in[127]: wb_clk_i;
-//	assign rst = (~la_oen[126]) ? la_data_in[126]: wb_rst_i;
-	assign clk = wb_clk_i;
-	assign rst = wb_rst_i;
-	
-	wire[31:0]			iaddr;
-	reg[31:0]			idata;
-	wire				ivalid;
-	wire				iready;
-	wire[31:0]			daddr;
-	wire[31:0]			dwdata;
-	wire[31:0]			dwstb;
-	wire				dwrite;
-	reg[31:0]			drdata;
-	wire				dvalid;
-	wire				dready;
+	assign clk = (~la_oen[127]) ? la_data_in[127]: wb_clk_i;
+	assign rst = (~la_oen[126]) ? ~la_data_in[126]: wb_rst_i;
+	assign core_rst = (~la_oen[125]) ? ~la_data_in[125]: wb_rst_i;
+//	assign clk = wb_clk_i;
+//	assign rst = wb_rst_i;
 	
 	localparam RAM_BITS = 8;
 	localparam ROM_BITS = 8;
 
-	fwrisc_rv32i u_core (
+	fwrisc_rv32i_wb u_core (
 				.clock(clk),
-				.reset(rst),
-		
-				.iaddr(iaddr),
-				.idata(idata),
-				.ivalid(ivalid),
-				.iready(iready),
-		
-				.dvalid(dvalid),
-				.daddr(daddr),
-				.dwdata(dwdata),
-				.dwstb(dwstb),
-				.dwrite(dwrite),
-				.drdata(drdata),
-				.dready(dready)
+				.reset(core_rst),
+
+				.wbi_adr_o(IC_I_ADR[32*INIT_ID_CORE_I+:32]),
+				.wbi_dat_o(IC_I_DAT_W[32*INIT_ID_CORE_I+:32]),
+				.wbi_dat_i(IC_I_DAT_R[32*INIT_ID_CORE_I+:32]),
+				.wbi_cyc_o(IC_I_CYC[INIT_ID_CORE_I]),
+				.wbi_err_i(IC_I_ERR[INIT_ID_CORE_I]),
+				.wbi_sel_o(IC_I_SEL[4*INIT_ID_CORE_I+:4]),
+				.wbi_stb_o(IC_I_STB[INIT_ID_CORE_I]),
+				.wbi_ack_i(IC_I_ACK[INIT_ID_CORE_I]),
+				.wbi_we_o(IC_I_WE[INIT_ID_CORE_I]),
+				
+				.wbd_adr_o(IC_I_ADR[32*INIT_ID_CORE_D+:32]),
+				.wbd_dat_o(IC_I_DAT_W[32*INIT_ID_CORE_D+:32]),
+				.wbd_dat_i(IC_I_DAT_R[32*INIT_ID_CORE_D+:32]),
+				.wbd_cyc_o(IC_I_CYC[INIT_ID_CORE_D]),
+				.wbd_err_i(IC_I_ERR[INIT_ID_CORE_D]),
+				.wbd_sel_o(IC_I_SEL[4*INIT_ID_CORE_D+:4]),
+				.wbd_stb_o(IC_I_STB[INIT_ID_CORE_D]),
+				.wbd_ack_i(IC_I_ACK[INIT_ID_CORE_D]),
+				.wbd_we_o(IC_I_WE[INIT_ID_CORE_D])
 			);
 
 	
@@ -192,7 +194,7 @@ module fwpayload(
 	
 	assign la_data_out[REG_PROBE_OFF+31:REG_PROBE_OFF] = reg_probe;
 	assign la_data_out[PC_PROBE_OFF+31:PC_PROBE_OFF] = pc_probe;
-	assign la_data_out[IVALID_OFF] = u_core.u_core.instr_complete;
+//	assign la_data_out[IVALID_OFF] = u_core.u_core.instr_complete;
 
 	// 640 pixels
 	// 16x16?
@@ -212,75 +214,22 @@ module fwpayload(
 	// ROM: 'h8000_0000
 	// RAM: 'h8000_8000
 	// LED: 'hC000_0000
-	reg[7:0]			ram_0[(1 << RAM_BITS)-1:0]; // 16k ram
-	reg[7:0]			ram_1[(1 << RAM_BITS)-1:0]; // 16k ram
-	reg[7:0]			ram_2[(1 << RAM_BITS)-1:0]; // 16k ram
-	reg[7:0]			ram_3[(1 << RAM_BITS)-1:0]; // 16k ram
-	reg[31:0]			rom[(1 << ROM_BITS)-1:0];   // 16k rom
-//	reg[31:0]			led;
-	reg[31:0]			tx_r;
-	reg					iready_r, dready_r;
 	
-	assign iready = iready_r;
-	assign dready = dready_r;
-
 //	initial begin
 //		$readmemh("rom.hex", rom);
 //	end
 	
-	reg[31:0]			addr_d;
-	reg[31:0]			addr_i;
-	reg[31:0]			led;
-
-	assign io_out[31:0] = led;
-	
-	always @(posedge clk) begin
-		addr_d <= daddr;
-		addr_i <= iaddr;
-
-		if (dvalid && dready && dwrite) begin
-			if (daddr[31:28] == 4'h8 && 
-					daddr[15:12] == 4'h8) begin
-				//				$display("Write to RAM: 'h%08h", daddr[13:2]);
-				if (dwstb[0]) ram_0[daddr[RAM_BITS+1:2]] <= dwdata[7:0];
-				if (dwstb[1]) ram_1[daddr[RAM_BITS+1:2]] <= dwdata[15:8];
-				if (dwstb[2]) ram_2[daddr[RAM_BITS+1:2]] <= dwdata[23:16];
-				if (dwstb[3]) ram_3[daddr[RAM_BITS+1:2]] <= dwdata[31:24];
-			end else if (daddr[31:28] == 4'hc) begin
-				if (daddr[3:2] == 4'h0) begin
-					led <= dwdata;
-				end else if (daddr[3:2] == 4'h1) begin
-					tx_r <= dwdata;
-				end
-			end
-		end
-	end
-	
-	always @(posedge clk) begin
-		// Prefer data access
-		if (dvalid) begin
-			dready_r <= 1;
-			iready_r <= 0;
-		end else if (ivalid) begin
-			iready_r <= 1;
-			dready_r <= 0;
-		end else begin
-			iready_r <= 0;
-			dready_r <= 0;
-		end
-	end
-
 	/****************************************************************
 	 * Simple WB to SRAM bridge
 	 ****************************************************************/
 	reg[1:0] wb_bridge_state = 0;
-	wire[31:0] sram_adr_i = IC_T_ADR[TGT_ID_SRAM];
-	wire[31:0] sram_dat_w = IC_T_DAT_W[TGT_ID_SRAM];
+	wire[31:0] sram_adr_i = IC_T_ADR[32*TGT_ID_SRAM+:32];
+	wire[31:0] sram_dat_w = IC_T_DAT_W[32*TGT_ID_SRAM+:32];
 	wire[31:0] sram_dat_r;
-	assign IC_T_DAT_R[TGT_ID_SRAM] = sram_dat_r;
+	assign IC_T_DAT_R[32*TGT_ID_SRAM+:32] = sram_dat_r;
 	wire       sram_cyc_i = IC_T_CYC[TGT_ID_SRAM];
 	assign     IC_T_ERR[TGT_ID_SRAM] = 0;
-	wire[3:0]  sram_sel_i = IC_T_SEL[TGT_ID_SRAM];
+	wire[3:0]  sram_sel_i = IC_T_SEL[4*TGT_ID_SRAM+:4];
 	wire       sram_stb_i = IC_T_STB[TGT_ID_SRAM];
 	wire       sram_ack_o;
 	assign     IC_T_ACK[TGT_ID_SRAM] = sram_ack_o;
@@ -319,58 +268,13 @@ module fwpayload(
 			.a_sel(sram_sel_i));
 	assign sram_ack_o = (wb_bridge_state == 3);
 	
-
-	wire [31:0] storage_mgmt_addr    = wbs_adr_i; // [ADDRESS_WIDTH+(DATA_WIDTH/32):(DATA_WIDTH/32)+1];
-	wire storage_mgmt_rd_en          = (wbs_cyc_i & wbs_stb_i & !wbs_we_i);
-	wire storage_mgmt_wr_en          = (wbs_cyc_i & wbs_stb_i & wbs_we_i);
-	wire [3:0] storage_mgmt_byte_en  = wbs_sel_i;
-	wire [31:0] storage_mgmt_wr_dat  = wbs_dat_i;
-	wire [31:0] storage_mgmt_rd_dat;
-	
-	assign wbs_dat_o = storage_mgmt_rd_dat;
-	
-	assign wbs_ack_o = (wb_bridge_state == 2);
-
-	// TODO: allow to read 'ram' too
-	assign storage_mgmt_rd_dat = rom[wbs_adr_i[ROM_BITS+1:2]];
-	
-	always @(posedge wb_clk_i) begin
-		if (storage_mgmt_wr_en) begin
-			rom[storage_mgmt_addr[13:2]] <= storage_mgmt_wr_dat;
-		end
-	end	
-	
-	always @* begin
-		if (addr_d[31:28] == 4'h8 && addr_d[15:12] == 4'h8) begin 
-			drdata = {
-					ram_3[addr_d[RAM_BITS+1:2]],
-					ram_2[addr_d[RAM_BITS+1:2]],
-					ram_1[addr_d[RAM_BITS+1:2]],
-					ram_0[addr_d[RAM_BITS+1:2]]
-				};
-		end else begin
-			drdata = rom[addr_d[13:2]];
-		end
-		
-		if (addr_i[31:28] == 4'h8 && addr_i[15:12] == 4'h8) begin
-			idata = {
-					ram_3[addr_i[RAM_BITS+1:2]],
-					ram_2[addr_i[RAM_BITS+1:2]],
-					ram_1[addr_i[RAM_BITS+1:2]],
-					ram_0[addr_i[RAM_BITS+1:2]]
-				};
-		end else begin
-			idata = rom[addr_i[ROM_BITS+2:2]];
-		end
-	end	
-	
 	// Some form of general I/O
 	// - GPIO?
 	// - 
 	
 	// Some form of specific I/O
-	// - UART?
-	// - SPI?
+	// - UART
+	// - SPI
 	
 	
 endmodule

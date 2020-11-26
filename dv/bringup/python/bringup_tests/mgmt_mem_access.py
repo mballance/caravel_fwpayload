@@ -8,6 +8,7 @@ import pybfms
 from wishbone_bfms.wb_initiator_bfm import WbInitiatorBfm
 from logic_analyzer_bfms.la_initiator_bfm import LaInitiatorBfm
 from random import Random
+from bringup_tests.la_utils import LaUtils
 
 
 @cocotb.test()
@@ -16,9 +17,21 @@ async def test(top):
     Hold the payload DUT in reset via the logic analyzer
     Meanwhile, test that the management interface can access memory
     """
+    print("--> pybfms.init()")
     await pybfms.init()
+    print("<-- pybfms.init()")
     u_wb : WbInitiatorBfm = pybfms.find_bfm(".*u_wb")
     u_la : LaInitiatorBfm = pybfms.find_bfm(".*u_la")
+    
+    print("u_wb=" + str(u_wb))
+    print("u_la=" + str(u_la))
+    
+    # Bring the system out of reset
+    la_utils = LaUtils(u_la)
+    print("--> reset_cycle_dut")
+    await la_utils.reset_cycle_dut(100)
+    print("<-- reset_cycle_dut")
+    await la_utils.set_dut_clock_control(False)
     
     # Test that we can write and read dut 'ROM'
     wr_data = []
@@ -36,4 +49,13 @@ async def test(top):
             print("PASS: " + hex(0x80000000+4*i))
         else:
             print("FAIL: " + hex(0x80000000+4*i) + " expect " + hex(wr_data[i]) + " receive " + hex(data))
-            
+
+    # Release the processor from reset
+    await la_utils.set_core_reset(True)
+    for i in range(10):
+        await u_la.propagate()
+    await la_utils.set_core_reset(False)
+
+    for i in range(1000):
+        await u_la.propagate()
+        

@@ -19,6 +19,7 @@ COMMON_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 PACKAGES_DIR := $(abspath $(COMMON_DIR)/../../packages)
 VLSIM := $(PACKAGES_DIR)/python/bin/vlsim
 PYBFMS_DPI_LIB := $(shell $(PACKAGES_DIR)/python/bin/pybfms lib)
+COCOTB_PREFIX := $(shell $(PACKAGES_DIR)/python/bin/cocotb-config --prefix)
 
 ifneq (,$(DEBUG))
 VLSIM_OPTIONS += --trace-fst
@@ -37,6 +38,7 @@ VLSIM_OPTIONS += $(foreach def,$(DEFINES),+define+$(def))
 SIMV_ARGS += $(foreach vpi,$(VPI_LIBS),+vpi=$(vpi))
 
 DPI_LIBS += $(PYBFMS_DPI_LIB)
+VPI_LIBS += $(COCOTB_PREFIX)/cocotb/libs/libcocotbvpi_verilator.so
 
 build : $(SIMV)
 
