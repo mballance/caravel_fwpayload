@@ -2,4 +2,6 @@
 packages/
 simv.*
 obj_dir/
+__pycache__/
+verilog/gl/
 

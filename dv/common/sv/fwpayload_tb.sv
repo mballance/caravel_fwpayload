@@ -1,5 +1,5 @@
 /****************************************************************************
- * bringup_tb.sv
+ * fwpayload_tb.sv
  ****************************************************************************/
 `ifdef IVERILOG
 `timescale 1ns/1ns
@@ -9,11 +9,11 @@
 	`define MPRJ_IO_PADS 38
 `endif
 /**
- * Module: bringup_tb
+ * Module: fwpayload_tb
  * 
  * TODO: Add module documentation
  */
-module bringup_tb(input clk);
+module fwpayload_tb(input clk);
 	
 `ifdef HAVE_HDL_CLOCKGEN
 	reg clk_r = 0;
@@ -33,7 +33,7 @@ module bringup_tb(input clk);
 		initial begin
 			if ($test$plusargs("dumpvars")) begin
 				$dumpfile("simx.vcd");
-				$dumpvars(0, bringup_tb);
+				$dumpvars(0, fwpayload_tb);
 			end
 			if (!$value$plusargs("timeout=%d", timeout)) begin
 				timeout=1000;
@@ -78,14 +78,14 @@ module bringup_tb(input clk);
 		) u_wb (
 			.clock(wb_clk_i),
 			.reset(wb_rst_i),
-			.stb_o(wbs_stb_i),
-			.cyc_o(wbs_cyc_i),
-			.we_o(wbs_we_i),
-			.sel_o(wbs_sel_i),
-			.dat_o(wbs_dat_i),
-			.adr_o(wbs_adr_i),
-			.ack_i(wbs_ack_o),
-			.dat_i(wbs_dat_o)
+			.stb(wbs_stb_i),
+			.cyc(wbs_cyc_i),
+			.we(wbs_we_i),
+			.sel(wbs_sel_i),
+			.dat_w(wbs_dat_i),
+			.adr(wbs_adr_i),
+			.ack(wbs_ack_o),
+			.dat_r(wbs_dat_o)
 		);
 	
 	wire [127:0] la_data_in;
@@ -110,7 +110,7 @@ module bringup_tb(input clk);
 	
 	wire   user_clock2 = clock;
 
-	user_project_wrapper u_dut(
+	fwpayload u_dut(
 			.vdda1(vdda1),	// User area 1 3.3V supply
 			.vdda2(vdda2),	// User area 2 3.3V supply
 			.vssa1(vssa1),	// User area 1 analog ground
@@ -140,8 +140,9 @@ module bringup_tb(input clk);
 			// IOs
 			.io_in(io_in),
 			.io_out(io_out),
-			.io_oeb(io_oeb),
+			.io_oeb(io_oeb)
 
+			/*
 			// Analog (direct connection to GPIO pad---use with caution)
 			// Note that analog I/O is not available on the 7 lowest-numbered
 			// GPIO pads, and so the analog_io indexing is offset from the
@@ -150,6 +151,7 @@ module bringup_tb(input clk);
 
 			// Independent clock (on independent integer divider)
 			.user_clock2(user_clock2)
+			 */
 			);
 
 endmodule

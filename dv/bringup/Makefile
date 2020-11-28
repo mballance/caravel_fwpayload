@@ -8,13 +8,18 @@ FWRISC_RTL_DIR:=$(PACKAGES_DIR)/fwrisc/rtl
 #********************************************************************
 FWRISC_SRCS = $(wildcard $(FWRISC_RTL_DIR)/*.sv)
 INCDIRS += $(FWRISC_RTL_DIR)
+INCDIRS += $(PACKAGES_DIR)/fwprotocol-defs/src/sv
 
 DEFINES += MPRJ_IO_PADS=38
 PYBFMS_MODULES += wishbone_bfms logic_analyzer_bfms
 SRCS += $(RTL_DIR)/fwpayload.v $(RTL_DIR)/user_project_wrapper.v
-SRCS += $(RTL_DIR)/wb_interconnect_NxN.sv
+SRCS += $(PACKAGES_DIR)/fw-wishbone-interconnect/verilog/rtl/wb_interconnect_NxN.v
+SRCS += $(PACKAGES_DIR)/fw-wishbone-interconnect/verilog/rtl/wb_interconnect_arb.v
 SRCS += $(RTL_DIR)/spram_32x256.sv
+SRCS += $(RTL_DIR)/spram_32x512.sv
 SRCS += $(RTL_DIR)/spram.v
+SRCS += $(RTL_DIR)/simple_spi_master.v
+SRCS += $(RTL_DIR)/simpleuart.v
 SRCS += $(FWRISC_SRCS) 
 
 TOP_MODULE = bringup_tb

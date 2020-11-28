@@ -2,6 +2,7 @@
 /****************************************************************************
  * fwpayload.v
  ****************************************************************************/
+`include "wishbone_macros.svh"
 
 `ifndef MPRJ_IO_PADS
 	`define MPRJ_IO_PADS 38
@@ -47,45 +48,33 @@ module fwpayload(
 		output [`MPRJ_IO_PADS-1:0] 		io_oeb
 		);
 	
-	wire clk, rst;
+	wire clk, rst, core_rst;
 
+	/****************************************************************
+	 * Interconnect definitions
+	 ****************************************************************/
 	// System interconnect
 	localparam N_INITIATORS = 3;
 	localparam INIT_ID_CORE_I = 0;
 	localparam INIT_ID_CORE_D = 1;
 	localparam INIT_ID_MGMT   = 2;
+	`WB_WIRES_ARR(i_ic_,32,32,N_INITIATORS);
 	
-	localparam N_TARGETS = 1;
+	localparam N_TARGETS = 4;
 	localparam TGT_ID_SRAM = 0;
-	// TBD
 	localparam TGT_ID_SPI  = 1;
 	localparam TGT_ID_UART = 2;
 	localparam TGT_ID_GPIO = 3;
-	wire[32*N_INITIATORS-1:0]		IC_I_ADR;
-	wire[32*N_INITIATORS-1:0]		IC_I_DAT_W;
-	wire[32*N_INITIATORS-1:0]		IC_I_DAT_R;
-	wire[N_INITIATORS-1:0]			IC_I_CYC;
-	wire[N_INITIATORS-1:0]			IC_I_ERR;
-	wire[4*N_INITIATORS-1:0]		IC_I_SEL;
-	wire[N_INITIATORS-1:0]			IC_I_STB;
-	wire[N_INITIATORS-1:0]			IC_I_ACK;
-	wire[N_INITIATORS-1:0]			IC_I_WE;
+	`WB_WIRES_ARR(ic_t_,32,32,N_TARGETS);
 	
-	wire[32*(N_TARGETS+1)-1:0]		IC_T_ADR;
-	wire[32*(N_TARGETS+1)-1:0]		IC_T_DAT_W;
-	wire[32*(N_TARGETS+1)-1:0]		IC_T_DAT_R;
-	wire[N_TARGETS:0]				IC_T_CYC;
-	wire[N_TARGETS:0]				IC_T_ERR;
-	wire[4*(N_TARGETS+1)-1:0]		IC_T_SEL;
-	wire[N_TARGETS:0]				IC_T_STB;
-	wire[N_TARGETS:0]				IC_T_ACK;
-	wire[N_TARGETS:0]				IC_T_WE;
-
-	// Interconnect has a default target that
-	// to which unmapped accesses are directed
-	assign IC_T_ACK[N_TARGETS] = 1;
-	assign IC_T_ERR[N_TARGETS] = 1;
-	assign IC_T_DAT_R[32*N_TARGETS+:32] = 0;
+	// Memory map
+	//
+	// 28-bit address space, with the upper 4 bits masked
+	//
+	// 0x00000000..0x00000FFFF - Program/data memory
+	// 0x01000000..0x010000000 - UART
+	// 0x01000000..0x010000100 - SPI
+	// 0x01000000..0x010000200 - GPIO
 	
 	// Interconnect
 	wb_interconnect_NxN #(
@@ -94,147 +83,95 @@ module fwpayload(
 			.N_INITIATORS(N_INITIATORS),
 			.N_TARGETS(N_TARGETS),
 			.I_ADR_MASK({
-				{ 8'hFF, {24{1'b0}} }
+				{ 32'h0F00_0000    },
+				{ 32'h0FFF_FF00    },
+				{ 32'h0FFF_FF00    },
+				{ 32'h0FFF_FF00    }
 				}),
 			.T_ADR({
-				{ 32'h8000_0000 }
+				{ 32'h0000_0000 },
+				{ 32'h0100_0000 },
+				{ 32'h0100_0100 },
+				{ 32'h0100_0200 }
 				})
 		) u_ic (
-			.clk(clk),
-			.rst(rst),
-			.ADR(IC_I_ADR),
-			.DAT_W(IC_I_DAT_W),
-			.DAT_R(IC_I_DAT_R),
-			.CYC(IC_I_CYC),
-			.ERR(IC_I_ERR),
-			.SEL(IC_I_SEL),
-			.STB(IC_I_STB),
-			.ACK(IC_I_ACK),
-			.WE(IC_I_WE),
-			
-			.TADR(IC_T_ADR),
-			.TDAT_W(IC_T_DAT_W),
-			.TDAT_R(IC_T_DAT_R),
-			.TCYC(IC_T_CYC),
-			.TERR(IC_T_ERR),
-			.TSEL(IC_T_SEL),
-			.TSTB(IC_T_STB),
-			.TACK(IC_T_ACK),
-			.TWE(IC_T_WE)
+			.clock(clk),
+			.reset(rst),
+		
+			`WB_CONNECT(,i_ic_),
+			`WB_CONNECT(t,ic_t_)
 		);
 
 	/****************************************************************
 	 * Connect management interface to port 1 on the interconnect
 	 ****************************************************************/
-	assign IC_I_ADR[32*INIT_ID_MGMT+:32] = wbs_adr_i;
-	assign IC_I_DAT_W[32*INIT_ID_MGMT+:32] = wbs_dat_i;
-	assign wbs_dat_o = IC_I_DAT_R[32*INIT_ID_MGMT+:32];
-	assign IC_I_CYC[INIT_ID_MGMT] = wbs_cyc_i;
-//	assign IC_I_ERR[INIT_ID_MGMT] = //wbs_cyc_i;
-	assign IC_I_SEL[4*INIT_ID_MGMT+:4] = wbs_sel_i;
-	assign IC_I_STB[INIT_ID_MGMT] = wbs_stb_i;
-	assign wbs_ack_o = IC_I_ACK[INIT_ID_MGMT];
-	assign IC_I_WE[INIT_ID_MGMT] = wbs_we_i;
+	assign i_ic_adr[32*INIT_ID_MGMT+:32] = wbs_adr_i;
+	assign i_ic_dat_w[32*INIT_ID_MGMT+:32] = wbs_dat_i;
+	assign wbs_dat_o = i_ic_dat_r[32*INIT_ID_MGMT+:32];
+	assign i_ic_cyc[INIT_ID_MGMT] = wbs_cyc_i;
+	assign i_ic_sel[4*INIT_ID_MGMT+:4] = wbs_sel_i;
+	assign i_ic_stb[INIT_ID_MGMT] = wbs_stb_i;
+	assign wbs_ack_o = i_ic_ack[INIT_ID_MGMT];
+	assign i_ic_we[INIT_ID_MGMT] = wbs_we_i;
 	
 	// Clock/reset control
 	// Allow the logic analyzer to take control of clock/reset
-	// Default to using the caravel clock/reset
 	assign clk = (~la_oen[127]) ? la_data_in[127]: wb_clk_i;
 	assign rst = (~la_oen[126]) ? ~la_data_in[126]: wb_rst_i;
 	assign core_rst = (~la_oen[125]) ? ~la_data_in[125]: wb_rst_i;
-//	assign clk = wb_clk_i;
-//	assign rst = wb_rst_i;
 	
-	localparam RAM_BITS = 8;
-	localparam ROM_BITS = 8;
-
+	/****************************************************************
+	 * FWRISC instance
+	 ****************************************************************/
 	fwrisc_rv32i_wb u_core (
 				.clock(clk),
 				.reset(core_rst),
 
-				.wbi_adr_o(IC_I_ADR[32*INIT_ID_CORE_I+:32]),
-				.wbi_dat_o(IC_I_DAT_W[32*INIT_ID_CORE_I+:32]),
-				.wbi_dat_i(IC_I_DAT_R[32*INIT_ID_CORE_I+:32]),
-				.wbi_cyc_o(IC_I_CYC[INIT_ID_CORE_I]),
-				.wbi_err_i(IC_I_ERR[INIT_ID_CORE_I]),
-				.wbi_sel_o(IC_I_SEL[4*INIT_ID_CORE_I+:4]),
-				.wbi_stb_o(IC_I_STB[INIT_ID_CORE_I]),
-				.wbi_ack_i(IC_I_ACK[INIT_ID_CORE_I]),
-				.wbi_we_o(IC_I_WE[INIT_ID_CORE_I]),
-				
-				.wbd_adr_o(IC_I_ADR[32*INIT_ID_CORE_D+:32]),
-				.wbd_dat_o(IC_I_DAT_W[32*INIT_ID_CORE_D+:32]),
-				.wbd_dat_i(IC_I_DAT_R[32*INIT_ID_CORE_D+:32]),
-				.wbd_cyc_o(IC_I_CYC[INIT_ID_CORE_D]),
-				.wbd_err_i(IC_I_ERR[INIT_ID_CORE_D]),
-				.wbd_sel_o(IC_I_SEL[4*INIT_ID_CORE_D+:4]),
-				.wbd_stb_o(IC_I_STB[INIT_ID_CORE_D]),
-				.wbd_ack_i(IC_I_ACK[INIT_ID_CORE_D]),
-				.wbd_we_o(IC_I_WE[INIT_ID_CORE_D])
+				`WB_CONNECT_ARR(wbi_,i_ic_,INIT_ID_CORE_I,32,32),
+				`WB_CONNECT_ARR(wbd_,i_ic_,INIT_ID_CORE_D,32,32)
 			);
 
-	
 	// Probes
 	// - PC 
 	//   - [31:0] input
-	// - Regs
-	//   - [63:32] input  - registers (via mux)
-	//   - [68:64] output - select
+	// - instr_complete
+	//   - [32]   input
+	// - gpio_out
+	//   - [39:36] input
+	// - Clock and reset
 	//   - 127 output     - clock
 	//   - 126 output     - reset
-	localparam IVALID_OFF        = 65;
-	localparam REG_PROBE_SEL_OFF = 64;
-	localparam REG_PROBE_OFF     = 32;
-	localparam PC_PROBE_OFF      = 0;
-	wire[4:0]             reg_probe_sel = (
-			la_oen[REG_PROBE_SEL_OFF+4:REG_PROBE_SEL_OFF] == 5'b0000)?
-			la_data_in[REG_PROBE_SEL_OFF+4:REG_PROBE_SEL_OFF]:5'b0000;
-	wire[31:0]            reg_probe;
-	wire[31:0]            pc_probe;
+	//   - 125 output     - core_reset
+	localparam LA_CLOCK					= 127;
+	localparam LA_RESET_SYS				= 126;
+	localparam LA_RESET_CORE			= 125;
+	localparam LA_GPIO_IN				= 40;
+	localparam LA_GPIO_OUT				= 36;
+	localparam LA_UART_RX				= 34;
+	localparam LA_UART_TX				= 33;
+	localparam LA_INSTR_COMPLETE        = 32;
+	localparam LA_PC      				= 0;
 	
-	assign la_data_out[REG_PROBE_OFF+31:REG_PROBE_OFF] = reg_probe;
-	assign la_data_out[PC_PROBE_OFF+31:PC_PROBE_OFF] = pc_probe;
-//	assign la_data_out[IVALID_OFF] = u_core.u_core.instr_complete;
+	wire[31:0]      pc_probe = u_core.u_core.u_core.pc;
+	assign la_data_out[LA_PC+:32] = pc_probe;
+	assign la_data_out[LA_INSTR_COMPLETE] = u_core.u_core.u_core.instr_complete;
 
-	// 640 pixels
-	// 16x16?
-	// - Each block is 40p wide
-	// -
-	// - 40ns per pix, 1600ns per block
-	// TODO: dedicated reset for core, to allow us to isolate it from the system
-	// Video shift register
-	// - Need two levels
-	// - Output
-	// - Ready
-	// - Need clock divider to control shift rate
-	// - Need IRQ to signal empty
-
-	// Small memory (1KB ok?)
-	// - Must be dual-port with access from slave port
-	// ROM: 'h8000_0000
-	// RAM: 'h8000_8000
-	// LED: 'hC000_0000
-	
-//	initial begin
-//		$readmemh("rom.hex", rom);
-//	end
-	
 	/****************************************************************
 	 * Simple WB to SRAM bridge
 	 ****************************************************************/
 	reg[1:0] wb_bridge_state = 0;
-	wire[31:0] sram_adr_i = IC_T_ADR[32*TGT_ID_SRAM+:32];
-	wire[31:0] sram_dat_w = IC_T_DAT_W[32*TGT_ID_SRAM+:32];
+	wire[31:0] sram_adr_i = ic_t_adr[32*TGT_ID_SRAM+:32];
+	wire[31:0] sram_dat_w = ic_t_dat_w[32*TGT_ID_SRAM+:32];
 	wire[31:0] sram_dat_r;
-	assign IC_T_DAT_R[32*TGT_ID_SRAM+:32] = sram_dat_r;
-	wire       sram_cyc_i = IC_T_CYC[TGT_ID_SRAM];
-	assign     IC_T_ERR[TGT_ID_SRAM] = 0;
-	wire[3:0]  sram_sel_i = IC_T_SEL[4*TGT_ID_SRAM+:4];
-	wire       sram_stb_i = IC_T_STB[TGT_ID_SRAM];
+	assign ic_t_dat_r[32*TGT_ID_SRAM+:32] = sram_dat_r;
+	wire       sram_cyc_i = ic_t_cyc[TGT_ID_SRAM];
+	assign     ic_t_err[TGT_ID_SRAM] = 0;
+	wire[3:0]  sram_sel_i = ic_t_sel[4*TGT_ID_SRAM+:4];
+	wire       sram_stb_i = ic_t_stb[TGT_ID_SRAM];
 	wire       sram_ack_o;
-	assign     IC_T_ACK[TGT_ID_SRAM] = sram_ack_o;
-	wire       sram_we_i  = IC_T_WE[TGT_ID_SRAM];
-
+	assign     ic_t_ack[TGT_ID_SRAM] = sram_ack_o;
+	wire       sram_we_i  = ic_t_we[TGT_ID_SRAM];
+	
 	always @(posedge wb_clk_i) begin
 		if (rst == 1) begin
 			wb_bridge_state <= 0;
@@ -268,14 +205,113 @@ module fwpayload(
 			.a_sel(sram_sel_i));
 	assign sram_ack_o = (wb_bridge_state == 3);
 	
-	// Some form of general I/O
-	// - GPIO?
-	// - 
+	/****************************************************************
+	 * External interfaces
+	 ****************************************************************/
 	
-	// Some form of specific I/O
 	// - UART
-	// - SPI
+	wire uart_enabled;
+	wire ser_tx;
+	wire ser_rx;
+	simpleuart_wb #(
+			.BASE_ADR(32'h0000_0000)
+		) u_uart (
+			.wb_clk_i(clk),
+			.wb_rst_i(rst),
+			.wb_adr_i({24'b0, ic_t_adr[32*TGT_ID_UART+:8]}),
+			.wb_dat_i(ic_t_dat_w[32*TGT_ID_UART+:32]),
+			.wb_sel_i(ic_t_sel[4*TGT_ID_UART+:4]),
+			.wb_we_i(ic_t_we[TGT_ID_UART]),
+			.wb_cyc_i(ic_t_cyc[TGT_ID_UART]),
+			.wb_stb_i(ic_t_stb[TGT_ID_UART]),
+			.wb_ack_o(ic_t_ack[TGT_ID_UART]),
+			.wb_dat_o(ic_t_dat_r[32*TGT_ID_UART+:32]),
+			
+			.uart_enabled(uart_enabled),
+			.ser_tx(ser_tx),
+			.ser_rx(ser_rx)
+		);
 	
+	// - SPI
+	wire hk_connect;
+	wire sdi;
+	wire csb;
+	wire sck;
+	wire sdo;
+	wire sdoenb;
+	wire irq;
+	simple_spi_master_wb #(
+			.BASE_ADR(32'h0000_0000)
+		) u_spi (
+			.wb_clk_i(clk),
+			.wb_rst_i(rst),
+			.wb_adr_i({24'b0, ic_t_adr[32*TGT_ID_SPI+:8]}),
+			.wb_dat_i(ic_t_dat_w[32*TGT_ID_SPI+:32]),
+			.wb_sel_i(ic_t_sel[4*TGT_ID_SPI+:4]),
+			.wb_we_i(ic_t_we[TGT_ID_SPI]),
+			.wb_cyc_i(ic_t_cyc[TGT_ID_SPI]),
+			.wb_stb_i(ic_t_stb[TGT_ID_SPI]),
+			.wb_ack_o(ic_t_ack[TGT_ID_SPI]),
+			.wb_dat_o(ic_t_dat_r[32*TGT_ID_SPI+:32]),
+			
+			.hk_connect(hk_connect),
+			.sdi(sdi),
+			.csb(csb),
+			.sck(sck),
+			.sdo(sdo),
+			.sdoenb(sdoenb),
+			.irq(irq)
+		);
+	
+	// - Simple GPIO
+	reg[3:0]	gpio_out;
+	wire[3:0]	gpio_in;
+	
+	wire[31:0] gpio_adr_i = ic_t_adr[32*TGT_ID_GPIO+:32];
+	wire[31:0] gpio_dat_w = ic_t_dat_w[32*TGT_ID_GPIO+:32];
+	wire[31:0] gpio_dat_r = {20'b0, gpio_in, 4'b0, gpio_out};
+	assign ic_t_dat_r[32*TGT_ID_GPIO+:32] = gpio_dat_r;
+	wire       gpio_cyc_i = ic_t_cyc[TGT_ID_GPIO];
+	assign     ic_t_err[TGT_ID_GPIO] = 0;
+	wire[3:0]  gpio_sel_i = ic_t_sel[4*TGT_ID_GPIO+:4];
+	wire       gpio_stb_i = ic_t_stb[TGT_ID_GPIO];
+	reg        gpio_ack_o;
+	assign     ic_t_ack[TGT_ID_GPIO] = gpio_ack_o;
+	wire       gpio_we_i  = ic_t_we[TGT_ID_GPIO];
+	
+	always @(posedge wb_clk_i) begin
+		if (rst == 1) begin
+			gpio_ack_o <= 1'b0;
+			gpio_out <= 4'b0;
+		end else begin
+			gpio_ack_o <= (gpio_cyc_i && gpio_stb_i);
+			
+			if (gpio_cyc_i && gpio_stb_i && gpio_we_i) begin
+				gpio_out <= gpio_dat_w[3:0];
+			end
+		end
+	end	
+	
+	
+	/****************************************************************
+	 * Outputs
+	 ****************************************************************/
+	// UART
+	assign io_out[16] = ser_tx;
+	assign ser_rx = io_in[17];
+	
+	assign sdi = io_in[18];
+	assign io_out[19] = csb;
+	assign io_out[20] = sck;
+	assign io_out[21] = sdo;
+	assign io_out[22] = sdoenb;
+
+	// GPIO
+	assign io_out[26:23] = gpio_out;
+	assign gpio_in = io_in[30:27];
+	
+	// Probe the GPIO output with the LA
+	assign la_data_in[39:36] = gpio_out;
 	
 endmodule
 

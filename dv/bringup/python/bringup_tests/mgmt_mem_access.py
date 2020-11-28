@@ -50,6 +50,23 @@ async def test(top):
         else:
             print("FAIL: " + hex(0x80000000+4*i) + " expect " + hex(wr_data[i]) + " receive " + hex(data))
 
+    # Load a short program that toggles the GPIO lines
+    gpio_toggle_program = [
+        0x010000b7,
+        0x20008093,
+        0x00000113,
+        0x0020a023,
+        0x00110113,
+        0xff9ff06f,
+        0x00000000]
+    
+    for i,data in enumerate(gpio_toggle_program):
+        print("Write: " + hex(0x30000000+4*i) + " " + hex(data))
+        await u_wb.write(0x30000000+4*i, data, 0xF)
+
+    # Take back clock control    
+    await la_utils.set_dut_clock_control(True)
+    
     # Release the processor from reset
     await la_utils.set_core_reset(True)
     for i in range(10):
@@ -57,5 +74,6 @@ async def test(top):
     await la_utils.set_core_reset(False)
 
     for i in range(1000):
-        await u_la.propagate()
+        await la_utils.clock_dut()
+
         

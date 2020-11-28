@@ -14,6 +14,8 @@
 #****************************************************************************
 
 COMMON_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
+
+ifneq (1,$(RULES))
 PACKAGES_DIR := $(abspath $(COMMON_DIR)/../../packages)
 VLSIM := $(PACKAGES_DIR)/python/bin/vlsim
 PYBFMS_VPI_LIB := $(shell $(PACKAGES_DIR)/python/bin/pybfms lib)
@@ -54,6 +56,8 @@ VVP_OPTIONS += $(foreach vpi,$(VPI_LIBS),-m $(vpi))
 VPI_LIBS += $(PYBFMS_VPI_LIB)
 VPI_LIBS += $(COCOTB_PREFIX)/cocotb/libs/libcocotbvpi_icarus.vpl
 
+else # Rules
+
 build : $(SIMV)
 
 $(SIMV) : $(SRCS) pybfms_gen.v
@@ -66,6 +70,4 @@ pybfms_gen.v :
 	$(PACKAGES_DIR)/python/bin/pybfms generate \
 		-l vlog $(foreach m,$(PYBFMS_MODULES),-m $(m)) -o $@
 
-clean ::
-	rm -f simv.* simx.fst simx.vcd pybfms_gen.v
-	rm -rf obj_dir
+endif

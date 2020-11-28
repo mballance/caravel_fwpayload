@@ -16,6 +16,8 @@
 #****************************************************************************
 
 COMMON_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
+
+ifneq (1,$(RULES))
 PACKAGES_DIR := $(abspath $(COMMON_DIR)/../../packages)
 VLSIM := $(PACKAGES_DIR)/python/bin/vlsim
 PYBFMS_DPI_LIB := $(shell $(PACKAGES_DIR)/python/bin/pybfms lib)
@@ -40,6 +42,8 @@ SIMV_ARGS += $(foreach vpi,$(VPI_LIBS),+vpi=$(vpi))
 DPI_LIBS += $(PYBFMS_DPI_LIB)
 VPI_LIBS += $(COCOTB_PREFIX)/cocotb/libs/libcocotbvpi_verilator.so
 
+else # Rules
+
 build : $(SIMV)
 
 $(SIMV) : $(SRCS) pybfms_gen.sv pybfms_gen.c
@@ -53,6 +57,4 @@ pybfms_gen.sv :
 	$(PACKAGES_DIR)/python/bin/pybfms generate \
 		-l sv $(foreach m,$(PYBFMS_MODULES),-m $(m)) -o $@
 
-clean ::
-	rm -f simv.* simx.fst simx.vcd pybfms_gen.sv pybfms_gen.c
-	rm -rf obj_dir
+endif
