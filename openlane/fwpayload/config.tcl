@@ -12,7 +12,8 @@ set ::env(CLOCK_PERIOD) "10"
 
 set ::env(FP_SIZING) absolute
 #set ::env(DIE_AREA) "0 0 2700 3700"
-set ::env(DIE_AREA) "0 0 2500 3500"
+#set ::env(DIE_AREA) "0 0 2500 3500"
+set ::env(DIE_AREA) "0 0 1500 2000"
 set ::env(DESIGN_IS_CORE) 0
 
 # Default density is 0.4

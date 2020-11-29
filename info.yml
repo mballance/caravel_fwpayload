@@ -1,0 +1,18 @@
+--- 
+project: 
+  description: "A simple core+peripherals payload for the Google-sponsored Open MPW shuttles for SKY130."
+  foundry: "SkyWater"
+  git_url: "https://github.com/mballance/fwpayload.git"
+  organization: "Matthew Ballance"
+  organization_url: "http://github.com/mballance"
+  owner: "Matthew Ballance"
+  process: "SKY130"
+  project_name: "FWPayload"
+  tags: 
+    - "Open MPW"
+    - "FWPayload"
+  category: "Test Design"
+  top_level_netlist: "verilog/rtl/fwpayload.v"
+  version: "1.00"
+  cover_image: "doc/images/fwpayload_diagram.png"
+  
