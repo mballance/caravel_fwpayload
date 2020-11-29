@@ -11,8 +11,9 @@ project:
   tags: 
     - "Open MPW"
     - "FWPayload"
-  category: "Test Design"
-  top_level_netlist: "verilog/rtl/fwpayload.v"
+  category: "Processor"
+  top_level_netlist: "verilog/rtl/caravel.v"
+  user_level_netlist: "verilog/rtl/user_project_wrapper.v"
   version: "1.00"
   cover_image: "doc/images/fwpayload_diagram.png"
   
