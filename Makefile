@@ -16,7 +16,6 @@ clean:
 .PHONY: verify
 verify:
 	echo "verify"
-	$(MAKE) -C dv
 
 
 

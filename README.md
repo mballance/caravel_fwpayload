@@ -144,17 +144,11 @@ running OpenLane.
 Openlane completes on fwpayload with the following status:
 
 ```
-0.25
-Number of pins violated: 479
-Number of nets violated: 297
-Total number of nets: 44367
+Number of pins violated: 321
+Number of nets violated: 201
+Total number of nets: 44783
 [INFO]: Generating Final Summary Report...
 [SUCCESS]: Flow Completed Without Fatal Errors.
-
-0.15
-Number of pins violated: 509
-Number of nets violated: 360
-Total number of nets: 44404
 
 ```
 
