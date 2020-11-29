@@ -1,4 +1,4 @@
-`default_nettype none
+// `default_nettype none
 
 `ifndef MPRJ_IO_PADS
 	`define MPRJ_IO_PADS 38
@@ -102,4 +102,4 @@ module user_project_wrapper #(
 		);
 
 endmodule	// user_project_wrapper
-`default_nettype wire
+// `default_nettype wire

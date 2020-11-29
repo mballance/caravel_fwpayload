@@ -110,7 +110,7 @@ module fwpayload_tb(input clk);
 	
 	wire   user_clock2 = clock;
 
-	fwpayload u_dut(
+	user_project_wrapper u_dut(
 			.vdda1(vdda1),	// User area 1 3.3V supply
 			.vdda2(vdda2),	// User area 2 3.3V supply
 			.vssa1(vssa1),	// User area 1 analog ground

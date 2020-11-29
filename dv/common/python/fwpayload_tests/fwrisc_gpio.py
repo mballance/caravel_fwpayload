@@ -8,7 +8,7 @@ import pybfms
 from wishbone_bfms.wb_initiator_bfm import WbInitiatorBfm
 from logic_analyzer_bfms.la_initiator_bfm import LaInitiatorBfm
 from random import Random
-from bringup_tests.la_utils import LaUtils
+from fwpayload_tests.la_utils import LaUtils
 
 
 @cocotb.test()
@@ -33,23 +33,6 @@ async def test(top):
     print("<-- reset_cycle_dut")
     await la_utils.set_dut_clock_control(False)
     
-    # Test that we can write and read dut 'ROM'
-    wr_data = []
-    r = Random(0)
-    for i in range(16):
-        data = r.randint(0, 0xFFFFFFFF)
-        print("Write: " + hex(0x80000000+4*i) + " = " + hex(data))
-        await u_wb.write(0x80000000 + 4*i, data, 0xF)
-        wr_data.append(data)
-        print("wr_data[" + str(i) + "] = " + hex(wr_data[i]))
-        
-    for i in range(16):
-        data = await u_wb.read(0x80000000 + 4*i)
-        if wr_data[i] == data:
-            print("PASS: " + hex(0x80000000+4*i))
-        else:
-            print("FAIL: " + hex(0x80000000+4*i) + " expect " + hex(wr_data[i]) + " receive " + hex(data))
-
     # Load a short program that toggles the GPIO lines
     gpio_toggle_program = [
         0x010000b7,
@@ -66,14 +49,29 @@ async def test(top):
 
     # Take back clock control    
     await la_utils.set_dut_clock_control(True)
+    await la_utils.set_sys_reset(False)
     
     # Release the processor from reset
     await la_utils.set_core_reset(True)
     for i in range(10):
-        await u_la.propagate()
+        await la_utils.reset_cycle_dut(10)
     await la_utils.set_core_reset(False)
 
+    # Clock the system, while observing GPIO via the logic analyzer
+    gpio_out_last = None
     for i in range(1000):
         await la_utils.clock_dut()
+        gpio_out_new = la_utils.get_gpio_out()
+        if gpio_out_last is None or gpio_out_new != gpio_out_last:
+            print("New: " + hex(gpio_out_new))
+            gpio_out_last = gpio_out_new
+            if gpio_out_last == 0xF:
+                break
 
+    if gpio_out_last is None:
+        raise cocotb.result.TestError("No gpio activity")
+
+
+    if gpio_out_last != 0xF:
+        raise cocotb.result.TestError("GPIO did something, but we didn't reach 0xF")
         

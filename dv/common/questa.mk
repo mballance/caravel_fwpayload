@@ -17,10 +17,10 @@
 ifneq (1,$(RULES))
 COMMON_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 PACKAGES_DIR := $(abspath $(COMMON_DIR)/../../packages)
-PYBFMS_DPI_LIB := $(subst .so,,$(shell $(PACKAGES_DIR)/python/bin/pybfms lib))
+PYBFMS_DPI_LIB := $(shell $(PACKAGES_DIR)/python/bin/pybfms lib)
 COCOTB_PREFIX := $(shell $(PACKAGES_DIR)/python/bin/cocotb-config --prefix)
 
-DPI_LIBS += $(PYBFMS_DPI_LIB)
+VPI_LIBS += $(PYBFMS_DPI_LIB)
 VPI_LIBS += $(COCOTB_PREFIX)/cocotb/libs/libcocotbvpi_modelsim.so
 
 VLOG_OPTIONS += $(foreach inc,$(INCDIRS),+incdir+$(inc))
@@ -28,7 +28,10 @@ VLOG_OPTIONS += $(foreach def,$(DEFINES),+define+$(def))
 VSIM_OPTIONS += $(foreach vpi,$(VPI_LIBS),-pli $(vpi))
 VSIM_OPTIONS += $(foreach dpi,$(DPI_LIBS),-sv_lib $(dpi))
 
-SRCS += pybfms_gen.sv pybfms_gen.c
+#VSIM_OPTIONS += -dpioutoftheblue 1
+
+#SRCS += pybfms_gen.sv pybfms_gen.c
+SRCS += pybfms_gen.v
 
 else # Rules
 
@@ -45,5 +48,9 @@ run : build
 pybfms_gen.sv pybfms_gen.c :
 	$(PACKAGES_DIR)/python/bin/pybfms generate \
 		-l sv $(foreach m,$(PYBFMS_MODULES),-m $(m)) -o $@
+
+pybfms_gen.v :
+	$(PACKAGES_DIR)/python/bin/pybfms generate \
+		-l vlog $(foreach m,$(PYBFMS_MODULES),-m $(m)) -o $@
 
 endif

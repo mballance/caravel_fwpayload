@@ -7,6 +7,7 @@ GL_DIR        := $(abspath $(COMMON_DIR)/../../verilog/gl)
 PACKAGES_DIR  := $(abspath $(COMMON_DIR)/../../packages)
 SIM ?= icarus
 SIMTYPE ?= functional
+TIMEOUT ?= 1ms
 
 
 PYBFMS_MODULES += wishbone_bfms logic_analyzer_bfms
@@ -34,6 +35,7 @@ ifeq (gate,$(SIMTYPE))
 SRCS += $(GL_DIR)/fwpayload.v
 else
 SRCS += $(RTL_DIR)/fwpayload.v
+SRCS += $(RTL_DIR)/user_project_wrapper.v
 SRCS += $(PACKAGES_DIR)/fw-wishbone-interconnect/verilog/rtl/wb_interconnect_NxN.v
 SRCS += $(PACKAGES_DIR)/fw-wishbone-interconnect/verilog/rtl/wb_interconnect_arb.v
 SRCS += $(RTL_DIR)/spram_32x256.sv

@@ -98,16 +98,67 @@ copy of ivpm.
 
 ## Integration Testing
 
+Testing of the fwpayload subsystem is done using a cocotb test environment.
+The block diagram is shown below:
 
-## Current Status
-Openlane completes with the following status:
+![FWPayload Block Diagram](doc/images/fwpayload_tb_diagram.png)
+
+Bus Functional Models (BFMs) are used to drive the Caravel management interface
+and logic-analyzer pins. 
+
+### Tests
+- fwrisc_gpio
+  - Loads a small program into the RISC-V core that writes to the GPIO outputs
+  - Drives the clock via the logic-analzer interface while monitoring the GPIO outputs
+  
+- mgmt_mem_access
+  - Tests 1, 2, and 4-byte accesses to register RAM via the management interface
+
+### Running an individual test
+Individual tests are run from the dv/<test> directory by running 'make'. 
 
 ```
+% cd dv/fwrisc_gpio
+% make clean
+% make
+```
+
+### Test Controls
+
+Test behavior is controlled using environment variables. 
+- SIM - Selects the simulator to run
+    - icarus -- Icarus Verilog (default)
+    - vlsim -- Verilator, via the vlsim front-end
+- DEBUG[=1] - Controls whether wave files should be saved
+    
+
+## Current Status
+FWPayload is taking Option #1 for integration into Caravel. Specifically,
+FWPayload will be hardened separately as a macro, then integrated into
+user_project_wrapper.
+
+The 'openlane/fwpayload' directory contains the config files for
+running OpenLane. The 'openlane' directory contains a Makefile for 
+running OpenLane. 
+
+Openlane completes on fwpayload with the following status:
+
+```
+0.25
 Number of pins violated: 479
 Number of nets violated: 297
 Total number of nets: 44367
 [INFO]: Generating Final Summary Report...
 [SUCCESS]: Flow Completed Without Fatal Errors.
+
+0.15
+Number of pins violated: 509
+Number of nets violated: 360
+Total number of nets: 44404
+
 ```
+
+Integrating the fwpayload macro into user_project_wrapper is currently
+incomplete, due to some include path issues.
 
 

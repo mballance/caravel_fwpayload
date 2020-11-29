@@ -35,7 +35,7 @@ module fwpayload(
 		input [31:0] 	wbs_dat_i,
 		input [31:0] 	wbs_adr_i,
 		output 			wbs_ack_o,
-		output [31:0] 					wbs_dat_o,
+		output [31:0] 	wbs_dat_o,
 
 		// Logic Analyzer Signals
 		input  [127:0] 					la_data_in,
@@ -48,7 +48,11 @@ module fwpayload(
 		output [`MPRJ_IO_PADS-1:0] 		io_oeb
 		);
 	
-	wire clk, rst, core_rst;
+	// Clock/reset control
+	// Allow the logic analyzer to take control of clock/reset
+	wire clk = (~la_oen[127]) ? la_data_in[127]: wb_clk_i;
+	wire rst = (~la_oen[126]) ? ~la_data_in[126]: wb_rst_i;
+	wire core_rst = (~la_oen[125]) ? ~la_data_in[125]: wb_rst_i;
 
 	/****************************************************************
 	 * Interconnect definitions
@@ -114,11 +118,6 @@ module fwpayload(
 	assign wbs_ack_o = i_ic_ack[INIT_ID_MGMT];
 	assign i_ic_we[INIT_ID_MGMT] = wbs_we_i;
 	
-	// Clock/reset control
-	// Allow the logic analyzer to take control of clock/reset
-	assign clk = (~la_oen[127]) ? la_data_in[127]: wb_clk_i;
-	assign rst = (~la_oen[126]) ? ~la_data_in[126]: wb_rst_i;
-	assign core_rst = (~la_oen[125]) ? ~la_data_in[125]: wb_rst_i;
 	
 	/****************************************************************
 	 * FWRISC instance
@@ -153,6 +152,8 @@ module fwpayload(
 	localparam LA_PC      				= 0;
 	
 	wire[31:0]      pc_probe = u_core.u_core.u_core.pc;
+	assign la_data_out[127:40] = 0;
+	assign la_data_out[35:33]  = 0;
 	assign la_data_out[LA_PC+:32] = pc_probe;
 	assign la_data_out[LA_INSTR_COMPLETE] = u_core.u_core.u_core.instr_complete;
 
@@ -172,7 +173,7 @@ module fwpayload(
 	assign     ic_t_ack[TGT_ID_SRAM] = sram_ack_o;
 	wire       sram_we_i  = ic_t_we[TGT_ID_SRAM];
 	
-	always @(posedge wb_clk_i) begin
+	always @(posedge clk) begin
 		if (rst == 1) begin
 			wb_bridge_state <= 0;
 		end else begin
@@ -231,6 +232,7 @@ module fwpayload(
 			.ser_tx(ser_tx),
 			.ser_rx(ser_rx)
 		);
+	assign ic_t_err[TGT_ID_UART] = 0;
 	
 	// - SPI
 	wire hk_connect;
@@ -262,6 +264,7 @@ module fwpayload(
 			.sdoenb(sdoenb),
 			.irq(irq)
 		);
+	assign ic_t_err[TGT_ID_SPI] = 0;
 	
 	// - Simple GPIO
 	reg[3:0]	gpio_out;
@@ -279,7 +282,7 @@ module fwpayload(
 	assign     ic_t_ack[TGT_ID_GPIO] = gpio_ack_o;
 	wire       gpio_we_i  = ic_t_we[TGT_ID_GPIO];
 	
-	always @(posedge wb_clk_i) begin
+	always @(posedge clk) begin
 		if (rst == 1) begin
 			gpio_ack_o <= 1'b0;
 			gpio_out <= 4'b0;
@@ -311,7 +314,7 @@ module fwpayload(
 	assign gpio_in = io_in[30:27];
 	
 	// Probe the GPIO output with the LA
-	assign la_data_in[39:36] = gpio_out;
+	assign la_data_out[LA_GPIO_OUT+:4] = gpio_out;
 	
 endmodule
 
