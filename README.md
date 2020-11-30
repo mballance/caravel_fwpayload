@@ -133,26 +133,23 @@ Test behavior is controlled using environment variables.
     
 
 ## Current Status
-FWPayload is taking Option #1 for integration into Caravel. Specifically,
-FWPayload will be hardened separately as a macro, then integrated into
-user_project_wrapper.
+FWPayload is taking Option #2 for integration into Caravel. Specifically,
+FWPayload will be hardened as part of user_project_wrapper. 
 
-The 'openlane/fwpayload' directory contains the config files for
+The 'openlane/user_project_wrapper' directory contains the config files for
 running OpenLane. The 'openlane' directory contains a Makefile for 
 running OpenLane. 
 
-Openlane completes on fwpayload with the following status:
+Openlane completes on user_project_wrapper with the following status:
 
 ```
-Number of pins violated: 321
-Number of nets violated: 201
-Total number of nets: 44783
+Number of pins violated: 537
+Number of nets violated: 321
+Total number of nets: 44363
 [INFO]: Generating Final Summary Report...
 [SUCCESS]: Flow Completed Without Fatal Errors.
 
 ```
 
-Integrating the fwpayload macro into user_project_wrapper is currently
-incomplete, due to some include path issues.
 
 

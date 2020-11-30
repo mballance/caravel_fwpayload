@@ -8,25 +8,21 @@ set ::env(CLOCK_PORT) "wb_clk_i"
 #set ::env(CLOCK_PORT) ""
 set ::env(CLOCK_NET) "u_core.clock"
 
-set ::env(CLOCK_PERIOD) "10"
+set ::env(CLOCK_PERIOD) "20"
 
 set ::env(FP_SIZING) absolute
 #set ::env(DIE_AREA) "0 0 2700 3700"
 #set ::env(DIE_AREA) "0 0 2500 3500"
 set ::env(DIE_AREA) "0 0 1500 2000"
+set ::env(DIE_AREA) "0 0 2700 3700"
 set ::env(DESIGN_IS_CORE) 0
 
 # Default density is 0.4
-set ::env(PL_TARGET_DENSITY) 0.25
-# TODO: Older version doesn't contain this
+set ::env(PL_TARGET_DENSITY) 0.35
 #set ::env(PL_BASIC_PLACEMENT) 1
 
-# TODO: Latest example doesn't contain this
-set ::env(PL_OPENPHYSYN_OPTIMIZATIONS) 0
-
-
 set vlog_files ""
-#lappend vlog_files "$script_dir/../../verilog/rtl/user_project_wrapper.v"
+lappend vlog_files "$script_dir/../../verilog/rtl/user_project_wrapper.v"
 lappend vlog_files "$script_dir/../../verilog/rtl/fwpayload.v"
 lappend vlog_files "$script_dir/../../verilog/rtl/spram_32x256.sv"
 lappend vlog_files "$script_dir/../../verilog/rtl/spram.v"
