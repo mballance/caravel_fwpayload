@@ -6,6 +6,26 @@ area of Caraval.
 ## Block diagram
 ![FWPayload Block Diagram](doc/images/fwpayload_diagram.png)
 
+## Current Status
+FWPayload is taking Option #2 for integration into Caravel. Specifically,
+FWPayload is directly integrated into user_project_wrapper and 
+hardened along with it.
+
+The 'openlane/user_project_wrapper' directory contains the config files for
+running OpenLane. The 'openlane' directory contains a Makefile for 
+running OpenLane. 
+
+Openlane completes on user_project_wrapper with the following status:
+
+```
+
+```
+
+### Pre-Check Status
+- 
+- 
+- 
+
 
 ## External IP
 FWPayload uses several pieces of external IP. Some are bundled with the project,
@@ -42,18 +62,62 @@ portion of the Caravel memory map.
 
 ## Pin map
 
+0  (i) - unused
+1  (i) - unused
+2  (i) - unused
+3  (i) - unused
+4  (i) - unused
+5  (i) - unused
+6  (i) - unused
+7  (i) - unused
+8  (i) - unused
+9  (i) - unused
+10 (i) - unused
+11 (i) - unused
+12 (o) - GPIO-out [0]
+13 (o) - GPIO-out [1]
+14 (o) - GPIO-out [2]
+15 (o) - GPIO-out [3]
+16 (o) - UART Tx
+17 (i) - UART Rx
+18 (i) - SPI SDI
+19 (o) - SPI CSB
+20 (o) - SPI SCK
+21 (o) - SPI SDO
+22 (o) - SPI SDOENB
+23 (o) - GPIO-out [4]
+24 (o) - GPIO-out [5]
+25 (o) - GPIO-out [6]
+26 (o) - GPIO-out [7]
+27 (i) - GPIO-in  [0]
+28 (i) - GPIO-in  [1]
+29 (i) - GPIO-in  [2]
+30 (i) - GPIO-in  [3]
+31 (i) - GPIO-in  [4]
+32 (i) - GPIO-in  [5]
+33 (i) - GPIO-in  [6]
+34 (i) - GPIO-in  [7]
+35 (i) - unused
+36 (i) - unused
+37 (i) - unused
+
+
 ## Bring-up/Debug Support
 
 FWPayload uses the Caravel logic analyzer to configure reset and clocking,
 probe the program counter of the FWRISC, and optionally, single-step the clock.
 
-- [127]   - Controls the clock when configured as an output
-- [126]   - Controls the system reset when configured as an output
-- [125]   - Controls the FWRISC core reset when configured as an output
-- [39:36] - Loopback, probing the GPIO output
-- [33]    - Loopback, probing UART tx output
-- [32]    - Input, probing the 'instruction-complete' FWRISC net
-- [31:0]  - Input, probing the FWRISC program-counter net
+- [127]    - Controls the clock when configured as an output
+- [126]    - Controls the system reset (active low) when configured as an output
+- [125]    - Controls the FWRISC core reset when configured as an output
+- [124:41] - unused
+- [43:40]  - Loopback, driving the GPIO input low bits
+- [39:36]  - Loopback, probing the GPIO output low bits
+- [35]     - unused
+- [34]     - Loopback, driving UART rx input
+- [33]     - Loopback, probing UART tx output
+- [32]     - Input, probing the 'instruction-complete' FWRISC net
+- [31:0]   - Input, probing the FWRISC program-counter net
 
 # Developer Notes
 
@@ -131,25 +195,6 @@ Test behavior is controlled using environment variables.
     - vlsim -- Verilator, via the vlsim front-end
 - DEBUG[=1] - Controls whether wave files should be saved
     
-
-## Current Status
-FWPayload is taking Option #2 for integration into Caravel. Specifically,
-FWPayload will be hardened as part of user_project_wrapper. 
-
-The 'openlane/user_project_wrapper' directory contains the config files for
-running OpenLane. The 'openlane' directory contains a Makefile for 
-running OpenLane. 
-
-Openlane completes on user_project_wrapper with the following status:
-
-```
-Number of pins violated: 537
-Number of nets violated: 321
-Total number of nets: 44363
-[INFO]: Generating Final Summary Report...
-[SUCCESS]: Flow Completed Without Fatal Errors.
-
-```
 
 
 

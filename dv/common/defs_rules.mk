@@ -32,10 +32,19 @@ INCDIRS += $(PACKAGES_DIR)/fwprotocol-defs/src/sv
 DEFINES += MPRJ_IO_PADS=38
 
 ifeq (gate,$(SIMTYPE))
-SRCS += $(GL_DIR)/fwpayload.v
+INCDIRS += $(PDK_ROOT)/sky130A
+SRCS += $(GL_DIR)/user_project_wrapper.v
+SRCS += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_io/verilog/sky130_fd_io.v
+SRCS += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_io/verilog/sky130_ef_io.v
+SRCS += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/primitives.v
+SRCS += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/sky130_fd_sc_hd.v
+SRCS += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hvl/verilog/primitives.v
+SRCS += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hvl/verilog/sky130_fd_sc_hvl.v
+
+DEFINES += FUNCTIONAL USE_POWER_PINS UNIT_DELAY='\#1'
 else
-SRCS += $(RTL_DIR)/fwpayload.v
 SRCS += $(RTL_DIR)/user_project_wrapper.v
+SRCS += $(RTL_DIR)/fwpayload.v
 SRCS += $(PACKAGES_DIR)/fw-wishbone-interconnect/verilog/rtl/wb_interconnect_NxN.v
 SRCS += $(PACKAGES_DIR)/fw-wishbone-interconnect/verilog/rtl/wb_interconnect_arb.v
 SRCS += $(RTL_DIR)/spram_32x256.sv

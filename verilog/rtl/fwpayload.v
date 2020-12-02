@@ -85,9 +85,9 @@ module fwpayload(
 		input  [127:0] 					la_oen,
 
 		// IOs
-		input  [`MPRJ_IO_PADS-1:0] 		io_in,
-		output [`MPRJ_IO_PADS-1:0] 		io_out,
-		output [`MPRJ_IO_PADS-1:0] 		io_oeb
+		input  [`MPRJ_IO_PADS-1:0] 			io_in,
+		output [`MPRJ_IO_PADS-1:0] 			io_out,
+		output [`MPRJ_IO_PADS-1:0] 			io_oeb
 		);
 	
 	// Clock/reset control
@@ -183,14 +183,14 @@ module fwpayload(
 	//   - 127 output     - clock
 	//   - 126 output     - reset
 	//   - 125 output     - core_reset
-	localparam LA_CLOCK					= 127;
+	localparam LA_CLOCK				= 127;
 	localparam LA_RESET_SYS				= 126;
 	localparam LA_RESET_CORE			= 125;
 	localparam LA_GPIO_IN				= 40;
 	localparam LA_GPIO_OUT				= 36;
 	localparam LA_UART_RX				= 34;
 	localparam LA_UART_TX				= 33;
-	localparam LA_INSTR_COMPLETE        = 32;
+	localparam LA_INSTR_COMPLETE        		= 32;
 	localparam LA_PC      				= 0;
 	
 	wire[31:0]      pc_probe = u_core.u_core.u_core.pc;
@@ -309,12 +309,12 @@ module fwpayload(
 	assign ic_t_err[TGT_ID_SPI] = 0;
 	
 	// - Simple GPIO
-	reg[3:0]	gpio_out;
-	wire[3:0]	gpio_in;
+	reg[7:0]	gpio_out;
+	wire[7:0]	gpio_in;
 	
 	wire[31:0] gpio_adr_i = ic_t_adr[32*TGT_ID_GPIO+:32];
 	wire[31:0] gpio_dat_w = ic_t_dat_w[32*TGT_ID_GPIO+:32];
-	wire[31:0] gpio_dat_r = {20'b0, gpio_in, 4'b0, gpio_out};
+	wire[31:0] gpio_dat_r = {16'b0, gpio_in, gpio_out};
 	assign ic_t_dat_r[32*TGT_ID_GPIO+:32] = gpio_dat_r;
 	wire       gpio_cyc_i = ic_t_cyc[TGT_ID_GPIO];
 	assign     ic_t_err[TGT_ID_GPIO] = 0;
@@ -327,12 +327,12 @@ module fwpayload(
 	always @(posedge clk) begin
 		if (rst == 1) begin
 			gpio_ack_o <= 1'b0;
-			gpio_out <= 4'b0;
+			gpio_out <= 8'b0;
 		end else begin
 			gpio_ack_o <= (gpio_cyc_i && gpio_stb_i);
 			
 			if (gpio_cyc_i && gpio_stb_i && gpio_we_i) begin
-				gpio_out <= gpio_dat_w[3:0];
+				gpio_out <= gpio_dat_w[7:0];
 			end
 		end
 	end	
@@ -341,22 +341,50 @@ module fwpayload(
 	/****************************************************************
 	 * Outputs
 	 ****************************************************************/
+	// Tie unused pins
+	assign io_out[11:0] = {12{1'b0}};
+	assign io_oeb[11:0] = {12{1'b0}};
+
+	// GPIO-o
+	assign io_out[15:12] = gpio_out[3:0];
+	assign io_oeb[15:12] = 4'hf;
 	// UART
 	assign io_out[16] = ser_tx;
-	assign ser_rx = io_in[17];
+	assign io_oeb[16] = 1;
+	assign ser_rx = (~la_oen[LA_UART_RX])?la_data_in[LA_UART_RX]:io_in[17];
+	assign io_oeb[17] = 0;
 	
 	assign sdi = io_in[18];
+	assign io_oeb[18] = 0;
 	assign io_out[19] = csb;
+	assign io_oeb[19] = 1;
 	assign io_out[20] = sck;
+	assign io_oeb[20] = 1;
 	assign io_out[21] = sdo;
+	assign io_oeb[21] = 1;
 	assign io_out[22] = sdoenb;
+	assign io_oeb[22] = 1;
 
 	// GPIO
-	assign io_out[26:23] = gpio_out;
-	assign gpio_in = io_in[30:27];
-	
-	// Probe the GPIO output with the LA
-	assign la_data_out[LA_GPIO_OUT+:4] = gpio_out;
+	assign io_out[26:23] = gpio_out[7:4];
+	assign io_oeb[26:23] = 4'hf;
+	assign gpio_in[0] = (~la_oen[LA_GPIO_IN])?la_data_in[LA_GPIO_IN]:io_in[27+0];
+	assign gpio_in[1] = (~la_oen[LA_GPIO_IN+1])?la_data_in[LA_GPIO_IN+1]:io_in[27+1];
+	assign gpio_in[2] = (~la_oen[LA_GPIO_IN+2])?la_data_in[LA_GPIO_IN+2]:io_in[27+2];
+	assign gpio_in[3] = (~la_oen[LA_GPIO_IN+3])?la_data_in[LA_GPIO_IN+3]:io_in[27+3];
+	assign gpio_in[7:4] = io_in[34:31];
+	assign io_oeb[34:27] = 4'h0;
+
+	// Unused
+	assign io_out[37:35] = {3{1'b0}};
+	assign io_oeb[37:35] = {3{1'b0}};
+
+	// Logic Analyzer I/O connections	
+	// Probe the low bits of GPIO output with the LA
+	assign la_data_out[LA_GPIO_OUT+:4] = gpio_out[3:0];
+	assign gpio_in[3:0] = la_data_in[LA_GPIO_IN+:4];
+
+	assign la_data_out[LA_UART_TX] = ser_tx;
 	
 endmodule
 

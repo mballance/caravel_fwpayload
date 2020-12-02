@@ -48,19 +48,24 @@ module fwpayload_tb(input clk);
 	wire clock = clk; 
 	reg[15:0]			reset_cnt;
 	reg[15:0]			reset_key /*verilator public*/ = 0;
+	reg power1 = 0;
+	reg power2 = 0;	
 	
 	always @(posedge clock) begin
 		if (reset_key != 16'ha520) begin
 			reset_key <= 16'ha520;
 			reset_cnt <= 16'h0000;
 		end else if (reset_cnt != 1000) begin
+			if (reset_cnt == 20) begin
+				power1 <= 1;
+				power2 <= 1;
+			end
 			reset_cnt <= reset_cnt + 1;
 		end
 	end
 	
 	wire reset = (reset_key != 16'ha520 || reset_cnt != 1000);
 	
-	wire vdda1, vdda2, vssa1, vssa2, vccd1, vccd2, vssd1, vssd2;
 	wire wb_clk_i = clock;
 	wire wb_rst_i = reset;
 	wire wbs_stb_i;
@@ -91,6 +96,12 @@ module fwpayload_tb(input clk);
 	wire [127:0] la_data_in;
 	wire [127:0] la_data_out;
 	wire [127:0] la_oen; //  = 128'hFFFF_FFFF_FFFF_FFFF__FFFF_FFFF_FFFF_FFFF;
+
+	wire la_clk = la_data_in[127];
+	wire la_sys_rst = la_data_in[126];
+	wire la_core_rst = la_data_in[125];
+	wire[31:0] pc = la_data_out[31:0];
+	wire[3:0]  gpio_out = la_data_out[39:36];
 	
 	la_initiator_bfm #(
 			.WIDTH(128)
@@ -102,7 +113,7 @@ module fwpayload_tb(input clk);
 			.oen(la_oen)
 		);
 	
-	wire [`MPRJ_IO_PADS-1:0] io_in;
+	wire [`MPRJ_IO_PADS-1:0] io_in = {`MPRJ_IO_PADS{1'b0}};
 	wire [`MPRJ_IO_PADS-1:0] io_out;
 	wire [`MPRJ_IO_PADS-1:0] io_oeb;
 
@@ -110,15 +121,28 @@ module fwpayload_tb(input clk);
 	
 	wire   user_clock2 = clock;
 
+	wire VDD3V3;
+        wire VDD1V8;
+        wire VSS;
+
+        assign VDD3V3 = power1;
+        assign VDD1V8 = power2;
+        assign VSS = 1'b0;
+
 	user_project_wrapper u_dut(
-			.vdda1(vdda1),	// User area 1 3.3V supply
-			.vdda2(vdda2),	// User area 2 3.3V supply
-			.vssa1(vssa1),	// User area 1 analog ground
-			.vssa2(vssa2),	// User area 2 analog ground
-			.vccd1(vccd1),	// User area 1 1.8V supply
-			.vccd2(vccd2),	// User area 2 1.8v supply
-			.vssd1(vssd1),	// User area 1 digital ground
-			.vssd2(vssd2),	// User area 2 digital ground
+			.vdda1(VDD3V3),	// User area 1 3.3V supply
+			.vdda2(VDD3V3),	// User area 2 3.3V supply
+			.vssa1(VSS),	// User area 1 analog ground
+			.vssa2(VSS),	// User area 2 analog ground
+			.vccd1(VDD1V8),	// User area 1 1.8V supply
+			.vccd2(VDD1V8),	// User area 2 1.8v supply
+			.vssd1(VSS),	// User area 1 digital ground
+			.vssd2(VSS),	// User area 2 digital ground
+
+`ifdef USE_POWER_PINS
+			.VPWR(power1),
+			.VGND(VSS),
+`endif
 
 			// Wishbone Slave ports (WB MI A)
 			.wb_clk_i(wb_clk_i),
