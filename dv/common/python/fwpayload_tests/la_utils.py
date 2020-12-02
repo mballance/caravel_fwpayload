@@ -42,8 +42,12 @@ class LaUtils(object):
         
     async def reset_cycle_dut(self, cycles=10):
         # Set reset high
+        print("--> set_high")
         await self.la_bfm.set_bits(LaUtils.RESET_IDX, 0, 1)
+        print("<-- set_high")
+        print("--> propagate")
         await self.la_bfm.propagate()
+        print("<-- propagate")
         
         # Clock 
         for i in range(cycles):

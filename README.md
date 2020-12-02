@@ -18,7 +18,11 @@ running OpenLane.
 Openlane completes on user_project_wrapper with the following status:
 
 ```
-
+Number of pins violated: 264
+Number of nets violated: 190
+Total number of nets: 44988
+[INFO]: Generating Final Summary Report...
+[SUCCESS]: Flow Completed Without Fatal Errors.
 ```
 
 ### Pre-Check Status

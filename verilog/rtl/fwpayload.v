@@ -195,7 +195,7 @@ module fwpayload(
 	
 	wire[31:0]      pc_probe = u_core.u_core.u_core.pc;
 	assign la_data_out[127:40] = 0;
-	assign la_data_out[35:33]  = 0;
+	assign la_data_out[35] = 0;
 	assign la_data_out[LA_PC+:32] = pc_probe;
 	assign la_data_out[LA_INSTR_COMPLETE] = u_core.u_core.u_core.instr_complete;
 

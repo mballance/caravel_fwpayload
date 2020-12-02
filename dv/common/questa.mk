@@ -20,6 +20,8 @@ PACKAGES_DIR := $(abspath $(COMMON_DIR)/../../packages)
 PYBFMS_DPI_LIB := $(shell $(PACKAGES_DIR)/python/bin/pybfms lib)
 COCOTB_PREFIX := $(shell $(PACKAGES_DIR)/python/bin/cocotb-config --prefix)
 
+DEFINES += HAVE_HDL_CLOCKGEN
+
 VPI_LIBS += $(PYBFMS_DPI_LIB)
 VPI_LIBS += $(COCOTB_PREFIX)/cocotb/libs/libcocotbvpi_modelsim.so
 
@@ -38,12 +40,14 @@ else # Rules
 build : $(SRCS)
 	vlib work
 	vlog $(VLOG_OPTIONS) $(SRCS)
-	vopt -o $(TOP_MODULE)_opt $(TOP_MODULE)
+	vopt -o $(TOP_MODULE)_opt $(TOP_MODULE) +designfile -debug
 
 
 run : build
 	vsim -batch -do "run $(TIMEOUT); quit -f" \
-	$(VSIM_OPTIONS) $(TOP_MODULE)_opt
+		$(VSIM_OPTIONS) $(TOP_MODULE)_opt \
+		-qwavedb=+report=class+signal
+
 
 pybfms_gen.sv pybfms_gen.c :
 	$(PACKAGES_DIR)/python/bin/pybfms generate \
@@ -54,3 +58,4 @@ pybfms_gen.v :
 		-l vlog $(foreach m,$(PYBFMS_MODULES),-m $(m)) -o $@
 
 endif
+
