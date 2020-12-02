@@ -25,15 +25,38 @@ Total number of nets: 44988
 [SUCCESS]: Flow Completed Without Fatal Errors.
 ```
 
+Integration tests pass for both RTL and gate-level simulations.
+
+### On-boarding FWPayload
+Caravel files (.gds,.lef,etc) have been copied from caravel/develop branch on 20201202.
+A merged .gds is created by running the 'ship' target. The result is:
+
+```
+221398 problems occurred.  See feedback entries.
+Using technology "sky130A", version 1.0.72-0-gb427e3b
+```
+
 ### Pre-Check Status
-- 
-- 
-- 
+- Step 1 -- Pass
+- Step 2 -- Pass
+- Step 3 -- Fail
+    - Documentation  -- Pass
+    - Makefile       -- Pass
+    - Pins           -- Fail
+        - Looks like the script finds arrayed ports in the .v and broken-out in the .lef
+- Step 4 -- Fail
+```
+{{PROGRESS}} Executing Step 4 of 4: Checking DRC Violations.
+{{PROGRESS}} Running DRC Checks...
+{{FAIL}} DRC Checks on GDS-II Failed, Reason: Total # of DRC violations is 21405435
+TEST FAILED AT STEP 4
+```
+
 
 
 ## External IP
 FWPayload uses several pieces of external IP. Some are bundled with the project,
-and some are fetched during the initialization step.
+and some are fetched during the project-initialization step.
 
 ### FWRISC
 RISC-V core originally targeted for FPGA application

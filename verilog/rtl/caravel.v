@@ -1,4 +1,4 @@
-// Note: copied root here to pass precheck
+// `default_nettype none
 /*--------------------------------------------------------------*/
 /* caravel, a project harness for the Google/SkyWater sky130	*/
 /* fabrication process and open source PDK			*/
@@ -23,18 +23,25 @@
 
 `include "libs.ref/sky130_fd_io/verilog/sky130_fd_io.v"
 `include "libs.ref/sky130_fd_io/verilog/sky130_ef_io.v"
+`include "libs.ref/sky130_fd_io/verilog/sky130_ef_io__gpiov2_pad_wrapped.v"
 
 `include "libs.ref/sky130_fd_sc_hd/verilog/primitives.v"
 `include "libs.ref/sky130_fd_sc_hd/verilog/sky130_fd_sc_hd.v"
 `include "libs.ref/sky130_fd_sc_hvl/verilog/primitives.v"
 `include "libs.ref/sky130_fd_sc_hvl/verilog/sky130_fd_sc_hvl.v"
 
-`include "mgmt_soc.v"
-`include "housekeeping_spi.v"
+`ifdef GL
+	`include "gl/mgmt_core.v"
+`else
+	`include "mgmt_soc.v"
+	`include "housekeeping_spi.v"
+	`include "caravel_clocking.v"
+	`include "mgmt_core.v"
+`endif
+
 `include "digital_pll.v"
-`include "caravel_clocking.v"
-`include "mgmt_core.v"
 `include "mgmt_protect.v"
+`include "mgmt_protect_hv.v"
 `include "mprj_io.v"
 `include "chip_io.v"
 `include "user_id_programming.v"
@@ -47,6 +54,7 @@
 `include "DFFRAMBB.v"
 `include "sram_1rw1r_32_256_8_sky130.v"
 `include "storage.v"
+`include "sky130_fd_sc_hvl__lsbufhv2lv_1_wrapped.v"
 
 /*------------------------------*/
 /* Include user project here	*/
@@ -157,6 +165,7 @@ module caravel (
     wire [`MPRJ_IO_PADS-1:0] user_io_oeb;
     wire [`MPRJ_IO_PADS-1:0] user_io_in;
     wire [`MPRJ_IO_PADS-1:0] user_io_out;
+    wire [`MPRJ_IO_PADS-8:0] user_analog_io;
 
     /* Padframe control signals */
     wire [`MPRJ_IO_PADS-1:0] gpio_serial_link;
@@ -179,12 +188,14 @@ module caravel (
     // irq 	 = mprj_io[7]		(input)
 
     wire [`MPRJ_IO_PADS-1:0] mgmt_io_in;
-    wire jtag_out, sdo_out; 		
-    wire jtag_outenb, sdo_outenb; 
+    wire jtag_out, sdo_out;
+    wire jtag_outenb, sdo_outenb;
 
     wire [`MPRJ_IO_PADS-3:0] mgmt_io_nc1;	/* no-connects */
     wire [`MPRJ_IO_PADS-3:0] mgmt_io_nc3;	/* no-connects */
     wire [1:0] mgmt_io_nc2;			/* no-connects */
+
+    wire clock_core;
 
     // Power-on-reset signal.  The reset pad generates the sense-inverted
     // reset at 3.3V.  The 1.8V signal and the inverted 1.8V signal are
@@ -192,9 +203,22 @@ module caravel (
 
     wire porb_h;
     wire porb_l;
+    wire por_l;
 
     wire rstb_h;
     wire rstb_l;
+
+    wire flash_clk_core,     flash_csb_core;
+    wire flash_clk_oeb_core, flash_csb_oeb_core;
+    wire flash_clk_ieb_core, flash_csb_ieb_core;
+    wire flash_io0_oeb_core, flash_io1_oeb_core;
+    wire flash_io2_oeb_core, flash_io3_oeb_core;
+    wire flash_io0_ieb_core, flash_io1_ieb_core;
+    wire flash_io2_ieb_core, flash_io3_ieb_core;
+    wire flash_io0_do_core,  flash_io1_do_core;
+    wire flash_io2_do_core,  flash_io3_do_core;
+    wire flash_io0_di_core,  flash_io1_di_core;
+    wire flash_io2_di_core,  flash_io3_di_core;
 
     // To be considered:  Master hold signal on all user pads (?)
     // For now, set holdh_n to 1 (NOTE:  This is in the 3.3V domain)
@@ -229,6 +253,7 @@ module caravel (
 	.flash_io1(flash_io1),
 	// SoC Core Interface
 	.porb_h(porb_h),
+	.por(por_l),
 	.resetb_core_h(rstb_h),
 	.clock_core(clock_core),
 	.gpio_out_core(gpio_out_core),
@@ -251,7 +276,6 @@ module caravel (
 	.flash_io1_do_core(flash_io1_do_core),
 	.flash_io0_di_core(flash_io0_di_core),
 	.flash_io1_di_core(flash_io1_di_core),
-	.por(~porb_l),
 	.mprj_io_in(mprj_io_in),
 	.mprj_io_out(mprj_io_out),
 	.mprj_io_oeb(mprj_io_oeb),
@@ -265,7 +289,8 @@ module caravel (
 	.mprj_io_analog_en(mprj_io_analog_en),
 	.mprj_io_analog_sel(mprj_io_analog_sel),
 	.mprj_io_analog_pol(mprj_io_analog_pol),
-	.mprj_io_dm(mprj_io_dm)
+	.mprj_io_dm(mprj_io_dm),
+	.mprj_analog_io(user_analog_io)
     );
 
     // SoC core
@@ -276,12 +301,13 @@ module caravel (
     wire [7:0] spi_ro_config_core;
 
     // LA signals
-    wire [127:0] la_output_core;   // From CPU to MPRJ
-    wire [127:0] la_data_in_mprj;  // From CPU to MPRJ
+    wire [127:0] la_data_in_user;  // From CPU to MPRJ
+    wire [127:0] la_data_in_mprj;  // From MPRJ to CPU
     wire [127:0] la_data_out_mprj; // From CPU to MPRJ
-    wire [127:0] la_output_mprj;   // From MPRJ to CPU
-    wire [127:0] la_oen;           // LA output enable from CPU perspective (active-low) 
-	
+    wire [127:0] la_data_out_user; // From MPRJ to CPU
+    wire [127:0] la_oen_user;      // From CPU to MPRJ
+    wire [127:0] la_oen_mprj;	   // From CPU to MPRJ
+
     // WB MI A (User Project)
     wire mprj_cyc_o_core;
     wire mprj_stb_o_core;
@@ -308,6 +334,7 @@ module caravel (
 	wire 	    mprj_clock;
 	wire 	    mprj_clock2;
 	wire 	    mprj_resetn;
+	wire 	    mprj_reset;
 	wire 	    mprj_cyc_o_user;
 	wire 	    mprj_stb_o_user;
 	wire 	    mprj_we_o_user;
@@ -320,22 +347,22 @@ module caravel (
 	wire	    mprj2_vdd_pwrgood;
 
 	// Storage area
-	// Management R/W interface 
-	wire [`RAM_BLOCKS-1:0] mgmt_ena; 
+	// Management R/W interface
+	wire [`RAM_BLOCKS-1:0] mgmt_ena;
     wire [`RAM_BLOCKS-1:0] mgmt_wen;
     wire [(`RAM_BLOCKS*4)-1:0] mgmt_wen_mask;
     wire [7:0] mgmt_addr;
     wire [31:0] mgmt_wdata;
     wire [(`RAM_BLOCKS*32)-1:0] mgmt_rdata;
 	// Management RO interface
-	wire mgmt_ena_ro; 
+	wire mgmt_ena_ro;
     wire [7:0] mgmt_addr_ro;
     wire [31:0] mgmt_rdata_ro;
 
     mgmt_core soc (
 	`ifdef USE_POWER_PINS
-		.vdd1v8(vccd),
-		.vss(vssa),
+		.VPWR(vccd),
+		.VGND(vssa),
 	`endif
 		// GPIO (1 pin)
 		.gpio_out_pad(gpio_out_core),
@@ -367,10 +394,10 @@ module caravel (
         	.core_clk(caravel_clk),
         	.user_clk(caravel_clk2),
         	.core_rstn(caravel_rstn),
-		// Logic Analyzer 
-		.la_input(la_data_out_mprj),
-		.la_output(la_output_core),
-		.la_oen(la_oen),
+		// Logic Analyzer
+		.la_input(la_data_in_mprj),
+		.la_output(la_data_out_mprj),
+		.la_oen(la_oen_mprj),
 		// User Project IO Control
 		.mprj_vcc_pwrgood(mprj_vcc_pwrgood),
 		.mprj2_vcc_pwrgood(mprj2_vcc_pwrgood),
@@ -397,8 +424,8 @@ module caravel (
 		.mprj_dat_i(mprj_dat_i_core),
 		// mask data
 		.mask_rev(mask_rev),
-		// MGMT area R/W interface 
-    	.mgmt_ena(mgmt_ena), 
+		// MGMT area R/W interface
+    	.mgmt_ena(mgmt_ena),
     	.mgmt_wen_mask(mgmt_wen_mask),
     	.mgmt_wen(mgmt_wen),
     	.mgmt_addr(mgmt_addr),
@@ -416,6 +443,7 @@ module caravel (
 	/* the vccd1 domain.						*/
 
 	mgmt_protect mgmt_buffers (
+	`ifdef USE_POWER_PINS
 		.vccd(vccd),
 		.vssd(vssd),
 		.vccd1(vccd1),
@@ -424,6 +452,7 @@ module caravel (
 		.vssa1(vssa1),
 		.vdda2(vdda2),
 		.vssa2(vssa2),
+        `endif
 
 		.caravel_clk(caravel_clk),
 		.caravel_clk2(caravel_clk2),
@@ -434,31 +463,36 @@ module caravel (
 		.mprj_sel_o_core(mprj_sel_o_core),
 		.mprj_adr_o_core(mprj_adr_o_core),
 		.mprj_dat_o_core(mprj_dat_o_core),
-		.la_output_core(la_output_core),
-		.la_oen(la_oen),
+		.la_data_out_core(la_data_out_user),
+		.la_data_out_mprj(la_data_out_mprj),
+		.la_data_in_core(la_data_in_user),
+		.la_data_in_mprj(la_data_in_mprj),
+		.la_oen_mprj(la_oen_mprj),
+		.la_oen_core(la_oen_user),
 
 		.user_clock(mprj_clock),
 		.user_clock2(mprj_clock2),
 		.user_resetn(mprj_resetn),
+		.user_reset(mprj_reset),
 		.mprj_cyc_o_user(mprj_cyc_o_user),
 		.mprj_stb_o_user(mprj_stb_o_user),
 		.mprj_we_o_user(mprj_we_o_user),
 		.mprj_sel_o_user(mprj_sel_o_user),
 		.mprj_adr_o_user(mprj_adr_o_user),
 		.mprj_dat_o_user(mprj_dat_o_user),
-		.la_data_in_mprj(la_data_in_mprj),
 		.user1_vcc_powergood(mprj_vcc_pwrgood),
 		.user2_vcc_powergood(mprj2_vcc_pwrgood),
 		.user1_vdd_powergood(mprj_vdd_pwrgood),
 		.user2_vdd_powergood(mprj2_vdd_pwrgood)
 	);
 
-	
+
 	/*----------------------------------------------*/
 	/* Wrapper module around the user project 	*/
 	/*----------------------------------------------*/
 
 	user_project_wrapper mprj ( 
+	`ifdef USE_POWER_PINS
 		.vdda1(vdda1),	// User area 1 3.3V power
 		.vdda2(vdda2),	// User area 2 3.3V power
 		.vssa1(vssa1),	// User area 1 analog ground
@@ -467,10 +501,11 @@ module caravel (
 		.vccd2(vccd2),	// User area 2 1.8V power
 		.vssd1(vssd1),	// User area 1 digital ground
 		.vssd2(vssd2),	// User area 2 digital ground
+        `endif
 
     		.wb_clk_i(mprj_clock),
-    		.wb_rst_i(!mprj_resetn),
-		// MGMT SoC Wishbone Slave 
+    		.wb_rst_i(mprj_reset),
+		// MGMT SoC Wishbone Slave
 		.wbs_cyc_i(mprj_cyc_o_user),
 		.wbs_stb_i(mprj_stb_o_user),
 		.wbs_we_i(mprj_we_o_user),
@@ -480,13 +515,14 @@ module caravel (
 	    	.wbs_ack_o(mprj_ack_i_core),
 		.wbs_dat_o(mprj_dat_i_core),
 		// Logic Analyzer
-		.la_data_in(la_data_in_mprj),
-		.la_data_out(la_data_out_mprj),
-		.la_oen (la_oen),
+		.la_data_in(la_data_in_user),
+		.la_data_out(la_data_out_user),
+		.la_oen(la_oen_user),
 		// IO Pads
 		.io_in (user_io_in),
     		.io_out(user_io_out),
     		.io_oeb(user_io_oeb),
+		.analog_io(user_analog_io),
 		// Independent clock
 		.user_clock2(mprj_clock2)
 	);
@@ -594,38 +630,37 @@ module caravel (
     	.pad_gpio_in(mprj_io_in[(`MPRJ_IO_PADS-1):2])
     );
 
-    sky130_fd_sc_hvl__lsbufhv2lv porb_level (
-		.VPWR(vddio),
-		.VPB(vddio),
-		.LVPWR(vccd),
-		.VNB(vssio),
-		.VGND(vssio),
-		.A(porb_h),
-		.X(porb_l)
-    );
-
     user_id_programming #(
 	.USER_PROJECT_ID(USER_PROJECT_ID)
     ) user_id_value (
+`ifdef USE_POWER_PINS
 	.vdd1v8(vccd),
 	.vss(vssd),
+`endif
 	.mask_rev(mask_rev)
     );
 
     // Power-on-reset circuit
     simple_por por (
+`ifdef USE_POWER_PINS
 		.vdd3v3(vddio),
+		.vdd1v8(vccd),
 		.vss(vssio),
-		.porb_h(porb_h)
+`endif
+		.porb_h(porb_h),
+		.porb_l(porb_l),
+		.por_l(por_l)
     );
 
     // XRES (chip input pin reset) reset level converter
-    sky130_fd_sc_hvl__lsbufhv2lv rstb_level (
+    sky130_fd_sc_hvl__lsbufhv2lv_1_wrapped rstb_level (
+`ifdef USE_POWER_PINS
 		.VPWR(vddio),
 		.VPB(vddio),
 		.LVPWR(vccd),
 		.VNB(vssio),
 		.VGND(vssio),
+`endif
 		.A(rstb_h),
 		.X(rstb_l)
     );
@@ -639,10 +674,11 @@ module caravel (
         .mgmt_addr(mgmt_addr),
         .mgmt_wdata(mgmt_wdata),
         .mgmt_rdata(mgmt_rdata),
-        // Management RO interface  
+        // Management RO interface
         .mgmt_ena_ro(mgmt_ena_ro),
         .mgmt_addr_ro(mgmt_addr_ro),
         .mgmt_rdata_ro(mgmt_rdata_ro)
 	);
 
 endmodule
+// `default_nettype wire
