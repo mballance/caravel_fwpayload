@@ -7,20 +7,28 @@ area of Caraval.
 ![FWPayload Block Diagram](doc/images/fwpayload_diagram.png)
 
 ## Current Status
-FWPayload is taking Option #2 for integration into Caravel. Specifically,
-FWPayload is directly integrated into user_project_wrapper and 
-hardened along with it.
+FWPayload is taking Option #1 for integration into Caravel. Specifically,
+FWPayload is integrated into a customized version of user_proj_example
+(stored in verilog/rtl/fwpayload/user_proj_example.v). The config in
+openlane/user_proj_example creates a macro from this description, and
+that macro is integrated into user_project_wrapper using the provided
+configuration.
 
-The 'openlane/user_project_wrapper' directory contains the config files for
-running OpenLane. The 'openlane' directory contains a Makefile for 
-running OpenLane. 
-
-Openlane completes on user_project_wrapper with the following status:
+Openlane completes on user_proj_example with no DRC errors, and the 
+following antenna violations:
 
 ```
-Number of pins violated: 264
-Number of nets violated: 190
-Total number of nets: 44988
+Number of pins violated: 52
+Number of nets violated: 51
+Total number of nets: 34963
+```
+
+Running with diode-insertion strategy 3 (default) results in the 
+following:
+```
+Number of pins violated: 193
+Number of nets violated: 146
+Total number of nets: 34963
 [INFO]: Generating Final Summary Report...
 [SUCCESS]: Flow Completed Without Fatal Errors.
 ```
@@ -28,7 +36,8 @@ Total number of nets: 44988
 Integration tests pass for both RTL and gate-level simulations.
 
 ### On-boarding FWPayload
-Caravel files (.gds,.lef,etc) have been copied from caravel/develop branch on 20201202.
+Caravel files (.gds,.lef,etc) have been copied from caravel/mpw-one-a tag
+on 20201206.
 A merged .gds is created by running the 'ship' target. The result is:
 
 ```
@@ -152,7 +161,7 @@ probe the program counter of the FWRISC, and optionally, single-step the clock.
 - Python 3       (3.6.8 was used)
 - Icarus Verilog (11.0 was used)
 - Verilator      (4.102 was used)
-- Openlane       (rc4 was used)
+- Openlane       (rc5 from openlane/mpw-one-a tag was used)
 - Skywater PDK   (PDK_ROOT is assumed to be properly set)
 
 ## Project Setup
