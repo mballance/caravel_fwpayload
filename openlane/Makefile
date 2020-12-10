@@ -1,18 +1,11 @@
-#****************************************************************************
-#* 
-#****************************************************************************
 BLOCKS = $(shell find * -maxdepth 0 -type d)
 CONFIG = $(foreach block,$(BLOCKS), ./$(block)/config.tcl)
 CLEAN = $(foreach block,$(BLOCKS), clean-$(block))
 
-OPENLANE_IMAGE_NAME ?= openlane:rc4
+OPENLANE_TAG ?= rc5
+OPENLANE_IMAGE_NAME ?= openlane:$(OPENLANE_TAG)
 OPENLANE_BASIC_COMMAND = "cd /project/openlane && flow.tcl -design ./$* -save_path .. -save -tag $* -overwrite"
 OPENLANE_INTERACTIVE_COMMAND = "cd /project/openlane && flow.tcl -it -file ./$*/interactive.tcl"
-
-ifeq (,$(shell which podman))
-# Podman (CentOS8+) doesn't require user-spec options
-USER_PERM_OPTIONS=-u $(shell id -u $(USER)):$(shell id -g $(USER))
-endif
 
 all: $(BLOCKS)
 
@@ -32,22 +25,32 @@ endif
 	@echo "###############################################"
 	@sleep 1
 
-	@if [[ -f ./$*/interactive.tcl ]]; then\
+	@if [ -f ./$*/interactive.tcl ]; then\
 		docker run -it -v $(OPENLANE_ROOT):/openLANE_flow \
 		-v $(PDK_ROOT):$(PDK_ROOT) \
 		-v $(PWD)/..:/project \
 		-e PDK_ROOT=$(PDK_ROOT) \
-		$(USER_PERM_OPTIONS) \
 		$(OPENLANE_IMAGE_NAME) sh -c $(OPENLANE_INTERACTIVE_COMMAND);\
 	else\
 		docker run -it -v $(OPENLANE_ROOT):/openLANE_flow \
 		-v $(PDK_ROOT):$(PDK_ROOT) \
 		-v $(PWD)/..:/project \
 		-e PDK_ROOT=$(PDK_ROOT) \
-		$(USER_PERM_OPTIONS) \
 		$(OPENLANE_IMAGE_NAME) sh -c $(OPENLANE_BASIC_COMMAND);\
 	fi
 
+#		-u $(shell id -u $(USER)):$(shell id -g $(USER)) \
+#		-u $(shell id -u $(USER)):$(shell id -g $(USER)) \
+
+.PHONY: openlane
+openlane:
+ifeq ($(OPENLANE_ROOT),)
+	@echo "Please export OPENLANE_ROOT"
+	@exit 1
+endif
+	git clone https://github.com/efabless/openlane.git --branch=master $(OPENLANE_ROOT) && \
+		cd $(OPENLANE_ROOT) && \
+		make openlane
 
 FORCE:
 

@@ -1,0 +1,11 @@
+packages/
+__pycache__/
+verilog/gl/
+runs/
+pybfms_*
+results.xml
+*.vcd
+*.fst
+*.vvp
+simv.*
+obj_dir/

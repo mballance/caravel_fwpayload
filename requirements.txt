@@ -4,6 +4,6 @@ vlsim
 pyelftools
 
 -e git+https://github.com/pybfms/pybfms.git#egg=pybfms
--e git+https://github.com/pybfms/wishbone_bfms.git#egg=wishbone_bfms
+-e git+https://github.com/pybfms/pybfms_wishbone.git#egg=pybfms_wishbone
 -e git+https://github.com/pybfms/pybfms_logic_analyzer.git#egg=pybfms-logic-analyzer
 

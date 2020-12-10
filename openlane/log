@@ -1,0 +1,23 @@
+###############################################
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+[36m[INFO]: 
+	___   ____   ___  ____   _       ____  ____     ___
+	/   \ |    \ /  _]|    \ | |     /    ||    \   /  _]
+	|     ||  o  )  [_ |  _  || |    |  o  ||  _  | /  [_
+	|  O  ||   _/    _]|  |  || |___ |     ||  |  ||    _]
+	|     ||  | |   [_ |  |  ||     ||  _  ||  |  ||   [_
+	\___/ |__| |_____||__|__||_____||__|__||__|__||_____|
+
+[37m
+[36m[INFO]: Version: rc4[37m
+[36m[INFO]: Running non-interactively[37m
+[36m[INFO]: Using design configuration at /project/openlane/user_proj_example/config.tcl[37m
+[36m[INFO]: Sourcing Configurations from /project/openlane/user_proj_example/config.tcl[37m
+[36m[INFO]: PDKs root directory: /project/fun/openlane/pdk_root[37m
+[36m[INFO]: PDK: sky130A[37m
+[36m[INFO]: Standard Cell Library: sky130_fd_sc_hd[37m
+[36m[INFO]: Sourcing Configurations from /project/openlane/user_proj_example/config.tcl[37m
+[36m[INFO]: Current run directory is /project/openlane/user_proj_example/runs/user_proj_example[37m
+[33m[WARNING]: Removing exisiting run /project/openlane/user_proj_example/runs/user_proj_example[37m
+[36m[INFO]: Preparing LEF Files[37m
+^Cmake: *** [Makefile:27: user_proj_example] Error 130

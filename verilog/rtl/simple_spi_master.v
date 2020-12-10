@@ -1,3 +1,4 @@
+`default_nettype none
 //----------------------------------------------------------------------------
 // Module: simple_spi_master
 //
@@ -146,7 +147,7 @@ module simple_spi_master (
     output [31:0] reg_dat_do,
     output	  reg_dat_wait,
     output	  irq_out,
-    output reg	  err_out,
+    output	  err_out,
 
     output	 hk_connect,	// Connect to housekeeping SPI
     input 	 sdi,	 // SPI input
@@ -164,6 +165,7 @@ module simple_spi_master (
     reg 	  isdo, hsck, icsb;
     reg [1:0] state;
     reg 	  isck;
+    reg	  err_out;
  
     reg [7:0]  treg, rreg, d_latched;
     reg [2:0]  nbit;
@@ -179,6 +181,13 @@ module simple_spi_master (
     reg	   enable;
     reg	   hkconn;
  
+    wire	  csb;
+    wire	  irq_out;
+    wire	  sck;
+    wire	  sdo;
+    wire	  sdoenb;
+    wire	  hk_connect;
+
     // Define behavior for inverted SCK and inverted CSB
     assign    	  csb = (enable == 1'b0) ? 1'bz : (invcsb) ? ~icsb : icsb;
     assign	  sck = (enable == 1'b0) ? 1'bz : (invsck) ? ~isck : isck;
@@ -380,3 +389,4 @@ module simple_spi_master (
     end // always
  
 endmodule
+`default_nettype wire

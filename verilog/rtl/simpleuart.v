@@ -1,3 +1,4 @@
+`default_nettype none
 /*
  *  PicoSoC - A simple example SoC using PicoRV32
  *
@@ -44,6 +45,7 @@ module simpleuart_wb # (
     wire [31:0] simpleuart_reg_div_do;
     wire [31:0] simpleuart_reg_dat_do;
     wire [31:0] simpleuart_reg_cfg_do;
+    wire reg_dat_wait;
 
     wire resetn = ~wb_rst_i;
     wire valid = wb_stb_i && wb_cyc_i; 
@@ -57,8 +59,6 @@ module simpleuart_wb # (
 
     wire [31:0] mem_wdata = wb_dat_i;
     wire reg_dat_re = simpleuart_reg_dat_sel && !wb_sel_i && ~wb_we_i; // read_enable
-
-    wire reg_dat_wait;
 
     assign wb_dat_o = simpleuart_reg_div_sel ? simpleuart_reg_div_do:
 		      simpleuart_reg_cfg_sel ? simpleuart_reg_cfg_do:
@@ -95,7 +95,7 @@ module simpleuart (
     input clk,
     input resetn,
 
-    output reg enabled,
+    output enabled,
     output ser_tx,
     input  ser_rx,
 
@@ -114,6 +114,7 @@ module simpleuart (
     output        reg_dat_wait
 );
     reg [31:0] cfg_divider;
+    reg        enabled;
 
     reg [3:0] recv_state;
     reg [31:0] recv_divcnt;
@@ -125,6 +126,8 @@ module simpleuart (
     reg [3:0] send_bitcnt;
     reg [31:0] send_divcnt;
     reg send_dummy;
+
+    wire reg_ena_do;
 
     assign reg_div_do = cfg_divider;
     assign reg_ena_do = {31'd0, enabled};
@@ -217,3 +220,4 @@ module simpleuart (
         end
     end
 endmodule
+`default_nettype wire
