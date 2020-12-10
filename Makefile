@@ -43,7 +43,7 @@ verify:
 
 $(LARGE_FILES_GZ): %.gz: %
 	@if ! [ $(suffix $<) == ".gz" ]; then\
-		gzip -n --best $< > /dev/null &&\
+		gzip -f -n --best $< > /dev/null &&\
 		echo "$< -> $@";\
 	fi
 

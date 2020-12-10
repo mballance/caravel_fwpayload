@@ -130,7 +130,7 @@ module fwpayload_tb(input clk);
         assign VSS = 1'b0;
 
 	user_proj_example u_dut(
-`ifdef USE_POWER_PINS
+		/*
 			.vdda1(VDD3V3),	// User area 1 3.3V supply
 			.vdda2(VDD3V3),	// User area 2 3.3V supply
 			.vssa1(VSS),	// User area 1 analog ground
@@ -139,6 +139,8 @@ module fwpayload_tb(input clk);
 			.vccd2(VDD1V8),	// User area 2 1.8v supply
 			.vssd1(VSS),	// User area 1 digital ground
 			.vssd2(VSS),	// User area 2 digital ground
+		 */
+`ifdef USE_POWER_PINS
 			.VPWR(power1),
 			.VGND(VSS),
 `endif

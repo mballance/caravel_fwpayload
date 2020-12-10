@@ -18,6 +18,13 @@ ifeq ($(OPENLANE_ROOT),)
 	@echo "Please export OPENLANE_ROOT"
 	@exit 1
 endif
+
+# Podman (Centos8) doesn't like the -u switches
+# Only add if we're not using podman in emulation
+ifeq (,$(shell which podman))
+   DOCKER_UID_OPTIONS = -u $(shell id -u $(USER)):$(shell id -g $(USER))
+endif
+
 ifeq ($(PDK_ROOT),)
 	@echo "Please export PDK_ROOT"
 	@exit 1
@@ -30,17 +37,16 @@ endif
 		-v $(PDK_ROOT):$(PDK_ROOT) \
 		-v $(PWD)/..:/project \
 		-e PDK_ROOT=$(PDK_ROOT) \
+		$(DOCKER_UID_OPTIONS) \
 		$(OPENLANE_IMAGE_NAME) sh -c $(OPENLANE_INTERACTIVE_COMMAND);\
 	else\
 		docker run -it -v $(OPENLANE_ROOT):/openLANE_flow \
 		-v $(PDK_ROOT):$(PDK_ROOT) \
 		-v $(PWD)/..:/project \
 		-e PDK_ROOT=$(PDK_ROOT) \
+		$(DOCKER_UID_OPTIONS) \
 		$(OPENLANE_IMAGE_NAME) sh -c $(OPENLANE_BASIC_COMMAND);\
 	fi
-
-#		-u $(shell id -u $(USER)):$(shell id -g $(USER)) \
-#		-u $(shell id -u $(USER)):$(shell id -g $(USER)) \
 
 .PHONY: openlane
 openlane:

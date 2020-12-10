@@ -33,7 +33,7 @@ DEFINES += MPRJ_IO_PADS=38
 
 ifeq (gate,$(SIMTYPE))
 INCDIRS += $(PDK_ROOT)/sky130A
-SRCS += $(GL_DIR)/user_project_wrapper.v
+SRCS += $(GL_DIR)/user_proj_example.v
 SRCS += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_io/verilog/sky130_fd_io.v
 SRCS += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_io/verilog/sky130_ef_io.v
 SRCS += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/primitives.v
