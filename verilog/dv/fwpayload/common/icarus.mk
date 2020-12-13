@@ -60,7 +60,7 @@ build : $(SIMV)
 $(SIMV) : $(SRCS) pybfms_gen.v
 	iverilog -o $@ $(IVERILOG_OPTIONS) $(SRCS) pybfms_gen.v 
 
-run : $(SIMV)
+run : $(SIMV) $(RUN_DEPS)
 	vvp $(VVP_OPTIONS) $(SIMV) $(SIMV_ARGS)
 	
 pybfms_gen.v :

@@ -6,6 +6,7 @@ set vlog_files ""
 lappend vlog_files $script_dir/../../verilog/rtl/defines.v
 lappend vlog_files $script_dir/../../verilog/rtl/fwpayload/user_proj_example.v
 lappend vlog_files $script_dir/../../verilog/rtl/fwpayload/fwpayload.v
+lappend vlog_files $script_dir/../../verilog/rtl/fwpayload/fw-wishbone-bridges/verilog/rtl/wb_clockdomain_bridge.v
 lappend vlog_files $script_dir/../../verilog/rtl/fwpayload/fw-wishbone-interconnect/verilog/rtl/wb_interconnect_NxN.v
 lappend vlog_files $script_dir/../../verilog/rtl/fwpayload/fw-wishbone-interconnect/verilog/rtl/wb_interconnect_arb.v
 lappend vlog_files $script_dir/../../verilog/rtl/fwpayload/spram_32x256.sv
@@ -38,10 +39,10 @@ set ::env(VERILOG_INCLUDE_DIRS) $vlog_incdirs
 
 set ::env(CLOCK_PORT) "wb_clk_i"
 #set ::env(CLOCK_NET) "u_payload.clock"
-set ::env(CLOCK_PERIOD) "40"
+set ::env(CLOCK_PERIOD) "30"
 
 set ::env(FP_SIZING) absolute
-set ::env(DIE_AREA) "0 0 1500 1500"
+set ::env(DIE_AREA) "0 0 1100 1100"
 set ::env(DESIGN_IS_CORE) 0
 
 set ::env(FP_PIN_ORDER_CFG) $script_dir/pin_order.cfg
@@ -49,9 +50,10 @@ set ::env(FP_PIN_ORDER_CFG) $script_dir/pin_order.cfg
 # set ::env(FP_CONTEXT_LEF) $script_dir/../user_project_wrapper/runs/user_project_wrapper/tmp/merged_unpadded.lef
 
 #set ::env(PL_BASIC_PLACEMENT) 1
-set ::env(PL_TARGET_DENSITY) 0.35
+set ::env(PL_TARGET_DENSITY) 0.40
 
 set ::env(DIODE_INSERTION_STRATEGY) 1
+#set ::env(GLB_RT_MAX_DIODE_INS_ITERS) 4
 
 set ::env(ROUTING_CORES) 10
 

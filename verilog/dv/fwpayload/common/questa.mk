@@ -41,7 +41,7 @@ build : $(SRCS)
 	vopt -o $(TOP_MODULE)_opt $(TOP_MODULE) +designfile -debug
 
 
-run : build
+run : build $(RUN_DEPS)
 	vsim -batch -do "run $(TIMEOUT); quit -f" \
 		$(VSIM_OPTIONS) $(TOP_MODULE)_opt \
 		-qwavedb=+report=class+signal

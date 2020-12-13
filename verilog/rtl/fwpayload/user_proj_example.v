@@ -40,13 +40,13 @@ module user_proj_example #(
 
     // Logic Analyzer Signals
     input  [127:0] 		la_data_in,
-    output reg[127:0] 	la_data_out,
+    output [127:0] 	la_data_out,
     input  [127:0] 		la_oen,
 
     // IOs
     input  [`MPRJ_IO_PADS-1:0] io_in,
-    output reg[`MPRJ_IO_PADS-1:0] io_out,
-    output reg[`MPRJ_IO_PADS-1:0] io_oeb
+    output [`MPRJ_IO_PADS-1:0] io_out,
+    output [`MPRJ_IO_PADS-1:0] io_oeb
 );
     wire clk;
     wire rst;
@@ -121,35 +121,30 @@ module user_proj_example #(
 	wire [31:0] wba_adr_i = (~(|la_oen[LA_WBA_ADR+16-1:LA_WBA_ADR]))?la_data_in[LA_WBA_ADR+16-1:LA_WBA_ADR]:{32{1'b0}};
 	wire 		wba_ack_o;
 	wire [31:0]	wba_dat_o;
-	
-	always @* begin
-		la_data_out[LA_WBA_STB_CYC] = 1'b0;
-		la_data_out[LA_WBA_WE] = 1'b0;
-		la_data_out[LA_WBA_SEL+4-1:LA_WBA_SEL] = {4{1'b0}};
-		la_data_out[LA_WBA_ADR+32-1:LA_WBA_ADR] = {32{1'b0}};
-		la_data_out[LA_WBA_ACK] = wba_ack_o;
-		la_data_out[LA_WBA_DAT+32-1:LA_WBA_DAT] = wba_dat_o;
-	end
+
+	/*
+	 */
+	assign la_data_out[LA_WBA_STB_CYC] = 1'b0;
+	assign la_data_out[LA_WBA_WE] = 1'b0;
+	assign la_data_out[LA_WBA_SEL+4-1:LA_WBA_SEL] = {4{1'b0}};
+	assign la_data_out[LA_WBA_ADR+16-1:LA_WBA_ADR] = {32{1'b0}};
+	assign la_data_out[LA_WBA_ACK] = wba_ack_o;
+	assign la_data_out[LA_WBA_DAT+32-1:LA_WBA_DAT] = wba_dat_o;
 	
 	wire[31:0] pc;
-	always @* la_data_out[LA_PC+32-1:LA_PC] = pc;
+	assign la_data_out[LA_PC+32-1:LA_PC] = pc;
 	wire ser_tx;
-	reg ser_rx;
+	wire ser_rx;
 	
 	wire sdi;
 	wire csb;
-	wire csb_1;
 	wire sck;
-	wire sck_1;
 	wire sdo;
-	wire sdo_1;
 	wire sdoenb;
-//	reg sdoenb;
-//	always @* sdoenb_1 = sdoenb;
 	
 	wire[7:0]	gpio_out;
-	always @* la_data_out[LA_GPIO_OUT+4-1:LA_GPIO_OUT] = gpio_out[3:0];
-	reg[7:0]	gpio_in;
+	assign la_data_out[LA_GPIO_OUT+4-1:LA_GPIO_OUT] = gpio_out[3:0];
+	wire[7:0]	gpio_in;
 	// TODO: handle la gpio_in
 
 	localparam PIN_UNUSED_BLOCK_1       = 0;
@@ -167,50 +162,82 @@ module user_proj_example #(
 	localparam PIN_UNUSED_BLOCK_2       = 35;
 	localparam PIN_UNUSED_SZ_2          = 2;
 
-	always @* begin
-		io_out[PIN_UNUSED_BLOCK_1+PIN_UNUSED_SZ_1-1:PIN_UNUSED_BLOCK_1] = {PIN_UNUSED_SZ_1{1'b0}};
-		io_oeb[PIN_UNUSED_BLOCK_1+PIN_UNUSED_SZ_1-1:PIN_UNUSED_BLOCK_1] = {PIN_UNUSED_SZ_1{1'b0}};
-		io_out[PIN_UART_TX] = ser_tx;
-		io_oeb[PIN_UART_TX] = 1;
-		ser_rx = io_in[PIN_UART_RX];
-		io_oeb[PIN_UART_RX] = 0;
-		io_oeb[PIN_SPI_SDI] = 0;
-		io_out[PIN_SPI_CSB] = csb;
-		io_oeb[PIN_SPI_SDI] = 1;
-		io_out[PIN_SPI_SCK] = sck;
-		io_oeb[PIN_SPI_SCK] = 1;
-		io_out[PIN_SPI_SDO] = sdo;
-		io_oeb[PIN_SPI_SDO] = 1;
-		io_out[PIN_SPI_SDOENB] = sdoenb;
-		io_oeb[PIN_SPI_SDOENB] = 1;
-	end
+	assign io_out[PIN_UNUSED_BLOCK_1+PIN_UNUSED_SZ_1-1:PIN_UNUSED_BLOCK_1] = {PIN_UNUSED_SZ_1{1'b0}};
+	assign io_oeb[PIN_UNUSED_BLOCK_1+PIN_UNUSED_SZ_1-1:PIN_UNUSED_BLOCK_1] = {PIN_UNUSED_SZ_1{1'b0}};
+	assign io_out[PIN_UART_TX] = ser_tx;
+	assign io_oeb[PIN_UART_TX] = 1;
+	assign ser_rx = io_in[PIN_UART_RX];
+	assign io_oeb[PIN_UART_RX] = 0;
+	assign io_oeb[PIN_SPI_SDI] = 0;
+	assign io_out[PIN_SPI_CSB] = csb;
+	assign io_oeb[PIN_SPI_SDI] = 1;
+	assign io_out[PIN_SPI_SCK] = sck;
+	assign io_oeb[PIN_SPI_SCK] = 1;
+	assign io_out[PIN_SPI_SDO] = sdo;
+	assign io_oeb[PIN_SPI_SDO] = 1;
+	assign io_out[PIN_SPI_SDOENB] = sdoenb;
+	assign io_oeb[PIN_SPI_SDOENB] = 1;
 	assign sdi = io_in[PIN_SPI_SDI];
 	
-	always @* begin
-		io_out[PIN_GPIO_OUT_LOW+4-1:PIN_GPIO_OUT_LOW] = gpio_out[3:0];
-		io_oeb[PIN_GPIO_OUT_LOW+4-1:PIN_GPIO_OUT_LOW] = {4{1'b1}};
-		io_out[PIN_GPIO_OUT_HIGH+4-1:PIN_GPIO_OUT_HIGH] = gpio_out[7:4];
-		io_oeb[PIN_GPIO_OUT_HIGH+4-1:PIN_GPIO_OUT_HIGH] = {4{1'b1}};
-		gpio_in = io_in[PIN_GPIO_IN+8-1:PIN_GPIO_IN];
-		io_oeb[PIN_GPIO_IN+8-1:PIN_GPIO_IN] = {8{1'b0}};
+	assign io_out[PIN_GPIO_OUT_LOW+4-1:PIN_GPIO_OUT_LOW] = gpio_out[3:0];
+	assign io_oeb[PIN_GPIO_OUT_LOW+4-1:PIN_GPIO_OUT_LOW] = {4{1'b1}};
+	assign io_out[PIN_GPIO_OUT_HIGH+4-1:PIN_GPIO_OUT_HIGH] = gpio_out[7:4];
+	assign io_oeb[PIN_GPIO_OUT_HIGH+4-1:PIN_GPIO_OUT_HIGH] = {4{1'b1}};
+	assign gpio_in = io_in[PIN_GPIO_IN+8-1:PIN_GPIO_IN];
+	assign io_oeb[PIN_GPIO_IN+8-1:PIN_GPIO_IN] = {8{1'b0}};
 	
-		io_out[PIN_UNUSED_BLOCK_2+PIN_UNUSED_SZ_2-1:PIN_UNUSED_BLOCK_2] = {PIN_UNUSED_SZ_2{1'b0}};
-		io_oeb[PIN_UNUSED_BLOCK_2+PIN_UNUSED_SZ_2-1:PIN_UNUSED_BLOCK_2] = {PIN_UNUSED_SZ_2{1'b0}};
-	end
+	assign io_out[PIN_UNUSED_BLOCK_2+PIN_UNUSED_SZ_2-1:PIN_UNUSED_BLOCK_2] = {PIN_UNUSED_SZ_2{1'b0}};
+	assign io_oeb[PIN_UNUSED_BLOCK_2+PIN_UNUSED_SZ_2-1:PIN_UNUSED_BLOCK_2] = {PIN_UNUSED_SZ_2{1'b0}};
+	
+	wire b2payload_stb;
+	wire b2payload_cyc;
+	wire b2payload_we;
+	wire[3:0] b2payload_sel;
+	wire[31:0] b2payload_dat_w;
+	wire[31:0] b2payload_adr;
+	wire b2payload_ack;
+	wire[31:0] b2payload_dat_r;
+	
+	// bridge for the management interface
+	wb_clockdomain_bridge #(
+			.ADR_WIDTH(32),
+			.DAT_WIDTH(32)
+		) u_bridge (
+			.reset(payload_sys_reset),
+			.i_clock(wb_clk_i),
+			.i_stb(wbs_stb_i),
+			.i_cyc(wbs_cyc_i),
+			.i_we(wbs_we_i),
+			.i_sel(wbs_sel_i),
+			.i_dat_w(wbs_dat_i),
+			.i_adr(wbs_adr_i),
+			.i_ack(wbs_ack_o),
+			.i_dat_r(wbs_dat_o),
+			
+			.t_clock(payload_clock),
+			.t_stb(b2payload_stb),
+			.t_cyc(b2payload_cyc),
+			.t_we(b2payload_we),
+			.t_sel(b2payload_sel),
+			.t_dat_w(b2payload_dat_w),
+			.t_adr(b2payload_adr),
+			.t_ack(b2payload_ack),
+			.t_dat_r(b2payload_dat_r)
+		);
     
     fwpayload u_payload(
     		.clock(payload_clock),
     		.sys_reset(payload_sys_reset),
     		.core_reset(payload_core_reset),
     		
-    		.wbs_stb_i(wbs_stb_i),
-    		.wbs_cyc_i(wbs_cyc_i),
-   			.wbs_we_i(wbs_we_i),
-    		.wbs_sel_i(wbs_sel_i),
-    		.wbs_dat_i(wbs_dat_i),
-    		.wbs_adr_i(wbs_adr_i),
-    		.wbs_ack_o(wbs_ack_o),
-    		.wbs_dat_o(wbs_dat_o),
+    		.wbs_stb_i(b2payload_stb),
+    		.wbs_cyc_i(b2payload_cyc),
+   			.wbs_we_i(b2payload_we),
+    		.wbs_sel_i(b2payload_sel),
+    		.wbs_dat_i(b2payload_dat_w),
+    		.wbs_adr_i(b2payload_adr),
+    		.wbs_ack_o(b2payload_ack),
+    		.wbs_dat_o(b2payload_dat_r),
     		
     		.wba_stb_i(wba_stb_i),
     		.wba_cyc_i(wba_cyc_i),
@@ -227,10 +254,10 @@ module user_proj_example #(
     		.ser_rx(ser_rx),
     		
     		.sdi(sdi),
-    		.csb(csb_1),
-    		.sck(sck_1),
-    		.sdo(sdo_1),
-    		.sdoenb(sdoenb_1),
+    		.csb(csb),
+    		.sck(sck),
+    		.sdo(sdo),
+    		.sdoenb(sdoenb),
     		
     		.gpio_out(gpio_out),
     		.gpio_in(gpio_in)
