@@ -57,4 +57,5 @@ set ::env(DIODE_INSERTION_STRATEGY) 1
 #set ::env(GLB_RT_MAX_DIODE_INS_ITERS) 4
 
 set ::env(ROUTING_CORES) 10
+set ::env(GLB_RT_MAXLAYER) 4
 
