@@ -175,11 +175,13 @@ module wb_interconnect_NxN #(
 						dat_r[WB_DATA_WIDTH*t2i_i+:WB_DATA_WIDTH] = 
 							tdat_r[WB_DATA_WIDTH*t2i_ii+:WB_DATA_WIDTH];
 						ack[t2i_i] = tack[t2i_ii];
+					end else if (initiator_active_target[t2i_i] == {N_TARG_ID_BITS{1'b1}}) begin
+						ack[t2i_i] = (cyc[t2i_i] & stb[t2i_i]);
 					end
 				end
 			end
-			assign err[t2i_i] = (initiator_active_target[t2i_i] != NO_TARGET)?
-					terr[initiator_active_target[t2i_i]]:1'b0;
+			assign err[t2i_i] = (initiator_active_target[t2i_i] != {N_TARG_ID_BITS{1'b1}})?
+					terr[initiator_active_target[t2i_i]]:(cyc[t2i_i] & stb[t2i_i]);
 		end
 	endgenerate
 

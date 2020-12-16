@@ -123,6 +123,8 @@ module user_proj_example #(
 	
 	wire[31:0] pc;
 	assign la_data_out[LA_PC+32-1:LA_PC] = pc;
+	wire instr_complete;
+	assign la_data_out[LA_INSTR_COMPLETE] = instr_complete;
 	wire ser_tx;
 	wire ser_rx;
 	
@@ -136,6 +138,8 @@ module user_proj_example #(
 	assign la_data_out[LA_GPIO_OUT+4-1:LA_GPIO_OUT] = gpio_out[3:0];
 	wire[7:0]	gpio_in;
 	// TODO: handle la gpio_in
+
+	assign la_data_out[LA_UART_TX] = ser_tx;
 
 	localparam PIN_UNUSED_BLOCK_1       = 0;
 	localparam PIN_UNUSED_SZ_1          = 12;
@@ -158,7 +162,7 @@ module user_proj_example #(
 	assign io_oeb[PIN_UNUSED_BLOCK_1+PIN_UNUSED_SZ_1-1:PIN_UNUSED_BLOCK_1] = {PIN_UNUSED_SZ_1{PIN_DIR_IN}};
 	assign io_out[PIN_UART_TX] = ser_tx;
 	assign io_oeb[PIN_UART_TX] = PIN_DIR_OUT;
-	assign ser_rx = io_in[PIN_UART_RX];
+	assign ser_rx = (~la_oen)?la_data_in[LA_UART_RX]:io_in[PIN_UART_RX];
 	assign io_oeb[PIN_UART_RX] = PIN_DIR_IN;
 	assign io_oeb[PIN_SPI_SDI] = PIN_DIR_IN;
 	assign io_out[PIN_SPI_CSB] = csb;
@@ -175,7 +179,11 @@ module user_proj_example #(
 	assign io_oeb[PIN_GPIO_OUT_LOW+4-1:PIN_GPIO_OUT_LOW] = {4{PIN_DIR_OUT}};
 	assign io_out[PIN_GPIO_OUT_HIGH+4-1:PIN_GPIO_OUT_HIGH] = gpio_out[7:4];
 	assign io_oeb[PIN_GPIO_OUT_HIGH+4-1:PIN_GPIO_OUT_HIGH] = {4{PIN_DIR_OUT}};
-	assign gpio_in = io_in[PIN_GPIO_IN+8-1:PIN_GPIO_IN];
+	assign gpio_in = io_in[PIN_GPIO_IN+8-1:PIN_GPIO_IN+4];
+	assign gpio_in[3] = (~la_oen[LA_GPIO_IN+3])?la_data_in[LA_GPIO_IN+3]:io_in[PIN_GPIO_IN+3];
+	assign gpio_in[2] = (~la_oen[LA_GPIO_IN+2])?la_data_in[LA_GPIO_IN+2]:io_in[PIN_GPIO_IN+2];
+	assign gpio_in[1] = (~la_oen[LA_GPIO_IN+1])?la_data_in[LA_GPIO_IN+1]:io_in[PIN_GPIO_IN+1];
+	assign gpio_in[0] = (~la_oen[LA_GPIO_IN+0])?la_data_in[LA_GPIO_IN+0]:io_in[PIN_GPIO_IN+0];
 	assign io_oeb[PIN_GPIO_IN+8-1:PIN_GPIO_IN] = {8{PIN_DIR_IN}};
 	
 	assign io_out[PIN_UNUSED_BLOCK_2+PIN_UNUSED_SZ_2-1:PIN_UNUSED_BLOCK_2] = {PIN_UNUSED_SZ_2{1'b0}};
@@ -241,6 +249,7 @@ module user_proj_example #(
     		.wba_dat_o(wba_dat_o),
     		
     		.pc(pc),
+		.instr_complete(instr_complete),
     		
     		.ser_tx(ser_tx),
     		.ser_rx(ser_rx),

@@ -99,3 +99,11 @@ async def test(top):
                 "Addr: " + hex(0x30000000+i) + " expect " + hex(wr_data[i]) + " receive " + hex(data))
             n_fails += 1
 
+    # Test unmapped accesses
+    for i in range(64):
+        await u_wb.write(0x32000000 + i, data, 0xF)
+
+    for i in range(64):
+        await u_wb.read(0x32000000 + i)
+
+
