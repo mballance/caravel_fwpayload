@@ -51,16 +51,6 @@ module user_proj_example #(
     wire clk;
     wire rst;
 
-    /*
-    wire [`MPRJ_IO_PADS-1:0] io_in;
-    wire [`MPRJ_IO_PADS-1:0] io_out;
-    wire [`MPRJ_IO_PADS-1:0] io_oeb;
-     */
-
-    // IO
-//    assign io_out = count;
-//    assign io_oeb = {(`MPRJ_IO_PADS-1){rst}};
-    
 	localparam LA_CLOCK					= 127;
 	localparam LA_RESET_SYS				= 126;
 	localparam LA_RESET_CORE			= 125;
@@ -161,33 +151,35 @@ module user_proj_example #(
 	localparam PIN_SPI_SDOENB			= 22;
 	localparam PIN_UNUSED_BLOCK_2       = 35;
 	localparam PIN_UNUSED_SZ_2          = 2;
+	localparam PIN_DIR_OUT              = 1'b0;
+	localparam PIN_DIR_IN               = 1'b1;
 
 	assign io_out[PIN_UNUSED_BLOCK_1+PIN_UNUSED_SZ_1-1:PIN_UNUSED_BLOCK_1] = {PIN_UNUSED_SZ_1{1'b0}};
-	assign io_oeb[PIN_UNUSED_BLOCK_1+PIN_UNUSED_SZ_1-1:PIN_UNUSED_BLOCK_1] = {PIN_UNUSED_SZ_1{1'b0}};
+	assign io_oeb[PIN_UNUSED_BLOCK_1+PIN_UNUSED_SZ_1-1:PIN_UNUSED_BLOCK_1] = {PIN_UNUSED_SZ_1{PIN_DIR_IN}};
 	assign io_out[PIN_UART_TX] = ser_tx;
-	assign io_oeb[PIN_UART_TX] = 1;
+	assign io_oeb[PIN_UART_TX] = PIN_DIR_OUT;
 	assign ser_rx = io_in[PIN_UART_RX];
-	assign io_oeb[PIN_UART_RX] = 0;
-	assign io_oeb[PIN_SPI_SDI] = 0;
+	assign io_oeb[PIN_UART_RX] = PIN_DIR_IN;
+	assign io_oeb[PIN_SPI_SDI] = PIN_DIR_IN;
 	assign io_out[PIN_SPI_CSB] = csb;
-	assign io_oeb[PIN_SPI_SDI] = 1;
+	assign io_oeb[PIN_SPI_SDI] = PIN_DIR_OUT;
 	assign io_out[PIN_SPI_SCK] = sck;
-	assign io_oeb[PIN_SPI_SCK] = 1;
+	assign io_oeb[PIN_SPI_SCK] = PIN_DIR_OUT;
 	assign io_out[PIN_SPI_SDO] = sdo;
-	assign io_oeb[PIN_SPI_SDO] = 1;
+	assign io_oeb[PIN_SPI_SDO] = PIN_DIR_OUT;
 	assign io_out[PIN_SPI_SDOENB] = sdoenb;
-	assign io_oeb[PIN_SPI_SDOENB] = 1;
+	assign io_oeb[PIN_SPI_SDOENB] = PIN_DIR_OUT;
 	assign sdi = io_in[PIN_SPI_SDI];
 	
 	assign io_out[PIN_GPIO_OUT_LOW+4-1:PIN_GPIO_OUT_LOW] = gpio_out[3:0];
-	assign io_oeb[PIN_GPIO_OUT_LOW+4-1:PIN_GPIO_OUT_LOW] = {4{1'b1}};
+	assign io_oeb[PIN_GPIO_OUT_LOW+4-1:PIN_GPIO_OUT_LOW] = {4{PIN_DIR_OUT}};
 	assign io_out[PIN_GPIO_OUT_HIGH+4-1:PIN_GPIO_OUT_HIGH] = gpio_out[7:4];
-	assign io_oeb[PIN_GPIO_OUT_HIGH+4-1:PIN_GPIO_OUT_HIGH] = {4{1'b1}};
+	assign io_oeb[PIN_GPIO_OUT_HIGH+4-1:PIN_GPIO_OUT_HIGH] = {4{PIN_DIR_OUT}};
 	assign gpio_in = io_in[PIN_GPIO_IN+8-1:PIN_GPIO_IN];
-	assign io_oeb[PIN_GPIO_IN+8-1:PIN_GPIO_IN] = {8{1'b0}};
+	assign io_oeb[PIN_GPIO_IN+8-1:PIN_GPIO_IN] = {8{PIN_DIR_IN}};
 	
 	assign io_out[PIN_UNUSED_BLOCK_2+PIN_UNUSED_SZ_2-1:PIN_UNUSED_BLOCK_2] = {PIN_UNUSED_SZ_2{1'b0}};
-	assign io_oeb[PIN_UNUSED_BLOCK_2+PIN_UNUSED_SZ_2-1:PIN_UNUSED_BLOCK_2] = {PIN_UNUSED_SZ_2{1'b0}};
+	assign io_oeb[PIN_UNUSED_BLOCK_2+PIN_UNUSED_SZ_2-1:PIN_UNUSED_BLOCK_2] = {PIN_UNUSED_SZ_2{PIN_DIR_IN}};
 	
 	wire b2payload_stb;
 	wire b2payload_cyc;

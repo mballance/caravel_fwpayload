@@ -1,5 +1,8 @@
 TEST_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 
+TOP_MODULE = fwpayload_tb
+TB_SRCS += $(COMMON_DIR)/sv/fwpayload_tb.sv
+
 include $(TEST_DIR)/../common/defs_rules.mk
 
 #********************************************************************

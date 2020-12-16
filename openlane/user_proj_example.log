@@ -66,9 +66,9 @@ Successfully finished Verilog frontend.
 2. Executing Verilog-2005 frontend: /project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v
 Parsing SystemVerilog input from `/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v' to AST representation.
 Generating RTLIL representation for module `\user_proj_example'.
-/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:112: Warning: Identifier `\payload_clock' is implicitly declared.
-/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:113: Warning: Identifier `\payload_sys_reset' is implicitly declared.
-/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:114: Warning: Identifier `\payload_core_reset' is implicitly declared.
+/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:102: Warning: Identifier `\payload_clock' is implicitly declared.
+/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:103: Warning: Identifier `\payload_sys_reset' is implicitly declared.
+/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:104: Warning: Identifier `\payload_core_reset' is implicitly declared.
 Successfully finished Verilog frontend.
 
 3. Executing Verilog-2005 frontend: /project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwpayload.v
@@ -652,7 +652,7 @@ Marked 4 switch rules as full_case in process $proc$/project/openlane/user_proj_
 Marked 1 switch rules as full_case in process $proc$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwpayload.v:321$38 in module fwpayload.
 Removed 1 dead cases from process $proc$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwpayload.v:219$34 in module fwpayload.
 Marked 2 switch rules as full_case in process $proc$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwpayload.v:219$34 in module fwpayload.
-Marked 2 switch rules as full_case in process $proc$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:99$6 in module user_proj_example.
+Marked 2 switch rules as full_case in process $proc$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:89$6 in module user_proj_example.
 Removed a total of 2 dead cases.
 
 28.2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
@@ -1080,7 +1080,7 @@ Creating decoders for process `\fwpayload.$proc$/project/openlane/user_proj_exam
      2/2: $0\gpio_out_r[7:0]
 Creating decoders for process `\fwpayload.$proc$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwpayload.v:219$34'.
      1/1: $0\wb_bridge_state[1:0]
-Creating decoders for process `\user_proj_example.$proc$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:99$6'.
+Creating decoders for process `\user_proj_example.$proc$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:89$6'.
      1/2: $0\clkcnt[3:0]
      2/2: $0\clock_r[0:0]
 
@@ -1577,9 +1577,9 @@ Creating register for signal `\fwpayload.\gpio_ack_o' using process `\fwpayload.
   created $dff cell `$procdff$4348' with positive edge clock.
 Creating register for signal `\fwpayload.\wb_bridge_state' using process `\fwpayload.$proc$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwpayload.v:219$34'.
   created $dff cell `$procdff$4349' with positive edge clock.
-Creating register for signal `\user_proj_example.\clkcnt' using process `\user_proj_example.$proc$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:99$6'.
+Creating register for signal `\user_proj_example.\clkcnt' using process `\user_proj_example.$proc$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:89$6'.
   created $dff cell `$procdff$4350' with positive edge clock.
-Creating register for signal `\user_proj_example.\clock_r' using process `\user_proj_example.$proc$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:99$6'.
+Creating register for signal `\user_proj_example.\clock_r' using process `\user_proj_example.$proc$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:89$6'.
   created $dff cell `$procdff$4351' with positive edge clock.
 
 28.2.9. Executing PROC_CLEAN pass (remove empty switches from decision trees).
@@ -1700,8 +1700,8 @@ Found and cleaned up 2 empty switches in `\fwpayload.$proc$/project/openlane/use
 Removing empty process `fwpayload.$proc$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwpayload.v:321$38'.
 Found and cleaned up 3 empty switches in `\fwpayload.$proc$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwpayload.v:219$34'.
 Removing empty process `fwpayload.$proc$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwpayload.v:219$34'.
-Found and cleaned up 2 empty switches in `\user_proj_example.$proc$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:99$6'.
-Removing empty process `user_proj_example.$proc$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:99$6'.
+Found and cleaned up 2 empty switches in `\user_proj_example.$proc$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:89$6'.
+Removing empty process `user_proj_example.$proc$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:89$6'.
 Cleaned up 229 empty switches.
 
 28.3. Executing FLATTEN pass (flatten design).
@@ -4320,8 +4320,8 @@ Removed a total of 0 cells.
 
 28.9.6. Executing OPT_DFF pass (perform DFF optimizations).
 Adding SRST signal on $procdff$4351 ($dff) from module user_proj_example (D = $procmux$4159_Y, Q = \clock_r, rval = 1'0).
-Adding EN signal on $auto$opt_dff.cc:702:run$4921 ($sdff) from module user_proj_example (D = $not$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:104$8_Y, Q = \clock_r).
-Adding SRST signal on $procdff$4350 ($dff) from module user_proj_example (D = $add$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:107$9_Y [3:0], Q = \clkcnt, rval = 4'0000).
+Adding EN signal on $auto$opt_dff.cc:702:run$4921 ($sdff) from module user_proj_example (D = $not$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:94$8_Y, Q = \clock_r).
+Adding SRST signal on $procdff$4350 ($dff) from module user_proj_example (D = $add$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:97$9_Y [3:0], Q = \clkcnt, rval = 4'0000).
 Adding SRST signal on $flatten\u_payload.\u_uart.\simpleuart.$procdff$4294 ($dff) from module user_proj_example (D = { $flatten\u_payload.\u_uart.\simpleuart.$procmux$3451_Y $flatten\u_payload.\u_uart.\simpleuart.$procmux$3456_Y $flatten\u_payload.\u_uart.\simpleuart.$procmux$3461_Y $flatten\u_payload.\u_uart.\simpleuart.$procmux$3466_Y }, Q = \u_payload.u_uart.simpleuart.cfg_divider, rval = 1).
 Adding EN signal on $auto$opt_dff.cc:702:run$4926 ($sdff) from module user_proj_example (D = \u_payload.u_uart.simpleuart.reg_dat_di [7:0], Q = \u_payload.u_uart.simpleuart.cfg_divider [7:0]).
 Adding EN signal on $auto$opt_dff.cc:702:run$4926 ($sdff) from module user_proj_example (D = \u_payload.u_uart.simpleuart.reg_div_di [15:8], Q = \u_payload.u_uart.simpleuart.cfg_divider [15:8]).
@@ -4598,9 +4598,9 @@ Removed top 26 address bits (of 32) from memory write port user_proj_example.$fl
 Removed top 26 address bits (of 32) from memory write port user_proj_example.$flatten\u_payload.\u_core.\u_core.\u_core.\u_regfile.$memwr$\regs$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwrisc/rtl/fwrisc_regfile.sv:0$2053 (u_payload.u_core.u_core.u_core.u_regfile.regs).
 Removed top 26 address bits (of 32) from memory write port user_proj_example.$flatten\u_payload.\u_core.\u_core.\u_core.\u_regfile.$memwr$\regs$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwrisc/rtl/fwrisc_regfile.sv:0$2054 (u_payload.u_core.u_core.u_core.u_regfile.regs).
 Removed top 26 address bits (of 32) from memory write port user_proj_example.$flatten\u_payload.\u_core.\u_core.\u_core.\u_regfile.$memwr$\regs$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwrisc/rtl/fwrisc_regfile.sv:0$2055 (u_payload.u_core.u_core.u_core.u_regfile.regs).
-Removed top 31 bits (of 32) from port B of cell user_proj_example.$add$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:107$9 ($add).
-Removed top 28 bits (of 32) from port Y of cell user_proj_example.$add$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:107$9 ($add).
-Removed top 16 bits (of 32) from mux cell user_proj_example.$ternary$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:121$33 ($mux).
+Removed top 31 bits (of 32) from port B of cell user_proj_example.$add$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:97$9 ($add).
+Removed top 28 bits (of 32) from port Y of cell user_proj_example.$add$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:97$9 ($add).
+Removed top 16 bits (of 32) from mux cell user_proj_example.$ternary$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:111$33 ($mux).
 Removed top 1 bits (of 2) from port B of cell user_proj_example.$auto$fsm_map.cc:77:implement_pattern_cache$4475 ($eq).
 Removed top 1 bits (of 2) from port B of cell user_proj_example.$auto$fsm_map.cc:77:implement_pattern_cache$4449 ($eq).
 Removed top 1 bits (of 9) from port B of cell user_proj_example.$auto$fsm_map.cc:77:implement_pattern_cache$4588 ($eq).
@@ -4868,7 +4868,7 @@ Removed top 28 bits (of 32) from port Y of cell user_proj_example.$flatten\u_pay
 Removed top 28 bits (of 32) from port Y of cell user_proj_example.$flatten\u_payload.\u_ic.\s_arb[3].aw_arb.$and$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fw-wishbone-interconnect/verilog/rtl/wb_interconnect_arb.v:122$1734 ($and).
 Removed cell user_proj_example.$flatten\u_payload.$procmux$4146 ($mux).
 Removed top 1 bits (of 2) from port B of cell user_proj_example.$flatten\u_payload.$procmux$4145_CMP0 ($eq).
-Removed top 28 bits (of 32) from wire user_proj_example.$add$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:107$9_Y.
+Removed top 28 bits (of 32) from wire user_proj_example.$add$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:97$9_Y.
 Removed top 3 bits (of 5) from wire user_proj_example.$flatten\u_payload.\u_core.\u_core.\u_core.\u_decode.$3\op_type_w[4:0].
 Removed top 4 bits (of 6) from wire user_proj_example.$flatten\u_payload.\u_core.\u_core.\u_core.\u_decode.$3\rb_raddr[5:0].
 Removed top 3 bits (of 4) from wire user_proj_example.$flatten\u_payload.\u_core.\u_core.\u_core.\u_decode.$4\op_w[3:0].
@@ -4930,7 +4930,7 @@ Removed 0 unused cells and 126 unused wires.
 
 28.13. Executing ALUMACC pass (create $alu and $macc cells).
 Extracting $alu and $macc cells in module user_proj_example:
-  creating $macc model for $add$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:107$9 ($add).
+  creating $macc model for $add$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:97$9 ($add).
   creating $macc model for $flatten\u_payload.\u_core.\u_core.\u_core.$sub$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwrisc/rtl/fwrisc.sv:73$1769 ($sub).
   creating $macc model for $flatten\u_payload.\u_core.\u_core.\u_core.\u_exec.$add$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwrisc/rtl/fwrisc_exec.sv:109$2061 ($add).
   creating $macc model for $flatten\u_payload.\u_core.\u_core.\u_core.\u_exec.\u_alu.$add$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwrisc/rtl/fwrisc_alu.sv:39$294 ($add).
@@ -4959,7 +4959,7 @@ Extracting $alu and $macc cells in module user_proj_example:
   creating $alu model for $macc $flatten\u_payload.\u_core.\u_core.\u_core.\u_exec.\u_alu.$add$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwrisc/rtl/fwrisc_alu.sv:39$294.
   creating $alu model for $macc $flatten\u_payload.\u_core.\u_core.\u_core.\u_exec.$add$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwrisc/rtl/fwrisc_exec.sv:109$2061.
   creating $alu model for $macc $flatten\u_payload.\u_core.\u_core.\u_core.$sub$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwrisc/rtl/fwrisc.sv:73$1769.
-  creating $alu model for $macc $add$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:107$9.
+  creating $alu model for $macc $add$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:97$9.
   creating $alu model for $flatten\u_payload.\u_core.\u_core.\u_core.\u_exec.\u_alu.$ge$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwrisc/rtl/fwrisc_alu.sv:47$303 ($ge): new $alu
   creating $alu model for $flatten\u_payload.\u_core.\u_core.\u_core.\u_exec.\u_alu.$ge$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwrisc/rtl/fwrisc_alu.sv:49$305 ($ge): new $alu
   creating $alu model for $flatten\u_payload.\u_core.\u_core.\u_core.\u_exec.\u_alu.$lt$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwrisc/rtl/fwrisc_alu.sv:46$302 ($lt): merged with $flatten\u_payload.\u_core.\u_core.\u_core.\u_exec.\u_alu.$ge$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwrisc/rtl/fwrisc_alu.sv:47$303.
@@ -4972,7 +4972,7 @@ Extracting $alu and $macc cells in module user_proj_example:
   creating $alu cell for $flatten\u_payload.\u_uart.\simpleuart.$gt$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/simpleuart.v:212$282: $auto$alumacc.cc:485:replace_alu$5365
   creating $alu cell for $flatten\u_payload.\u_uart.\simpleuart.$gt$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/simpleuart.v:172$271: $auto$alumacc.cc:485:replace_alu$5376
   creating $alu cell for $flatten\u_payload.\u_uart.\simpleuart.$gt$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/simpleuart.v:166$270: $auto$alumacc.cc:485:replace_alu$5387
-  creating $alu cell for $add$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:107$9: $auto$alumacc.cc:485:replace_alu$5392
+  creating $alu cell for $add$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/user_proj_example.v:97$9: $auto$alumacc.cc:485:replace_alu$5392
   creating $alu cell for $flatten\u_payload.\u_core.\u_core.\u_core.$sub$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwrisc/rtl/fwrisc.sv:73$1769: $auto$alumacc.cc:485:replace_alu$5395
   creating $alu cell for $flatten\u_payload.\u_core.\u_core.\u_core.\u_exec.$add$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwrisc/rtl/fwrisc_exec.sv:109$2061: $auto$alumacc.cc:485:replace_alu$5398
   creating $alu cell for $flatten\u_payload.\u_core.\u_core.\u_core.\u_exec.\u_alu.$ge$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwrisc/rtl/fwrisc_alu.sv:49$305, $flatten\u_payload.\u_core.\u_core.\u_core.\u_exec.\u_alu.$lt$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwrisc/rtl/fwrisc_alu.sv:48$304, $flatten\u_payload.\u_core.\u_core.\u_core.\u_exec.\u_alu.$eq$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwrisc/rtl/fwrisc_alu.sv:44$300, $flatten\u_payload.\u_core.\u_core.\u_core.\u_exec.\u_alu.$ne$/project/openlane/user_proj_example/../../verilog/rtl/fwpayload/fwrisc/rtl/fwrisc_alu.sv:45$301: $auto$alumacc.cc:485:replace_alu$5401
@@ -6724,14 +6724,14 @@ Mapping DFF cells in module `\user_proj_example':
 
 37. Executing ABC pass (technology mapping using ABC).
 
-37.1. Extracting gate netlist of module `\user_proj_example' to `/tmp/yosys-abc-OhRBPs/input.blif'..
+37.1. Extracting gate netlist of module `\user_proj_example' to `/tmp/yosys-abc-tuBjEL/input.blif'..
 Extracted 21881 gates and 27120 wires to a netlist network with 5237 inputs and 5176 outputs.
 
 37.1.1. Executing ABC.
-Running ABC command: /build/bin/yosys-abc -s -f /tmp/yosys-abc-OhRBPs/abc.script 2>&1
-ABC: ABC command line: "source /tmp/yosys-abc-OhRBPs/abc.script".
+Running ABC command: /build/bin/yosys-abc -s -f /tmp/yosys-abc-tuBjEL/abc.script 2>&1
+ABC: ABC command line: "source /tmp/yosys-abc-tuBjEL/abc.script".
 ABC: 
-ABC: + read_blif /tmp/yosys-abc-OhRBPs/input.blif 
+ABC: + read_blif /tmp/yosys-abc-tuBjEL/input.blif 
 ABC: + read_lib -w /project/openlane/user_proj_example/runs/user_proj_example/tmp/trimmed.lib 
 ABC: Parsing finished successfully.  Parsing time =     0.01 sec
 ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfbbn_2".
@@ -11234,7 +11234,7 @@ ABC: Path 47 --   21472 : 1    1 sky130_fd_sc_hd__inv_2   A =   3.75  Df =13063.
 ABC: Start-point = pi2507 (\u_payload.u_core.u_core.u_core.u_regfile.instr_count [1]).  End-point = po2479 ($auto$rtlil.cc:2290:MuxGate$85675).
 ABC: + print_stats -m 
 ABC: netlist                       : i/o = 5237/ 5176  lat =    0  nd = 29966  edge =  69163  area =304993.02  delay =55.00  lev = 55
-ABC: + write_blif /tmp/yosys-abc-OhRBPs/output.blif 
+ABC: + write_blif /tmp/yosys-abc-tuBjEL/output.blif 
 
 37.1.2. Re-integrating ABC results.
 ABC RESULTS:   sky130_fd_sc_hd__a2111o_4 cells:        3
@@ -11572,7 +11572,7 @@ found and reported 237 problems.
 Dumping module `\user_proj_example'.
 
 Warnings: 300 unique messages, 363 total
-End of script. Logfile hash: 7e61bbc074, CPU: user 20.42s system 0.07s, MEM: 166.72 MB peak
+End of script. Logfile hash: b447d9be17, CPU: user 20.57s system 0.08s, MEM: 167.19 MB peak
 Yosys 0.9+3621 (git sha1 84e9fa7, gcc 8.3.1 -fPIC -Os)
 Time spent: 43% 2x abc (15 sec), 15% 2x write_verilog (5 sec), ...
 [36m[INFO]: Changing netlist from 0 to /project/openlane/user_proj_example/runs/user_proj_example/results/synthesis/user_proj_example.synthesis.v[37m
@@ -11746,26 +11746,26 @@ Notice 0: Finished DEF file: /project/openlane/user_proj_example/runs/user_proj_
 [INFO] Util(%) = 31.056479
 [INFO] StdInstsArea = 426661702400
 [INFO] MacroInstsArea = 0
-[InitialPlace]  Iter: 1 CG Error: 0.0350325 HPWL: 645383750
-[InitialPlace]  Iter: 2 CG Error: 0.000630073 HPWL: 587827732
-[InitialPlace]  Iter: 3 CG Error: 0.000161808 HPWL: 555417945
-[InitialPlace]  Iter: 4 CG Error: 0.000203896 HPWL: 534094778
-[InitialPlace]  Iter: 5 CG Error: 0.000276813 HPWL: 466681003
-[InitialPlace]  Iter: 6 CG Error: 0.000147327 HPWL: 454883685
-[InitialPlace]  Iter: 7 CG Error: 0.000205659 HPWL: 447699812
-[InitialPlace]  Iter: 8 CG Error: 0.000128208 HPWL: 440691400
-[InitialPlace]  Iter: 9 CG Error: 0.000157741 HPWL: 436600523
-[InitialPlace]  Iter: 10 CG Error: 9.62608e-05 HPWL: 431080991
-[InitialPlace]  Iter: 11 CG Error: 6.33204e-05 HPWL: 428339830
-[InitialPlace]  Iter: 12 CG Error: 3.68306e-05 HPWL: 424357213
-[InitialPlace]  Iter: 13 CG Error: 3.90629e-05 HPWL: 422880613
-[InitialPlace]  Iter: 14 CG Error: 3.14351e-05 HPWL: 422164857
-[InitialPlace]  Iter: 15 CG Error: 4.54805e-05 HPWL: 421751441
-[InitialPlace]  Iter: 16 CG Error: 2.45734e-05 HPWL: 421579553
-[InitialPlace]  Iter: 17 CG Error: 2.357e-05 HPWL: 421204656
-[InitialPlace]  Iter: 18 CG Error: 1.99432e-05 HPWL: 421078488
-[InitialPlace]  Iter: 19 CG Error: 1.54186e-05 HPWL: 420762694
-[InitialPlace]  Iter: 20 CG Error: 1.46994e-05 HPWL: 420720039
+[InitialPlace]  Iter: 1 CG Error: 0.0354068 HPWL: 645383750
+[InitialPlace]  Iter: 2 CG Error: 0.000916099 HPWL: 587932349
+[InitialPlace]  Iter: 3 CG Error: 0.000163722 HPWL: 556720534
+[InitialPlace]  Iter: 4 CG Error: 0.000174446 HPWL: 535766137
+[InitialPlace]  Iter: 5 CG Error: 0.000107402 HPWL: 467738189
+[InitialPlace]  Iter: 6 CG Error: 0.000106515 HPWL: 447161289
+[InitialPlace]  Iter: 7 CG Error: 6.90393e-05 HPWL: 433488981
+[InitialPlace]  Iter: 8 CG Error: 6.63249e-05 HPWL: 428100903
+[InitialPlace]  Iter: 9 CG Error: 7.08792e-05 HPWL: 425738192
+[InitialPlace]  Iter: 10 CG Error: 4.95543e-05 HPWL: 424708430
+[InitialPlace]  Iter: 11 CG Error: 5.8702e-05 HPWL: 424012171
+[InitialPlace]  Iter: 12 CG Error: 4.00746e-05 HPWL: 423311132
+[InitialPlace]  Iter: 13 CG Error: 4.46414e-05 HPWL: 422715446
+[InitialPlace]  Iter: 14 CG Error: 3.22795e-05 HPWL: 422280342
+[InitialPlace]  Iter: 15 CG Error: 2.83662e-05 HPWL: 421812492
+[InitialPlace]  Iter: 16 CG Error: 2.65791e-05 HPWL: 421584326
+[InitialPlace]  Iter: 17 CG Error: 2.99463e-05 HPWL: 421217552
+[InitialPlace]  Iter: 18 CG Error: 2.09257e-05 HPWL: 421144981
+[InitialPlace]  Iter: 19 CG Error: 1.86141e-05 HPWL: 420833926
+[InitialPlace]  Iter: 20 CG Error: 1.73709e-05 HPWL: 420829106
 [INFO] FillerInit: NumGCells = 39747
 [INFO] FillerInit: NumGNets = 35571
 [INFO] FillerInit: NumGPins = 115194
@@ -11777,59 +11777,59 @@ Notice 0: Finished DEF file: /project/openlane/user_proj_example/runs/user_proj_
 [INFO] BinCnt = (128, 128)
 [INFO] BinSize = (9287, 9202)
 [INFO] NumBins = 16384
-[NesterovSolve] Iter: 1 overflow: 0.992251 HPWL: 159569779
-[NesterovSolve] Iter: 10 overflow: 0.983649 HPWL: 211783953
-[NesterovSolve] Iter: 20 overflow: 0.97641 HPWL: 241101322
-[NesterovSolve] Iter: 30 overflow: 0.971392 HPWL: 256395961
-[NesterovSolve] Iter: 40 overflow: 0.968703 HPWL: 265591748
-[NesterovSolve] Iter: 50 overflow: 0.966976 HPWL: 271810001
-[NesterovSolve] Iter: 60 overflow: 0.966004 HPWL: 276492685
-[NesterovSolve] Iter: 70 overflow: 0.965604 HPWL: 280021844
-[NesterovSolve] Iter: 80 overflow: 0.965548 HPWL: 280933551
-[NesterovSolve] Iter: 90 overflow: 0.965585 HPWL: 279331087
-[NesterovSolve] Iter: 100 overflow: 0.965855 HPWL: 276310031
-[NesterovSolve] Iter: 110 overflow: 0.96586 HPWL: 272972637
-[NesterovSolve] Iter: 120 overflow: 0.965646 HPWL: 270108621
-[NesterovSolve] Iter: 130 overflow: 0.965452 HPWL: 268269978
-[NesterovSolve] Iter: 140 overflow: 0.965208 HPWL: 267557215
-[NesterovSolve] Iter: 150 overflow: 0.964893 HPWL: 267764202
-[NesterovSolve] Iter: 160 overflow: 0.964627 HPWL: 268954530
-[NesterovSolve] Iter: 170 overflow: 0.964392 HPWL: 271445399
-[NesterovSolve] Iter: 180 overflow: 0.963658 HPWL: 275899209
-[NesterovSolve] Iter: 190 overflow: 0.963026 HPWL: 284382834
-[NesterovSolve] Iter: 200 overflow: 0.961922 HPWL: 300987936
-[NesterovSolve] Iter: 210 overflow: 0.960657 HPWL: 329152216
-[NesterovSolve] Iter: 220 overflow: 0.958011 HPWL: 366539972
-[NesterovSolve] Iter: 230 overflow: 0.953952 HPWL: 409194993
-[NesterovSolve] Iter: 240 overflow: 0.94872 HPWL: 457100532
-[NesterovSolve] Iter: 250 overflow: 0.941554 HPWL: 518144053
-[NesterovSolve] Iter: 260 overflow: 0.930662 HPWL: 599890747
-[NesterovSolve] Iter: 270 overflow: 0.914809 HPWL: 698423041
-[NesterovSolve] Iter: 280 overflow: 0.892494 HPWL: 808982284
-[NesterovSolve] Iter: 290 overflow: 0.867656 HPWL: 932781593
-[NesterovSolve] Iter: 300 overflow: 0.839251 HPWL: 1046783464
-[NesterovSolve] Iter: 310 overflow: 0.80444 HPWL: 1148037276
-[NesterovSolve] Iter: 320 overflow: 0.771085 HPWL: 1235528545
-[NesterovSolve] Iter: 330 overflow: 0.736314 HPWL: 1411343074
-[NesterovSolve] Iter: 340 overflow: 0.696787 HPWL: 1538729583
-[NesterovSolve] Iter: 350 overflow: 0.651356 HPWL: 1538221893
-[NesterovSolve] Iter: 360 overflow: 0.604944 HPWL: 1651282966
-[NesterovSolve] Iter: 370 overflow: 0.560635 HPWL: 1726251366
-[NesterovSolve] Iter: 380 overflow: 0.510988 HPWL: 1732760507
-[NesterovSolve] Iter: 390 overflow: 0.469755 HPWL: 1775869634
-[NesterovSolve] Iter: 400 overflow: 0.427837 HPWL: 1778145019
-[NesterovSolve] Iter: 410 overflow: 0.395615 HPWL: 1794844739
-[NesterovSolve] Iter: 420 overflow: 0.354902 HPWL: 1793139775
-[NesterovSolve] Iter: 430 overflow: 0.322763 HPWL: 1787428610
-[NesterovSolve] Iter: 440 overflow: 0.293959 HPWL: 1779203231
-[NesterovSolve] Iter: 450 overflow: 0.263936 HPWL: 1774939202
-[NesterovSolve] Iter: 460 overflow: 0.236005 HPWL: 1770806666
-[NesterovSolve] Iter: 470 overflow: 0.208791 HPWL: 1766776927
-[NesterovSolve] Iter: 480 overflow: 0.182425 HPWL: 1765145178
-[NesterovSolve] Iter: 490 overflow: 0.156813 HPWL: 1763853054
-[NesterovSolve] Iter: 500 overflow: 0.132633 HPWL: 1763273202
-[NesterovSolve] Iter: 510 overflow: 0.114122 HPWL: 1763567910
-[NesterovSolve] Finished with Overflow: 0.0983697
+[NesterovSolve] Iter: 1 overflow: 0.99228 HPWL: 159312008
+[NesterovSolve] Iter: 10 overflow: 0.983609 HPWL: 211866292
+[NesterovSolve] Iter: 20 overflow: 0.976352 HPWL: 240992606
+[NesterovSolve] Iter: 30 overflow: 0.971324 HPWL: 256181970
+[NesterovSolve] Iter: 40 overflow: 0.968684 HPWL: 265295715
+[NesterovSolve] Iter: 50 overflow: 0.96684 HPWL: 271452219
+[NesterovSolve] Iter: 60 overflow: 0.96596 HPWL: 276073553
+[NesterovSolve] Iter: 70 overflow: 0.965528 HPWL: 279582455
+[NesterovSolve] Iter: 80 overflow: 0.965496 HPWL: 280504544
+[NesterovSolve] Iter: 90 overflow: 0.9655 HPWL: 278931866
+[NesterovSolve] Iter: 100 overflow: 0.965797 HPWL: 275971739
+[NesterovSolve] Iter: 110 overflow: 0.965696 HPWL: 272678021
+[NesterovSolve] Iter: 120 overflow: 0.965565 HPWL: 269840126
+[NesterovSolve] Iter: 130 overflow: 0.965391 HPWL: 268029363
+[NesterovSolve] Iter: 140 overflow: 0.96519 HPWL: 267338199
+[NesterovSolve] Iter: 150 overflow: 0.964843 HPWL: 267543886
+[NesterovSolve] Iter: 160 overflow: 0.964545 HPWL: 268678799
+[NesterovSolve] Iter: 170 overflow: 0.964343 HPWL: 271063693
+[NesterovSolve] Iter: 180 overflow: 0.963651 HPWL: 275267146
+[NesterovSolve] Iter: 190 overflow: 0.963118 HPWL: 283223223
+[NesterovSolve] Iter: 200 overflow: 0.961957 HPWL: 298827310
+[NesterovSolve] Iter: 210 overflow: 0.960674 HPWL: 325822740
+[NesterovSolve] Iter: 220 overflow: 0.958174 HPWL: 362541431
+[NesterovSolve] Iter: 230 overflow: 0.954396 HPWL: 404684651
+[NesterovSolve] Iter: 240 overflow: 0.949296 HPWL: 451353045
+[NesterovSolve] Iter: 250 overflow: 0.942155 HPWL: 510259947
+[NesterovSolve] Iter: 260 overflow: 0.931828 HPWL: 589051169
+[NesterovSolve] Iter: 270 overflow: 0.915526 HPWL: 681830014
+[NesterovSolve] Iter: 280 overflow: 0.894184 HPWL: 792346966
+[NesterovSolve] Iter: 290 overflow: 0.868999 HPWL: 920502818
+[NesterovSolve] Iter: 300 overflow: 0.840751 HPWL: 1035086215
+[NesterovSolve] Iter: 310 overflow: 0.808213 HPWL: 1132183053
+[NesterovSolve] Iter: 320 overflow: 0.776451 HPWL: 1221196227
+[NesterovSolve] Iter: 330 overflow: 0.740528 HPWL: 1398879794
+[NesterovSolve] Iter: 340 overflow: 0.700601 HPWL: 1525643807
+[NesterovSolve] Iter: 350 overflow: 0.656351 HPWL: 1538367305
+[NesterovSolve] Iter: 360 overflow: 0.609393 HPWL: 1633172830
+[NesterovSolve] Iter: 370 overflow: 0.565191 HPWL: 1722874295
+[NesterovSolve] Iter: 380 overflow: 0.517981 HPWL: 1720258814
+[NesterovSolve] Iter: 390 overflow: 0.47194 HPWL: 1770998083
+[NesterovSolve] Iter: 400 overflow: 0.430902 HPWL: 1760785510
+[NesterovSolve] Iter: 410 overflow: 0.393097 HPWL: 1794177066
+[NesterovSolve] Iter: 420 overflow: 0.35996 HPWL: 1792827332
+[NesterovSolve] Iter: 430 overflow: 0.326158 HPWL: 1785186067
+[NesterovSolve] Iter: 440 overflow: 0.295472 HPWL: 1778165425
+[NesterovSolve] Iter: 450 overflow: 0.266218 HPWL: 1774187083
+[NesterovSolve] Iter: 460 overflow: 0.236505 HPWL: 1768812276
+[NesterovSolve] Iter: 470 overflow: 0.209851 HPWL: 1766844486
+[NesterovSolve] Iter: 480 overflow: 0.182154 HPWL: 1765156169
+[NesterovSolve] Iter: 490 overflow: 0.157227 HPWL: 1764361116
+[NesterovSolve] Iter: 500 overflow: 0.135754 HPWL: 1763753164
+[NesterovSolve] Iter: 510 overflow: 0.11515 HPWL: 1763247500
+[NesterovSolve] Finished with Overflow: 0.0983563
 Warning: /project/fun/openlane/pdk_root-mpw-one-a/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__ss_100C_1v60.lib, line 32 default_operating_condition ss_100C_1v60 not found.
 Warning: /project/fun/openlane/pdk_root-mpw-one-a/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__ff_n40C_1v95.lib, line 31 default_operating_condition ff_n40C_1v95 not found.
 create_clock [get_ports $::env(CLOCK_PORT)]  -name $::env(CLOCK_PORT)  -period $::env(CLOCK_PERIOD)
@@ -11858,8 +11858,8 @@ set_load  $cap_load [all_outputs]
 [36m[INFO]: Changing layout from /project/openlane/user_proj_example/runs/user_proj_example/tmp/floorplan/pdn.def to /project/openlane/user_proj_example/runs/user_proj_example/tmp/placement/replace.def[37m
 [36m[INFO]: Running OpenPhySyn Timing Optimization...[37m
 [36m[INFO]: Trimming Liberty...[37m
-[OpenPhySyn] [2020-12-15 23:06:30.087] [info] Loaded 6 transforms.
-[OpenPhySyn] [2020-12-15 23:06:30.344] [info] OpenPhySyn: 1.8.1
+[OpenPhySyn] [2020-12-16 01:37:08.254] [info] Loaded 6 transforms.
+[OpenPhySyn] [2020-12-16 01:37:08.497] [info] OpenPhySyn: 1.8.1
 Warning: /project/openlane/user_proj_example/runs/user_proj_example/tmp/opt.lib, line 32 default_operating_condition ss_100C_1v60 not found.
 Notice 0: Reading LEF file:  /project/openlane/user_proj_example/runs/user_proj_example/tmp/merged_unpadded.lef
 Notice 0:     Created 13 technology layers
@@ -11889,14 +11889,14 @@ Path Type: max
    0.00    0.00   clock network delay (ideal)
    6.00    6.00 v input external delay
    0.12    6.12 v wb_rst_i (in)
-   0.21    6.33 ^ _56453_/Y (sky130_fd_sc_hd__inv_2)
-   0.60    6.94 ^ _32380_/X (sky130_fd_sc_hd__a2bb2o_4)
-   0.57    7.50 ^ _35531_/X (sky130_fd_sc_hd__buf_2)
-   0.41    7.91 ^ _35532_/X (sky130_fd_sc_hd__buf_2)
-   0.33    8.23 ^ _35580_/X (sky130_fd_sc_hd__buf_2)
-   0.20    8.43 ^ _35581_/X (sky130_fd_sc_hd__buf_2)
-   0.00    8.43 ^ _62787_/SET_B (sky130_fd_sc_hd__dfstp_4)
-           8.43   data arrival time
+   0.22    6.33 ^ _56453_/Y (sky130_fd_sc_hd__inv_2)
+   0.63    6.96 ^ _32380_/X (sky130_fd_sc_hd__a2bb2o_4)
+   0.57    7.53 ^ _35531_/X (sky130_fd_sc_hd__buf_2)
+   0.37    7.90 ^ _35532_/X (sky130_fd_sc_hd__buf_2)
+   0.30    8.21 ^ _35580_/X (sky130_fd_sc_hd__buf_2)
+   0.19    8.40 ^ _35581_/X (sky130_fd_sc_hd__buf_2)
+   0.00    8.40 ^ _62787_/SET_B (sky130_fd_sc_hd__dfstp_4)
+           8.40   data arrival time
 
   30.00   30.00   clock wb_clk_i (rise edge)
    0.00   30.00   clock network delay (ideal)
@@ -11906,9 +11906,9 @@ Path Type: max
           30.25   data required time
 ---------------------------------------------------------
           30.25   data required time
-          -8.43   data arrival time
+          -8.40   data arrival time
 ---------------------------------------------------------
-          21.82   slack (MET)
+          21.85   slack (MET)
 
 
 Startpoint: la_oen[122] (input port clocked by wb_clk_i)
@@ -11922,12 +11922,12 @@ Path Type: max
    0.00    0.00   clock network delay (ideal)
    6.00    6.00 ^ input external delay
    0.01    6.01 ^ la_oen[122] (in)
-   0.49    6.49 ^ _37147_/X (sky130_fd_sc_hd__and4_4)
+   0.49    6.50 ^ _37147_/X (sky130_fd_sc_hd__and4_4)
    0.09    6.59 v _37148_/Y (sky130_fd_sc_hd__inv_2)
-   0.29    6.88 v _37149_/X (sky130_fd_sc_hd__and2_4)
-   1.09    7.97 v _42859_/X (sky130_fd_sc_hd__or4_4)
-   0.00    7.97 v _42861_/B (sky130_fd_sc_hd__or2_4)
-           7.97   data arrival time
+   0.30    6.89 v _37149_/X (sky130_fd_sc_hd__and2_4)
+   1.09    7.98 v _42859_/X (sky130_fd_sc_hd__or4_4)
+   0.00    7.98 v _42861_/B (sky130_fd_sc_hd__or2_4)
+           7.98   data arrival time
 
   15.00   15.00   clock wb_clk_i (fall edge)
    0.00   15.00   clock network delay (ideal)
@@ -11937,9 +11937,9 @@ Path Type: max
           15.00   data required time
 ---------------------------------------------------------
           15.00   data required time
-          -7.97   data arrival time
+          -7.98   data arrival time
 ---------------------------------------------------------
-           7.03   slack (MET)
+           7.02   slack (MET)
 
 
 Startpoint: _62628_ (rising edge-triggered flip-flop clocked by wb_clk_i)
@@ -11953,55 +11953,55 @@ Path Type: max
    0.00    0.00   clock network delay (ideal)
    0.00    0.00 ^ _62628_/CLK (sky130_fd_sc_hd__dfxtp_4)
    0.67    0.67 ^ _62628_/Q (sky130_fd_sc_hd__dfxtp_4)
-   0.08    0.75 v _36333_/Y (sky130_fd_sc_hd__inv_2)
-   0.50    1.25 v _36335_/X (sky130_fd_sc_hd__or2_4)
-   0.50    1.75 v _36336_/X (sky130_fd_sc_hd__or2_4)
-   1.06    2.80 v _36339_/X (sky130_fd_sc_hd__or4_4)
-   0.48    3.29 v _36340_/X (sky130_fd_sc_hd__or2_4)
-   0.50    3.78 v _36341_/X (sky130_fd_sc_hd__or2_4)
-   0.89    4.68 v _36342_/X (sky130_fd_sc_hd__or4_4)
-   0.71    5.39 v _36343_/X (sky130_fd_sc_hd__or3_4)
-   0.70    6.09 v _36344_/X (sky130_fd_sc_hd__or3_4)
-   0.69    6.78 v _36345_/X (sky130_fd_sc_hd__or3_4)
-   0.47    7.25 v _36346_/X (sky130_fd_sc_hd__or2_4)
-   0.48    7.73 v _36347_/X (sky130_fd_sc_hd__or2_4)
-   0.50    8.23 v _36348_/X (sky130_fd_sc_hd__or2_4)
-   1.05    9.28 v _36351_/X (sky130_fd_sc_hd__or4_4)
-   0.49    9.77 v _36352_/X (sky130_fd_sc_hd__or2_4)
-   0.48   10.25 v _36353_/X (sky130_fd_sc_hd__or2_4)
-   0.47   10.73 v _36354_/X (sky130_fd_sc_hd__or2_4)
-   0.47   11.19 v _36355_/X (sky130_fd_sc_hd__or2_4)
-   0.93   12.12 v _36356_/X (sky130_fd_sc_hd__or4_4)
-   0.50   12.62 v _36357_/X (sky130_fd_sc_hd__or2_4)
-   0.48   13.11 v _36358_/X (sky130_fd_sc_hd__or2_4)
-   0.48   13.59 v _36359_/X (sky130_fd_sc_hd__or2_4)
-   0.47   14.06 v _36360_/X (sky130_fd_sc_hd__or2_4)
-   0.47   14.53 v _36361_/X (sky130_fd_sc_hd__or2_4)
-   1.04   15.57 v _36364_/X (sky130_fd_sc_hd__or4_4)
-   0.49   16.06 v _36365_/X (sky130_fd_sc_hd__or2_4)
-   0.48   16.54 v _36366_/X (sky130_fd_sc_hd__or2_4)
-   0.48   17.02 v _36367_/X (sky130_fd_sc_hd__or2_4)
-   0.49   17.51 v _36368_/X (sky130_fd_sc_hd__or2_4)
-   0.87   18.38 v _36369_/X (sky130_fd_sc_hd__or4_4)
-   0.48   18.86 v _36370_/X (sky130_fd_sc_hd__or2_4)
-   0.48   19.34 v _36371_/X (sky130_fd_sc_hd__or2_4)
-   0.49   19.83 v _36372_/X (sky130_fd_sc_hd__or2_4)
-   0.48   20.31 v _36373_/X (sky130_fd_sc_hd__or2_4)
-   0.47   20.78 v _36374_/X (sky130_fd_sc_hd__or2_4)
-   1.05   21.83 v _36377_/X (sky130_fd_sc_hd__or4_4)
-   0.48   22.31 v _36378_/X (sky130_fd_sc_hd__or2_4)
-   0.48   22.79 v _36379_/X (sky130_fd_sc_hd__or2_4)
-   0.49   23.28 v _36380_/X (sky130_fd_sc_hd__or2_4)
-   0.47   23.75 v _36381_/X (sky130_fd_sc_hd__or2_4)
-   0.46   24.21 v _36382_/X (sky130_fd_sc_hd__or2_4)
-   0.48   24.69 v _36383_/X (sky130_fd_sc_hd__or2_4)
-   0.46   25.16 v _36384_/X (sky130_fd_sc_hd__or2_4)
-   0.58   25.74 v _36391_/X (sky130_fd_sc_hd__a211o_4)
-   0.32   26.06 v _36392_/X (sky130_fd_sc_hd__and3_4)
-   0.47   26.53 v _36393_/X (sky130_fd_sc_hd__a211o_4)
-   0.07   26.59 ^ _36394_/Y (sky130_fd_sc_hd__inv_2)
-   0.00   26.59 ^ _62702_/D (sky130_fd_sc_hd__dfxtp_4)
-          26.59   data arrival time
+   0.09    0.76 v _36333_/Y (sky130_fd_sc_hd__inv_2)
+   0.50    1.26 v _36335_/X (sky130_fd_sc_hd__or2_4)
+   0.50    1.76 v _36336_/X (sky130_fd_sc_hd__or2_4)
+   1.06    2.82 v _36339_/X (sky130_fd_sc_hd__or4_4)
+   0.49    3.31 v _36340_/X (sky130_fd_sc_hd__or2_4)
+   0.49    3.80 v _36341_/X (sky130_fd_sc_hd__or2_4)
+   0.90    4.70 v _36342_/X (sky130_fd_sc_hd__or4_4)
+   0.72    5.41 v _36343_/X (sky130_fd_sc_hd__or3_4)
+   0.70    6.11 v _36344_/X (sky130_fd_sc_hd__or3_4)
+   0.69    6.80 v _36345_/X (sky130_fd_sc_hd__or3_4)
+   0.47    7.27 v _36346_/X (sky130_fd_sc_hd__or2_4)
+   0.48    7.75 v _36347_/X (sky130_fd_sc_hd__or2_4)
+   0.50    8.25 v _36348_/X (sky130_fd_sc_hd__or2_4)
+   1.05    9.31 v _36351_/X (sky130_fd_sc_hd__or4_4)
+   0.48    9.79 v _36352_/X (sky130_fd_sc_hd__or2_4)
+   0.48   10.27 v _36353_/X (sky130_fd_sc_hd__or2_4)
+   0.47   10.74 v _36354_/X (sky130_fd_sc_hd__or2_4)
+   0.47   11.21 v _36355_/X (sky130_fd_sc_hd__or2_4)
+   0.87   12.08 v _36356_/X (sky130_fd_sc_hd__or4_4)
+   0.48   12.56 v _36357_/X (sky130_fd_sc_hd__or2_4)
+   0.48   13.05 v _36358_/X (sky130_fd_sc_hd__or2_4)
+   0.49   13.53 v _36359_/X (sky130_fd_sc_hd__or2_4)
+   0.47   14.00 v _36360_/X (sky130_fd_sc_hd__or2_4)
+   0.47   14.47 v _36361_/X (sky130_fd_sc_hd__or2_4)
+   1.04   15.51 v _36364_/X (sky130_fd_sc_hd__or4_4)
+   0.48   16.00 v _36365_/X (sky130_fd_sc_hd__or2_4)
+   0.48   16.48 v _36366_/X (sky130_fd_sc_hd__or2_4)
+   0.48   16.96 v _36367_/X (sky130_fd_sc_hd__or2_4)
+   0.49   17.45 v _36368_/X (sky130_fd_sc_hd__or2_4)
+   0.87   18.32 v _36369_/X (sky130_fd_sc_hd__or4_4)
+   0.49   18.80 v _36370_/X (sky130_fd_sc_hd__or2_4)
+   0.48   19.28 v _36371_/X (sky130_fd_sc_hd__or2_4)
+   0.49   19.77 v _36372_/X (sky130_fd_sc_hd__or2_4)
+   0.47   20.24 v _36373_/X (sky130_fd_sc_hd__or2_4)
+   0.47   20.71 v _36374_/X (sky130_fd_sc_hd__or2_4)
+   1.04   21.75 v _36377_/X (sky130_fd_sc_hd__or4_4)
+   0.49   22.24 v _36378_/X (sky130_fd_sc_hd__or2_4)
+   0.48   22.73 v _36379_/X (sky130_fd_sc_hd__or2_4)
+   0.49   23.21 v _36380_/X (sky130_fd_sc_hd__or2_4)
+   0.47   23.68 v _36381_/X (sky130_fd_sc_hd__or2_4)
+   0.46   24.14 v _36382_/X (sky130_fd_sc_hd__or2_4)
+   0.48   24.62 v _36383_/X (sky130_fd_sc_hd__or2_4)
+   0.46   25.09 v _36384_/X (sky130_fd_sc_hd__or2_4)
+   0.59   25.68 v _36391_/X (sky130_fd_sc_hd__a211o_4)
+   0.32   26.00 v _36392_/X (sky130_fd_sc_hd__and3_4)
+   0.48   26.47 v _36393_/X (sky130_fd_sc_hd__a211o_4)
+   0.07   26.54 ^ _36394_/Y (sky130_fd_sc_hd__inv_2)
+   0.00   26.54 ^ _62702_/D (sky130_fd_sc_hd__dfxtp_4)
+          26.54   data arrival time
 
   30.00   30.00   clock wb_clk_i (rise edge)
    0.00   30.00   clock network delay (ideal)
@@ -12011,9 +12011,9 @@ Path Type: max
           29.86   data required time
 ---------------------------------------------------------
           29.86   data required time
-         -26.59   data arrival time
+         -26.54   data arrival time
 ---------------------------------------------------------
-           3.26   slack (MET)
+           3.32   slack (MET)
 
 
 Capacitance violations: 0
@@ -12022,28 +12022,28 @@ wns 0.00
 tns 0.00
 Initial area: 4526184 um2
 OpenPhySyn timing repair:
-[OpenPhySyn] [2020-12-15 23:06:35.940] [info] Invoking repair_timing transform
-[OpenPhySyn] [2020-12-15 23:06:36.130] [info] Buffer library: sky130_fd_sc_hd__buf_2, sky130_fd_sc_hd__buf_4, sky130_fd_sc_hd__buf_8
-[OpenPhySyn] [2020-12-15 23:06:36.130] [info] Inverter library: None
-[OpenPhySyn] [2020-12-15 23:06:36.130] [info] Buffering: enabled
-[OpenPhySyn] [2020-12-15 23:06:36.130] [info] Driver sizing: enabled
-[OpenPhySyn] [2020-12-15 23:06:36.130] [info] Pin-swapping: enabled
-[OpenPhySyn] [2020-12-15 23:06:36.130] [info] Mode: Timing-Driven
-[OpenPhySyn] [2020-12-15 23:06:36.130] [info] Iteration 1
-[OpenPhySyn] [2020-12-15 23:06:41.876] [info] No more violations or cannot find more optimal buffer
-[OpenPhySyn] [2020-12-15 23:06:41.878] [info] Runtime: 5s
-[OpenPhySyn] [2020-12-15 23:06:41.878] [info] Buffers: 0
-[OpenPhySyn] [2020-12-15 23:06:41.878] [info] Resize up: 0
-[OpenPhySyn] [2020-12-15 23:06:41.878] [info] Resize down: 0
-[OpenPhySyn] [2020-12-15 23:06:41.878] [info] Pin Swap: 0
-[OpenPhySyn] [2020-12-15 23:06:41.878] [info] Buffered nets: 0
-[OpenPhySyn] [2020-12-15 23:06:41.878] [info] Fanout violations: 0
-[OpenPhySyn] [2020-12-15 23:06:41.878] [info] Transition violations: 0
-[OpenPhySyn] [2020-12-15 23:06:41.878] [info] Capacitance violations: 0
-[OpenPhySyn] [2020-12-15 23:06:41.878] [info] Slack gain: 0.0
-[OpenPhySyn] [2020-12-15 23:06:41.878] [info] Initial area: 452618
-[OpenPhySyn] [2020-12-15 23:06:41.878] [info] New area: 452618
-[OpenPhySyn] [2020-12-15 23:06:41.878] [info] Finished repair_timing transform (0)
+[OpenPhySyn] [2020-12-16 01:37:13.786] [info] Invoking repair_timing transform
+[OpenPhySyn] [2020-12-16 01:37:13.977] [info] Buffer library: sky130_fd_sc_hd__buf_2, sky130_fd_sc_hd__buf_4, sky130_fd_sc_hd__buf_8
+[OpenPhySyn] [2020-12-16 01:37:13.977] [info] Inverter library: None
+[OpenPhySyn] [2020-12-16 01:37:13.977] [info] Buffering: enabled
+[OpenPhySyn] [2020-12-16 01:37:13.977] [info] Driver sizing: enabled
+[OpenPhySyn] [2020-12-16 01:37:13.977] [info] Pin-swapping: enabled
+[OpenPhySyn] [2020-12-16 01:37:13.977] [info] Mode: Timing-Driven
+[OpenPhySyn] [2020-12-16 01:37:13.977] [info] Iteration 1
+[OpenPhySyn] [2020-12-16 01:37:19.489] [info] No more violations or cannot find more optimal buffer
+[OpenPhySyn] [2020-12-16 01:37:19.491] [info] Runtime: 5s
+[OpenPhySyn] [2020-12-16 01:37:19.491] [info] Buffers: 0
+[OpenPhySyn] [2020-12-16 01:37:19.491] [info] Resize up: 0
+[OpenPhySyn] [2020-12-16 01:37:19.491] [info] Resize down: 0
+[OpenPhySyn] [2020-12-16 01:37:19.491] [info] Pin Swap: 0
+[OpenPhySyn] [2020-12-16 01:37:19.491] [info] Buffered nets: 0
+[OpenPhySyn] [2020-12-16 01:37:19.491] [info] Fanout violations: 0
+[OpenPhySyn] [2020-12-16 01:37:19.491] [info] Transition violations: 0
+[OpenPhySyn] [2020-12-16 01:37:19.491] [info] Capacitance violations: 0
+[OpenPhySyn] [2020-12-16 01:37:19.491] [info] Slack gain: 0.0
+[OpenPhySyn] [2020-12-16 01:37:19.491] [info] Initial area: 452618
+[OpenPhySyn] [2020-12-16 01:37:19.491] [info] New area: 452618
+[OpenPhySyn] [2020-12-16 01:37:19.491] [info] Finished repair_timing transform (0)
 Added/updated 0 cells
 =============== Final Reports =============
 Startpoint: wb_rst_i (input port clocked by wb_clk_i)
@@ -12057,14 +12057,14 @@ Path Type: max
    0.00    0.00   clock network delay (ideal)
    6.00    6.00 v input external delay
    0.12    6.12 v wb_rst_i (in)
-   0.21    6.33 ^ _56453_/Y (sky130_fd_sc_hd__inv_2)
-   0.60    6.94 ^ _32380_/X (sky130_fd_sc_hd__a2bb2o_4)
-   0.57    7.50 ^ _35531_/X (sky130_fd_sc_hd__buf_2)
-   0.41    7.91 ^ _35532_/X (sky130_fd_sc_hd__buf_2)
-   0.33    8.23 ^ _35580_/X (sky130_fd_sc_hd__buf_2)
-   0.20    8.43 ^ _35581_/X (sky130_fd_sc_hd__buf_2)
-   0.00    8.43 ^ _62787_/SET_B (sky130_fd_sc_hd__dfstp_4)
-           8.43   data arrival time
+   0.22    6.33 ^ _56453_/Y (sky130_fd_sc_hd__inv_2)
+   0.63    6.96 ^ _32380_/X (sky130_fd_sc_hd__a2bb2o_4)
+   0.57    7.53 ^ _35531_/X (sky130_fd_sc_hd__buf_2)
+   0.37    7.90 ^ _35532_/X (sky130_fd_sc_hd__buf_2)
+   0.30    8.21 ^ _35580_/X (sky130_fd_sc_hd__buf_2)
+   0.19    8.40 ^ _35581_/X (sky130_fd_sc_hd__buf_2)
+   0.00    8.40 ^ _62787_/SET_B (sky130_fd_sc_hd__dfstp_4)
+           8.40   data arrival time
 
   30.00   30.00   clock wb_clk_i (rise edge)
    0.00   30.00   clock network delay (ideal)
@@ -12074,9 +12074,9 @@ Path Type: max
           30.25   data required time
 ---------------------------------------------------------
           30.25   data required time
-          -8.43   data arrival time
+          -8.40   data arrival time
 ---------------------------------------------------------
-          21.82   slack (MET)
+          21.85   slack (MET)
 
 
 Startpoint: la_oen[122] (input port clocked by wb_clk_i)
@@ -12090,12 +12090,12 @@ Path Type: max
    0.00    0.00   clock network delay (ideal)
    6.00    6.00 ^ input external delay
    0.01    6.01 ^ la_oen[122] (in)
-   0.49    6.49 ^ _37147_/X (sky130_fd_sc_hd__and4_4)
+   0.49    6.50 ^ _37147_/X (sky130_fd_sc_hd__and4_4)
    0.09    6.59 v _37148_/Y (sky130_fd_sc_hd__inv_2)
-   0.29    6.88 v _37149_/X (sky130_fd_sc_hd__and2_4)
-   1.09    7.97 v _42859_/X (sky130_fd_sc_hd__or4_4)
-   0.00    7.97 v _42861_/B (sky130_fd_sc_hd__or2_4)
-           7.97   data arrival time
+   0.30    6.89 v _37149_/X (sky130_fd_sc_hd__and2_4)
+   1.09    7.98 v _42859_/X (sky130_fd_sc_hd__or4_4)
+   0.00    7.98 v _42861_/B (sky130_fd_sc_hd__or2_4)
+           7.98   data arrival time
 
   15.00   15.00   clock wb_clk_i (fall edge)
    0.00   15.00   clock network delay (ideal)
@@ -12105,9 +12105,9 @@ Path Type: max
           15.00   data required time
 ---------------------------------------------------------
           15.00   data required time
-          -7.97   data arrival time
+          -7.98   data arrival time
 ---------------------------------------------------------
-           7.03   slack (MET)
+           7.02   slack (MET)
 
 
 Startpoint: _62628_ (rising edge-triggered flip-flop clocked by wb_clk_i)
@@ -12121,55 +12121,55 @@ Path Type: max
    0.00    0.00   clock network delay (ideal)
    0.00    0.00 ^ _62628_/CLK (sky130_fd_sc_hd__dfxtp_4)
    0.67    0.67 ^ _62628_/Q (sky130_fd_sc_hd__dfxtp_4)
-   0.08    0.75 v _36333_/Y (sky130_fd_sc_hd__inv_2)
-   0.50    1.25 v _36335_/X (sky130_fd_sc_hd__or2_4)
-   0.50    1.75 v _36336_/X (sky130_fd_sc_hd__or2_4)
-   1.06    2.80 v _36339_/X (sky130_fd_sc_hd__or4_4)
-   0.48    3.29 v _36340_/X (sky130_fd_sc_hd__or2_4)
-   0.50    3.78 v _36341_/X (sky130_fd_sc_hd__or2_4)
-   0.89    4.68 v _36342_/X (sky130_fd_sc_hd__or4_4)
-   0.71    5.39 v _36343_/X (sky130_fd_sc_hd__or3_4)
-   0.70    6.09 v _36344_/X (sky130_fd_sc_hd__or3_4)
-   0.69    6.78 v _36345_/X (sky130_fd_sc_hd__or3_4)
-   0.47    7.25 v _36346_/X (sky130_fd_sc_hd__or2_4)
-   0.48    7.73 v _36347_/X (sky130_fd_sc_hd__or2_4)
-   0.50    8.23 v _36348_/X (sky130_fd_sc_hd__or2_4)
-   1.05    9.28 v _36351_/X (sky130_fd_sc_hd__or4_4)
-   0.49    9.77 v _36352_/X (sky130_fd_sc_hd__or2_4)
-   0.48   10.25 v _36353_/X (sky130_fd_sc_hd__or2_4)
-   0.47   10.73 v _36354_/X (sky130_fd_sc_hd__or2_4)
-   0.47   11.19 v _36355_/X (sky130_fd_sc_hd__or2_4)
-   0.93   12.12 v _36356_/X (sky130_fd_sc_hd__or4_4)
-   0.50   12.62 v _36357_/X (sky130_fd_sc_hd__or2_4)
-   0.48   13.11 v _36358_/X (sky130_fd_sc_hd__or2_4)
-   0.48   13.59 v _36359_/X (sky130_fd_sc_hd__or2_4)
-   0.47   14.06 v _36360_/X (sky130_fd_sc_hd__or2_4)
-   0.47   14.53 v _36361_/X (sky130_fd_sc_hd__or2_4)
-   1.04   15.57 v _36364_/X (sky130_fd_sc_hd__or4_4)
-   0.49   16.06 v _36365_/X (sky130_fd_sc_hd__or2_4)
-   0.48   16.54 v _36366_/X (sky130_fd_sc_hd__or2_4)
-   0.48   17.02 v _36367_/X (sky130_fd_sc_hd__or2_4)
-   0.49   17.51 v _36368_/X (sky130_fd_sc_hd__or2_4)
-   0.87   18.38 v _36369_/X (sky130_fd_sc_hd__or4_4)
-   0.48   18.86 v _36370_/X (sky130_fd_sc_hd__or2_4)
-   0.48   19.34 v _36371_/X (sky130_fd_sc_hd__or2_4)
-   0.49   19.83 v _36372_/X (sky130_fd_sc_hd__or2_4)
-   0.48   20.31 v _36373_/X (sky130_fd_sc_hd__or2_4)
-   0.47   20.78 v _36374_/X (sky130_fd_sc_hd__or2_4)
-   1.05   21.83 v _36377_/X (sky130_fd_sc_hd__or4_4)
-   0.48   22.31 v _36378_/X (sky130_fd_sc_hd__or2_4)
-   0.48   22.79 v _36379_/X (sky130_fd_sc_hd__or2_4)
-   0.49   23.28 v _36380_/X (sky130_fd_sc_hd__or2_4)
-   0.47   23.75 v _36381_/X (sky130_fd_sc_hd__or2_4)
-   0.46   24.21 v _36382_/X (sky130_fd_sc_hd__or2_4)
-   0.48   24.69 v _36383_/X (sky130_fd_sc_hd__or2_4)
-   0.46   25.16 v _36384_/X (sky130_fd_sc_hd__or2_4)
-   0.58   25.74 v _36391_/X (sky130_fd_sc_hd__a211o_4)
-   0.32   26.06 v _36392_/X (sky130_fd_sc_hd__and3_4)
-   0.47   26.53 v _36393_/X (sky130_fd_sc_hd__a211o_4)
-   0.07   26.59 ^ _36394_/Y (sky130_fd_sc_hd__inv_2)
-   0.00   26.59 ^ _62702_/D (sky130_fd_sc_hd__dfxtp_4)
-          26.59   data arrival time
+   0.09    0.76 v _36333_/Y (sky130_fd_sc_hd__inv_2)
+   0.50    1.26 v _36335_/X (sky130_fd_sc_hd__or2_4)
+   0.50    1.76 v _36336_/X (sky130_fd_sc_hd__or2_4)
+   1.06    2.82 v _36339_/X (sky130_fd_sc_hd__or4_4)
+   0.49    3.31 v _36340_/X (sky130_fd_sc_hd__or2_4)
+   0.49    3.80 v _36341_/X (sky130_fd_sc_hd__or2_4)
+   0.90    4.70 v _36342_/X (sky130_fd_sc_hd__or4_4)
+   0.72    5.41 v _36343_/X (sky130_fd_sc_hd__or3_4)
+   0.70    6.11 v _36344_/X (sky130_fd_sc_hd__or3_4)
+   0.69    6.80 v _36345_/X (sky130_fd_sc_hd__or3_4)
+   0.47    7.27 v _36346_/X (sky130_fd_sc_hd__or2_4)
+   0.48    7.75 v _36347_/X (sky130_fd_sc_hd__or2_4)
+   0.50    8.25 v _36348_/X (sky130_fd_sc_hd__or2_4)
+   1.05    9.31 v _36351_/X (sky130_fd_sc_hd__or4_4)
+   0.48    9.79 v _36352_/X (sky130_fd_sc_hd__or2_4)
+   0.48   10.27 v _36353_/X (sky130_fd_sc_hd__or2_4)
+   0.47   10.74 v _36354_/X (sky130_fd_sc_hd__or2_4)
+   0.47   11.21 v _36355_/X (sky130_fd_sc_hd__or2_4)
+   0.87   12.08 v _36356_/X (sky130_fd_sc_hd__or4_4)
+   0.48   12.56 v _36357_/X (sky130_fd_sc_hd__or2_4)
+   0.48   13.05 v _36358_/X (sky130_fd_sc_hd__or2_4)
+   0.49   13.53 v _36359_/X (sky130_fd_sc_hd__or2_4)
+   0.47   14.00 v _36360_/X (sky130_fd_sc_hd__or2_4)
+   0.47   14.47 v _36361_/X (sky130_fd_sc_hd__or2_4)
+   1.04   15.51 v _36364_/X (sky130_fd_sc_hd__or4_4)
+   0.48   16.00 v _36365_/X (sky130_fd_sc_hd__or2_4)
+   0.48   16.48 v _36366_/X (sky130_fd_sc_hd__or2_4)
+   0.48   16.96 v _36367_/X (sky130_fd_sc_hd__or2_4)
+   0.49   17.45 v _36368_/X (sky130_fd_sc_hd__or2_4)
+   0.87   18.32 v _36369_/X (sky130_fd_sc_hd__or4_4)
+   0.49   18.80 v _36370_/X (sky130_fd_sc_hd__or2_4)
+   0.48   19.28 v _36371_/X (sky130_fd_sc_hd__or2_4)
+   0.49   19.77 v _36372_/X (sky130_fd_sc_hd__or2_4)
+   0.47   20.24 v _36373_/X (sky130_fd_sc_hd__or2_4)
+   0.47   20.71 v _36374_/X (sky130_fd_sc_hd__or2_4)
+   1.04   21.75 v _36377_/X (sky130_fd_sc_hd__or4_4)
+   0.49   22.24 v _36378_/X (sky130_fd_sc_hd__or2_4)
+   0.48   22.73 v _36379_/X (sky130_fd_sc_hd__or2_4)
+   0.49   23.21 v _36380_/X (sky130_fd_sc_hd__or2_4)
+   0.47   23.68 v _36381_/X (sky130_fd_sc_hd__or2_4)
+   0.46   24.14 v _36382_/X (sky130_fd_sc_hd__or2_4)
+   0.48   24.62 v _36383_/X (sky130_fd_sc_hd__or2_4)
+   0.46   25.09 v _36384_/X (sky130_fd_sc_hd__or2_4)
+   0.59   25.68 v _36391_/X (sky130_fd_sc_hd__a211o_4)
+   0.32   26.00 v _36392_/X (sky130_fd_sc_hd__and3_4)
+   0.48   26.47 v _36393_/X (sky130_fd_sc_hd__a211o_4)
+   0.07   26.54 ^ _36394_/Y (sky130_fd_sc_hd__inv_2)
+   0.00   26.54 ^ _62702_/D (sky130_fd_sc_hd__dfxtp_4)
+          26.54   data arrival time
 
   30.00   30.00   clock wb_clk_i (rise edge)
    0.00   30.00   clock network delay (ideal)
@@ -12179,9 +12179,9 @@ Path Type: max
           29.86   data required time
 ---------------------------------------------------------
           29.86   data required time
-         -26.59   data arrival time
+         -26.54   data arrival time
 ---------------------------------------------------------
-           3.26   slack (MET)
+           3.32   slack (MET)
 
 
 Capacitance violations: 0
@@ -12279,11 +12279,11 @@ row height                2.7 u
 
 Placement Analysis
 --------------------------------
-total displacement   131293.1 u
-average displacement      2.4 u
-max displacement         27.5 u
-original HPWL        1763481.6 u
-legalized HPWL       1865169.6 u
+total displacement   133355.9 u
+average displacement      2.5 u
+max displacement         23.5 u
+original HPWL        1763294.7 u
+legalized HPWL       1866197.2 u
 delta HPWL                  6 %
 
 [36m[INFO]: Changing layout from /project/openlane/user_proj_example/runs/user_proj_example/tmp/placement/openphysyn.def to /project/openlane/user_proj_example/runs/user_proj_example/results/placement/user_proj_example.placement.def[37m
@@ -12358,14 +12358,14 @@ Number of created patterns = 313632.
     Tot. number of sinks: 141
     Number of static layers: 0
  Wire segment unit: 13000 dbu (13 um)
- Original sink region: [(10845, 12300), (1180625, 134580)]
- Normalized sink region: [(0.834231, 0.946154), (90.8173, 10.3523)]
-    Width:  89.9831
-    Height: 9.40615
+ Original sink region: [(8085, 14760), (1169912, 142860)]
+ Normalized sink region: [(0.621923, 1.13538), (89.9932, 10.9892)]
+    Width:  89.3713
+    Height: 9.85385
  Level 1
     Direction: Horizontal
     # sinks per sub-region: 71
-    Sub-region size: 44.9915 X 9.40615
+    Sub-region size: 44.6857 X 9.85385
     Segment length (rounded): 22
     Key: 9408 outSlew: 34 load: 1 length: 8 isBuffered: 1
     Key: 7971 outSlew: 11 load: 1 length: 8 isBuffered: 1
@@ -12373,13 +12373,13 @@ Number of created patterns = 313632.
  Level 2
     Direction: Vertical
     # sinks per sub-region: 36
-    Sub-region size: 44.9915 X 4.70308
+    Sub-region size: 44.6857 X 4.92692
     Segment length (rounded): 2
     Key: 55 outSlew: 11 load: 1 length: 2 isBuffered: 1
  Level 3
     Direction: Horizontal
     # sinks per sub-region: 18
-    Sub-region size: 22.4958 X 4.70308
+    Sub-region size: 22.3428 X 4.92692
     Segment length (rounded): 12
     Key: 9417 outSlew: 34 load: 1 length: 8 isBuffered: 1
     Key: 339 outSlew: 11 load: 1 length: 4 isBuffered: 1
@@ -12387,7 +12387,7 @@ Number of created patterns = 313632.
  Level 4
     Direction: Vertical
     # sinks per sub-region: 9
-    Sub-region size: 22.4958 X 2.35154
+    Sub-region size: 22.3428 X 2.46346
     Segment length (rounded): 1
     Key: 313873 outSlew: 11 load: 1 length: 1 isBuffered: 1
  Stop criterion found. Max number of sinks is (15)
@@ -12397,7 +12397,7 @@ Number of created patterns = 313632.
  ****************
  * Post CTS opt *
  ****************
- Avg. source sink dist: 90419.9 dbu.
+ Avg. source sink dist: 85167.7 dbu.
  Num outlier sinks: 6
  ********************
  * Write data to DB *
@@ -12407,7 +12407,7 @@ Number of created patterns = 313632.
     Minimum number of buffers in the clock path: 8.
     Maximum number of buffers in the clock path: 9.
     Created 49 clock nets.
-    Fanout distribution for the current clock = 4:1, 5:2, 7:3, 8:2, 9:1, 10:2, 11:1, 12:2, 13:2.
+    Fanout distribution for the current clock = 4:1, 6:4, 7:1, 8:3, 9:2, 11:1, 12:1, 13:1, 14:2.
     Max level of the clock tree: 4.
  ... End of TritonCTS execution.
 [INFO]: Legalizing...
@@ -12427,11 +12427,11 @@ row height                2.7 u
 
 Placement Analysis
 --------------------------------
-total displacement      246.9 u
+total displacement      218.6 u
 average displacement      0.0 u
-max displacement         16.1 u
-original HPWL        1871906.0 u
-legalized HPWL       1872056.2 u
+max displacement         10.4 u
+original HPWL        1872437.5 u
+legalized HPWL       1872534.7 u
 delta HPWL                  0 %
 
 [36m[INFO]: Clock Tree Synthesis was successful[37m
@@ -12496,11 +12496,11 @@ row height                2.7 u
 
 Placement Analysis
 --------------------------------
-total displacement   307762.2 u
+total displacement   307895.2 u
 average displacement      2.3 u
-max displacement         18.8 u
-original HPWL        1912094.4 u
-legalized HPWL       1992557.4 u
+max displacement         17.5 u
+original HPWL        1912423.0 u
+legalized HPWL       1993624.5 u
 delta HPWL                  4 %
 
 [36m[INFO]: Changing layout from /project/openlane/user_proj_example/runs/user_proj_example/results/cts/user_proj_example.cts.def to /project/openlane/user_proj_example/runs/user_proj_example/tmp/placement/diodes.def[37m
@@ -12558,86 +12558,86 @@ Notice 0: Finished DEF file: /project/openlane/user_proj_example/runs/user_proj_
 [INFO] Processing 1546935 obstacles on layer 1
 [INFO] Processing 355158 obstacles on layer 2
 [INFO] Reducing resources of layer 1 by 99%
-[INFO] WIRELEN : 323661, WIRELEN1 : 0
-[INFO] NumSeg  : 117854
+[INFO] WIRELEN : 323132, WIRELEN1 : 0
+[INFO] NumSeg  : 117635
 [INFO] NumShift: 0
 First L Route
-[INFO] WIRELEN : 323910, WIRELEN1 : 323910
-[INFO] NumSeg  : 117285
-[INFO] NumShift: 3198
-[Overflow Report] Total hCap    : 756043
+[INFO] WIRELEN : 323519, WIRELEN1 : 323519
+[INFO] NumSeg  : 117216
+[INFO] NumShift: 3267
+[Overflow Report] Total hCap    : 755986
 [Overflow Report] Total vCap    : 448404
-[Overflow Report] Total Usage   : 323910
+[Overflow Report] Total Usage   : 323519
 [Overflow Report] Max H Overflow: 0
-[Overflow Report] Max V Overflow: 5
-[Overflow Report] Max Overflow  : 5
-[Overflow Report] Num Overflow e: 10
+[Overflow Report] Max V Overflow: 1
+[Overflow Report] Max Overflow  : 1
+[Overflow Report] Num Overflow e: 4
 [Overflow Report] H   Overflow  : 0
-[Overflow Report] V   Overflow  : 20
-[Overflow Report] Final Overflow: 20
+[Overflow Report] V   Overflow  : 4
+[Overflow Report] Final Overflow: 4
 
 Second L Route
-[Overflow Report] Total hCap    : 756043
+[Overflow Report] Total hCap    : 755986
 [Overflow Report] Total vCap    : 448404
-[Overflow Report] Total Usage   : 323910
+[Overflow Report] Total Usage   : 323519
 [Overflow Report] Max H Overflow: 0
-[Overflow Report] Max V Overflow: 5
-[Overflow Report] Max Overflow  : 5
-[Overflow Report] Num Overflow e: 10
+[Overflow Report] Max V Overflow: 1
+[Overflow Report] Max Overflow  : 1
+[Overflow Report] Num Overflow e: 3
 [Overflow Report] H   Overflow  : 0
-[Overflow Report] V   Overflow  : 20
-[Overflow Report] Final Overflow: 20
+[Overflow Report] V   Overflow  : 3
+[Overflow Report] Final Overflow: 3
 
 First Z Route
-[Overflow Report] Total hCap    : 756043
+[Overflow Report] Total hCap    : 755986
 [Overflow Report] Total vCap    : 448404
-[Overflow Report] Total Usage   : 323910
+[Overflow Report] Total Usage   : 323519
 [Overflow Report] Max H Overflow: 0
-[Overflow Report] Max V Overflow: 5
-[Overflow Report] Max Overflow  : 5
-[Overflow Report] Num Overflow e: 10
+[Overflow Report] Max V Overflow: 1
+[Overflow Report] Max Overflow  : 1
+[Overflow Report] Num Overflow e: 3
 [Overflow Report] H   Overflow  : 0
-[Overflow Report] V   Overflow  : 20
-[Overflow Report] Final Overflow: 20
+[Overflow Report] V   Overflow  : 3
+[Overflow Report] Final Overflow: 3
 
 [INFO] LV routing round 0, enlarge 10 
 [INFO] 10 threshold, 10 expand
-[Overflow Report] total Usage   : 323910
+[Overflow Report] total Usage   : 323519
 [Overflow Report] Max H Overflow: 0
-[Overflow Report] Max V Overflow: 5
-[Overflow Report] Max Overflow  : 5
-[Overflow Report] Num Overflow e: 19
+[Overflow Report] Max V Overflow: 7
+[Overflow Report] Max Overflow  : 7
+[Overflow Report] Num Overflow e: 194
 [Overflow Report] H   Overflow  : 0
-[Overflow Report] V   Overflow  : 30
-[Overflow Report] Final Overflow: 30
+[Overflow Report] V   Overflow  : 498
+[Overflow Report] Final Overflow: 498
 
 [INFO] LV routing round 1, enlarge 15 
 [INFO] 5 threshold, 15 expand
-[Overflow Report] total Usage   : 323910
+[Overflow Report] total Usage   : 323519
 [Overflow Report] Max H Overflow: 0
-[Overflow Report] Max V Overflow: 5
-[Overflow Report] Max Overflow  : 5
-[Overflow Report] Num Overflow e: 14
+[Overflow Report] Max V Overflow: 2
+[Overflow Report] Max Overflow  : 2
+[Overflow Report] Num Overflow e: 7
 [Overflow Report] H   Overflow  : 0
-[Overflow Report] V   Overflow  : 25
-[Overflow Report] Final Overflow: 25
+[Overflow Report] V   Overflow  : 8
+[Overflow Report] Final Overflow: 8
 
 [INFO] LV routing round 2, enlarge 20 
 [INFO] 1 threshold, 20 expand
-[Overflow Report] total Usage   : 323910
+[Overflow Report] total Usage   : 323519
 [Overflow Report] Max H Overflow: 0
-[Overflow Report] Max V Overflow: 5
-[Overflow Report] Max Overflow  : 5
-[Overflow Report] Num Overflow e: 12
+[Overflow Report] Max V Overflow: 4
+[Overflow Report] Max Overflow  : 4
+[Overflow Report] Num Overflow e: 27
 [Overflow Report] H   Overflow  : 0
-[Overflow Report] V   Overflow  : 22
-[Overflow Report] Final Overflow: 22
+[Overflow Report] V   Overflow  : 43
+[Overflow Report] Final Overflow: 43
 
 Running extra iterations to remove overflow...
 Update congestion history type 1
 [INFO] iteration 1, enlarge 20, costheight 9, threshold 10 via cost 2 
-[INFO] log_coef 0.766449, healingTrigger 0 cost_step 5 L 1 cost_type 1 updatetype 1
-[Overflow Report] total Usage   : 323942
+[INFO] log_coef 1.181232, healingTrigger 0 cost_step 5 L 1 cost_type 1 updatetype 1
+[Overflow Report] total Usage   : 323544
 [Overflow Report] Max H Overflow: 0
 [Overflow Report] Max V Overflow: 0
 [Overflow Report] Max Overflow  : 0
@@ -12650,7 +12650,7 @@ Usage checked
 Maze routing finished
 [INFO] P3 runtime: 0.010000 sec
 [INFO] Final 2D results: 
-[Overflow Report] total Usage   : 323942
+[Overflow Report] total Usage   : 323544
 [Overflow Report] Max H Overflow: 0
 [Overflow Report] Max V Overflow: 0
 [Overflow Report] Max Overflow  : 0
@@ -12661,32 +12661,32 @@ Maze routing finished
 
 Layer Assignment Begins
 Layer assignment finished
-[INFO] 2D + Layer Assignment Runtime: 3.240000 sec
+[INFO] 2D + Layer Assignment Runtime: 3.170000 sec
 Post Processing Begins 
 Post Processsing finished
  Starting via filling
-[INFO] Via related to pin nodes 222516
-[INFO] Via related stiner nodes 8671
+[INFO] Via related to pin nodes 223089
+[INFO] Via related stiner nodes 8543
 Via filling finished
 
 Final usage/overflow report: 
 [INFO] Usage per layer: 
     Layer 1 usage: 0
-    Layer 2 usage: 180063
-    Layer 3 usage: 143228
-    Layer 4 usage: 2122
+    Layer 2 usage: 174860
+    Layer 3 usage: 144688
+    Layer 4 usage: 5193
 
 [INFO] Capacity per layer: 
     Layer 1 capacity: 0
-    Layer 2 capacity: 457107
+    Layer 2 capacity: 457050
     Layer 3 capacity: 448404
     Layer 4 capacity: 298936
 
 [INFO] Use percentage per layer: 
     Layer 1 use percentage: 0.0%
-    Layer 2 use percentage: 39.39%
-    Layer 3 use percentage: 31.94%
-    Layer 4 use percentage: 0.71%
+    Layer 2 use percentage: 38.26%
+    Layer 3 use percentage: 32.27%
+    Layer 4 use percentage: 1.74%
 
 [INFO] Overflow per layer: 
     Layer 1 overflow: 0
@@ -12694,8 +12694,8 @@ Final usage/overflow report:
     Layer 3 overflow: 0
     Layer 4 overflow: 0
 
-[Overflow Report] Total Usage   : 325413
-[Overflow Report] Total Capacity: 1204447
+[Overflow Report] Total Usage   : 324741
+[Overflow Report] Total Capacity: 1204390
 [Overflow Report] Max H Overflow: 0
 [Overflow Report] Max V Overflow: 0
 [Overflow Report] Max Overflow  : 0
@@ -12703,10 +12703,10 @@ Final usage/overflow report:
 [Overflow Report] V   Overflow  : 0
 [Overflow Report] Final Overflow: 0
 
-[INFO] Final usage          : 325413
-[INFO] Final number of vias : 249788
-[INFO] Final usage 3D       : 1074777
-[INFO] Total wirelength: 3194913 um
+[INFO] Final usage          : 324741
+[INFO] Final number of vias : 248498
+[INFO] Final usage 3D       : 1070235
+[INFO] Total wirelength: 3177346 um
 [INFO] Num routed nets: 35444
 Warning: /project/fun/openlane/pdk_root-mpw-one-a/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__ss_100C_1v60.lib, line 32 default_operating_condition ss_100C_1v60 not found.
 Warning: /project/fun/openlane/pdk_root-mpw-one-a/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__ff_n40C_1v95.lib, line 31 default_operating_condition ff_n40C_1v95 not found.
@@ -12753,7 +12753,7 @@ Notice 0:     Created 133822 components and 693030 component-terminals.
 Notice 0:     Created 2 special nets and 0 connections.
 Notice 0:     Created 35620 nets and 194123 connections.
 Notice 0: Finished DEF file: /project/openlane/user_proj_example/runs/user_proj_example/tmp/routing/fastroute.def
-Placed 140592 filler instances.
+Placed 140402 filler instances.
 [36m[INFO]: Changing layout from /project/openlane/user_proj_example/runs/user_proj_example/tmp/routing/fastroute.def to /project/openlane/user_proj_example/runs/user_proj_example/tmp/routing/addspacers.def[37m
 [36m[INFO]: Writing Verilog...[37m
 OpenROAD 0.9.0 d03ebfc244
@@ -12771,7 +12771,7 @@ Notice 0: Design: user_proj_example
 Notice 0: 		Created 100000 Insts
 Notice 0: 		Created 200000 Insts
 Notice 0:     Created 606 pins.
-Notice 0:     Created 274414 components and 1255398 component-terminals.
+Notice 0:     Created 274224 components and 1254638 component-terminals.
 Notice 0:     Created 2 special nets and 0 connections.
 Notice 0:     Created 35620 nets and 194123 connections.
 Notice 0: Finished DEF file: /project/openlane/user_proj_example/runs/user_proj_example/tmp/routing/addspacers.def
@@ -12806,7 +12806,7 @@ design:      user_proj_example
 die area:    ( 0 0 ) ( 1200000 1200000 )
 trackPts:    12
 defvias:     3
-#components: 274414
+#components: 274224
 #terminals:  606
 #snets:      2
 #nets:       35620
@@ -12816,7 +12816,7 @@ guideIn read 100000 guides
 guideIn read 200000 guides
 guideIn read 300000 guides
 
-#guides:     362388
+#guides:     361052
 Warning: met2 does not have viaDef align with layer direction, generating new viaDef via2_FR...
 Warning: met4 does not have viaDef align with layer direction, generating new viaDef via4_FR...
 done initConstraintLayerIdx
@@ -12847,7 +12847,7 @@ instance analysis ...
   complete 90000 instances
   complete 100000 instances
   complete 200000 instances
-#unique instances = 79
+#unique instances = 80
 
 init region query ...
   complete 10000 insts
@@ -12877,9 +12877,9 @@ init region query ...
 
 FR_MASTERSLICE shape region query size = 0
 FR_VIA shape region query size = 0
-li1 shape region query size = 2078223
+li1 shape region query size = 2076959
 mcon shape region query size = 2274615
-met1 shape region query size = 639814
+met1 shape region query size = 639434
 via shape region query size = 13888
 met2 shape region query size = 7548
 via2 shape region query size = 13888
@@ -12893,8 +12893,8 @@ met5 shape region query size = 0
 start pin access
   complete 100 pins
   complete 200 pins
-  complete 233 pins
-  complete 73 unique inst patterns
+  complete 236 pins
+  complete 74 unique inst patterns
   complete 1000 groups
   complete 2000 groups
   complete 3000 groups
@@ -12914,14 +12914,14 @@ start pin access
   complete 80000 groups
   complete 90000 groups
   complete 100000 groups
-  complete 101555 groups
-Expt1 runtime (pin-level access point gen): 0.33416
-Expt2 runtime (design-level access pattern gen): 0.375317
-#scanned instances     = 274414
-#unique  instances     = 79
-#stdCellGenAp          = 1736
+  complete 101468 groups
+Expt1 runtime (pin-level access point gen): 0.289658
+Expt2 runtime (design-level access pattern gen): 0.372233
+#scanned instances     = 274224
+#unique  instances     = 80
+#stdCellGenAp          = 1759
 #stdCellValidPlanarAp  = 36
-#stdCellValidViaAp     = 1069
+#stdCellValidViaAp     = 1084
 #stdCellPinNoAp        = 0
 #stdCellPinCnt         = 194123
 #instTermValidViaApCnt = 0
@@ -12931,7 +12931,7 @@ Expt2 runtime (design-level access pattern gen): 0.375317
 #macroNoAp             = 0
 
 complete pin access
-cpu time = 00:00:06, elapsed time = 00:00:00, memory = 471.64 (MB), peak = 523.49 (MB)
+cpu time = 00:00:06, elapsed time = 00:00:00, memory = 472.08 (MB), peak = 523.42 (MB)
 
 post process guides ...
 GCELLGRID X -1 DO 173 STEP 6900 ;
@@ -12987,13 +12987,13 @@ init guide query ...
 
 FR_MASTERSLICE guide region query size = 0
 FR_VIA guide region query size = 0
-li1 guide region query size = 133593
+li1 guide region query size = 133726
 mcon guide region query size = 0
-met1 guide region query size = 109578
+met1 guide region query size = 108980
 via guide region query size = 0
-met2 guide region query size = 59568
+met2 guide region query size = 59003
 via2 guide region query size = 0
-met3 guide region query size = 72
+met3 guide region query size = 149
 via3 guide region query size = 0
 met4 guide region query size = 0
 via4 guide region query size = 0
@@ -13003,11 +13003,11 @@ init gr pin query ...
 
 
 start track assignment
-Done with 193161 vertical wires in 4 frboxes and 109650 horizontal wires in 4 frboxes.
-Done with 19071 vertical wires in 4 frboxes and 35388 horizontal wires in 4 frboxes.
+Done with 192729 vertical wires in 4 frboxes and 109129 horizontal wires in 4 frboxes.
+Done with 19439 vertical wires in 4 frboxes and 35053 horizontal wires in 4 frboxes.
 
 complete track assignment
-cpu time = 00:00:28, elapsed time = 00:00:09, memory = 744.00 (MB), peak = 1175.42 (MB)
+cpu time = 00:00:27, elapsed time = 00:00:09, memory = 708.43 (MB), peak = 1139.30 (MB)
 
 post processing ...
 
@@ -13048,1355 +13048,651 @@ initVia2ViaMinLenNew_cutSpc met2 (d2d-x, d2d-y, d2u-x, d2u-y, u2d-x, u2d-y, u2u-
 initVia2ViaMinLenNew_cutSpc met3 (d2d-x, d2d-y, d2u-x, d2u-y, u2d-x, u2d-y, u2u-x, u2u-y) = (630, 630, 655, 625, 655, 625, 680, 630)
 initVia2ViaMinLenNew_cutSpc met4 (d2d-x, d2d-y, d2u-x, d2u-y, u2d-x, u2d-y, u2u-x, u2u-y) = (680, 630, 1055, 1055, 1055, 1055, 3020, 3020)
 initVia2ViaMinLenNew_cutSpc met5 (d2d-x, d2d-y, d2u-x, d2u-y, u2d-x, u2d-y, u2u-x, u2u-y) = (1600, 1600, 0, 0, 0, 0, 0, 0)
-cpu time = 00:00:00, elapsed time = 00:00:00, memory = 744.00 (MB), peak = 1175.42 (MB)
+cpu time = 00:00:00, elapsed time = 00:00:00, memory = 708.44 (MB), peak = 1139.30 (MB)
 
 start detail routing ...
 start 0th optimization iteration ...
     completing 10% with 0 violations
-    elapsed time = 00:00:05, memory = 986.27 (MB)
+    elapsed time = 00:00:05, memory = 985.41 (MB)
     completing 20% with 0 violations
-    elapsed time = 00:00:13, memory = 1034.30 (MB)
-    completing 30% with 28949 violations
-    elapsed time = 00:00:17, memory = 1035.84 (MB)
-    completing 40% with 28949 violations
-    elapsed time = 00:00:27, memory = 1055.79 (MB)
-    completing 50% with 28949 violations
-    elapsed time = 00:00:36, memory = 1070.30 (MB)
-    completing 60% with 47741 violations
-    elapsed time = 00:00:44, memory = 1090.00 (MB)
-    completing 70% with 47741 violations
-    elapsed time = 00:00:54, memory = 1105.10 (MB)
-    completing 80% with 58851 violations
-    elapsed time = 00:01:01, memory = 1131.13 (MB)
-    completing 90% with 58851 violations
-    elapsed time = 00:01:13, memory = 1142.07 (MB)
-    completing 100% with 59735 violations
-    elapsed time = 00:01:23, memory = 1153.95 (MB)
-  number of violations = 71131
-cpu time = 00:13:53, elapsed time = 00:01:48, memory = 1727.08 (MB), peak = 1727.12 (MB)
-total wire length = 2322908 um
-total wire length on LAYER li1 = 7346 um
-total wire length on LAYER met1 = 1271342 um
-total wire length on LAYER met2 = 1017253 um
-total wire length on LAYER met3 = 26457 um
-total wire length on LAYER met4 = 508 um
+    elapsed time = 00:00:12, memory = 1019.00 (MB)
+    completing 30% with 27957 violations
+    elapsed time = 00:00:16, memory = 1020.03 (MB)
+    completing 40% with 27957 violations
+    elapsed time = 00:00:26, memory = 1028.20 (MB)
+    completing 50% with 27957 violations
+    elapsed time = 00:00:35, memory = 1061.35 (MB)
+    completing 60% with 46070 violations
+    elapsed time = 00:00:42, memory = 1083.75 (MB)
+    completing 70% with 46070 violations
+    elapsed time = 00:00:52, memory = 1098.87 (MB)
+    completing 80% with 57138 violations
+    elapsed time = 00:00:59, memory = 1124.96 (MB)
+    completing 90% with 57138 violations
+    elapsed time = 00:01:12, memory = 1140.39 (MB)
+    completing 100% with 57568 violations
+    elapsed time = 00:01:22, memory = 1147.02 (MB)
+  number of violations = 68736
+cpu time = 00:13:32, elapsed time = 00:01:46, memory = 1721.41 (MB), peak = 1721.59 (MB)
+total wire length = 2317375 um
+total wire length on LAYER li1 = 7181 um
+total wire length on LAYER met1 = 1235406 um
+total wire length on LAYER met2 = 1028023 um
+total wire length on LAYER met3 = 46370 um
+total wire length on LAYER met4 = 393 um
 total wire length on LAYER met5 = 0 um
-total number of vias = 419319
-up-via summary (total 419319):
+total number of vias = 415726
+up-via summary (total 415726):
 
 -------------------------
  FR_MASTERSLICE         0
-            li1    204790
-           met1    211852
-           met2      2624
-           met3        53
+            li1    204681
+           met1    208552
+           met2      2447
+           met3        46
            met4         0
 -------------------------
-                   419319
+                   415726
 
 
 start 1st optimization iteration ...
-    completing 10% with 71131 violations
-    elapsed time = 00:00:05, memory = 1727.12 (MB)
-    completing 20% with 71131 violations
-    elapsed time = 00:00:15, memory = 1731.96 (MB)
-    completing 30% with 62715 violations
-    elapsed time = 00:00:20, memory = 1731.97 (MB)
-    completing 40% with 62715 violations
-    elapsed time = 00:00:30, memory = 1732.22 (MB)
-    completing 50% with 62715 violations
-    elapsed time = 00:00:39, memory = 1740.96 (MB)
-    completing 60% with 52055 violations
-    elapsed time = 00:00:45, memory = 1740.96 (MB)
-    completing 70% with 52055 violations
-    elapsed time = 00:00:55, memory = 1741.48 (MB)
-    completing 80% with 44535 violations
-    elapsed time = 00:01:02, memory = 1741.79 (MB)
-    completing 90% with 44535 violations
-    elapsed time = 00:01:13, memory = 1741.95 (MB)
-    completing 100% with 34393 violations
-    elapsed time = 00:01:23, memory = 1748.39 (MB)
-  number of violations = 34393
-cpu time = 00:13:41, elapsed time = 00:01:42, memory = 1748.39 (MB), peak = 1748.50 (MB)
-total wire length = 2310019 um
-total wire length on LAYER li1 = 7132 um
-total wire length on LAYER met1 = 1263946 um
-total wire length on LAYER met2 = 1008692 um
-total wire length on LAYER met3 = 29544 um
-total wire length on LAYER met4 = 703 um
+    completing 10% with 68736 violations
+    elapsed time = 00:00:05, memory = 1721.59 (MB)
+    completing 20% with 68736 violations
+    elapsed time = 00:00:14, memory = 1724.51 (MB)
+    completing 30% with 60247 violations
+    elapsed time = 00:00:19, memory = 1734.66 (MB)
+    completing 40% with 60247 violations
+    elapsed time = 00:00:29, memory = 1735.70 (MB)
+    completing 50% with 60247 violations
+    elapsed time = 00:00:38, memory = 1737.32 (MB)
+    completing 60% with 50211 violations
+    elapsed time = 00:00:45, memory = 1737.32 (MB)
+    completing 70% with 50211 violations
+    elapsed time = 00:00:54, memory = 1743.65 (MB)
+    completing 80% with 42965 violations
+    elapsed time = 00:01:01, memory = 1743.68 (MB)
+    completing 90% with 42965 violations
+    elapsed time = 00:01:12, memory = 1743.68 (MB)
+    completing 100% with 33160 violations
+    elapsed time = 00:01:21, memory = 1743.94 (MB)
+  number of violations = 33162
+cpu time = 00:13:13, elapsed time = 00:01:40, memory = 1743.94 (MB), peak = 1744.06 (MB)
+total wire length = 2304787 um
+total wire length on LAYER li1 = 6781 um
+total wire length on LAYER met1 = 1228794 um
+total wire length on LAYER met2 = 1019765 um
+total wire length on LAYER met3 = 49089 um
+total wire length on LAYER met4 = 355 um
 total wire length on LAYER met5 = 0 um
-total number of vias = 418496
-up-via summary (total 418496):
+total number of vias = 414671
+up-via summary (total 414671):
 
 -------------------------
  FR_MASTERSLICE         0
-            li1    204827
-           met1    210446
-           met2      3143
-           met3        80
+            li1    204420
+           met1    207205
+           met2      2994
+           met3        52
            met4         0
 -------------------------
-                   418496
+                   414671
 
 
 start 2nd optimization iteration ...
-    completing 10% with 34393 violations
-    elapsed time = 00:00:05, memory = 1748.50 (MB)
-    completing 20% with 34393 violations
-    elapsed time = 00:00:16, memory = 1753.97 (MB)
-    completing 30% with 37178 violations
-    elapsed time = 00:00:22, memory = 1754.22 (MB)
-    completing 40% with 37178 violations
-    elapsed time = 00:00:32, memory = 1754.22 (MB)
-    completing 50% with 37178 violations
-    elapsed time = 00:00:40, memory = 1754.45 (MB)
-    completing 60% with 37533 violations
-    elapsed time = 00:00:47, memory = 1754.56 (MB)
-    completing 70% with 37533 violations
-    elapsed time = 00:01:00, memory = 1758.43 (MB)
-    completing 80% with 37301 violations
-    elapsed time = 00:01:05, memory = 1758.45 (MB)
-    completing 90% with 37301 violations
-    elapsed time = 00:01:16, memory = 1758.51 (MB)
-    completing 100% with 34275 violations
-    elapsed time = 00:01:23, memory = 1758.51 (MB)
-  number of violations = 34277
-cpu time = 00:13:40, elapsed time = 00:01:42, memory = 1758.51 (MB), peak = 1758.51 (MB)
-total wire length = 2306710 um
-total wire length on LAYER li1 = 7091 um
-total wire length on LAYER met1 = 1262804 um
-total wire length on LAYER met2 = 1006675 um
-total wire length on LAYER met3 = 29282 um
-total wire length on LAYER met4 = 856 um
+    completing 10% with 33162 violations
+    elapsed time = 00:00:06, memory = 1744.06 (MB)
+    completing 20% with 33162 violations
+    elapsed time = 00:00:16, memory = 1745.86 (MB)
+    completing 30% with 35902 violations
+    elapsed time = 00:00:21, memory = 1745.96 (MB)
+    completing 40% with 35902 violations
+    elapsed time = 00:00:31, memory = 1747.32 (MB)
+    completing 50% with 35902 violations
+    elapsed time = 00:00:38, memory = 1748.25 (MB)
+    completing 60% with 36109 violations
+    elapsed time = 00:00:46, memory = 1748.25 (MB)
+    completing 70% with 36109 violations
+    elapsed time = 00:00:57, memory = 1748.97 (MB)
+    completing 80% with 35692 violations
+    elapsed time = 00:01:02, memory = 1748.98 (MB)
+    completing 90% with 35692 violations
+    elapsed time = 00:01:12, memory = 1748.98 (MB)
+    completing 100% with 32768 violations
+    elapsed time = 00:01:18, memory = 1748.98 (MB)
+  number of violations = 32768
+cpu time = 00:12:53, elapsed time = 00:01:38, memory = 1748.98 (MB), peak = 1748.98 (MB)
+total wire length = 2301162 um
+total wire length on LAYER li1 = 6843 um
+total wire length on LAYER met1 = 1227070 um
+total wire length on LAYER met2 = 1017766 um
+total wire length on LAYER met3 = 49160 um
+total wire length on LAYER met4 = 321 um
 total wire length on LAYER met5 = 0 um
-total number of vias = 417987
-up-via summary (total 417987):
+total number of vias = 414452
+up-via summary (total 414452):
 
 -------------------------
  FR_MASTERSLICE         0
-            li1    204882
-           met1    209763
-           met2      3242
-           met3       100
+            li1    204523
+           met1    206830
+           met2      3046
+           met3        53
            met4         0
 -------------------------
-                   417987
+                   414452
 
 
 start 3rd optimization iteration ...
-    completing 10% with 34277 violations
-    elapsed time = 00:00:04, memory = 1758.51 (MB)
-    completing 20% with 34277 violations
-    elapsed time = 00:00:11, memory = 1758.51 (MB)
-    completing 30% with 27632 violations
-    elapsed time = 00:00:19, memory = 1762.45 (MB)
-    completing 40% with 27632 violations
-    elapsed time = 00:00:26, memory = 1763.99 (MB)
-    completing 50% with 27632 violations
-    elapsed time = 00:00:33, memory = 1765.28 (MB)
-    completing 60% with 20418 violations
-    elapsed time = 00:00:39, memory = 1765.32 (MB)
-    completing 70% with 20418 violations
-    elapsed time = 00:00:46, memory = 1765.65 (MB)
-    completing 80% with 12844 violations
-    elapsed time = 00:00:52, memory = 1765.92 (MB)
-    completing 90% with 12844 violations
-    elapsed time = 00:00:58, memory = 1765.92 (MB)
-    completing 100% with 4281 violations
-    elapsed time = 00:01:04, memory = 1765.96 (MB)
-  number of violations = 4281
-cpu time = 00:09:24, elapsed time = 00:01:23, memory = 1765.96 (MB), peak = 1770.38 (MB)
-total wire length = 2298413 um
-total wire length on LAYER li1 = 3943 um
-total wire length on LAYER met1 = 1188968 um
-total wire length on LAYER met2 = 1006434 um
-total wire length on LAYER met3 = 95189 um
-total wire length on LAYER met4 = 3878 um
+    completing 10% with 32768 violations
+    elapsed time = 00:00:04, memory = 1748.98 (MB)
+    completing 20% with 32768 violations
+    elapsed time = 00:00:11, memory = 1750.00 (MB)
+    completing 30% with 26494 violations
+    elapsed time = 00:00:14, memory = 1750.00 (MB)
+    completing 40% with 26494 violations
+    elapsed time = 00:00:21, memory = 1752.06 (MB)
+    completing 50% with 26494 violations
+    elapsed time = 00:00:26, memory = 1757.73 (MB)
+    completing 60% with 19562 violations
+    elapsed time = 00:00:33, memory = 1758.41 (MB)
+    completing 70% with 19562 violations
+    elapsed time = 00:00:41, memory = 1767.19 (MB)
+    completing 80% with 12877 violations
+    elapsed time = 00:00:47, memory = 1741.36 (MB)
+    completing 90% with 12877 violations
+    elapsed time = 00:00:54, memory = 1753.02 (MB)
+    completing 100% with 4502 violations
+    elapsed time = 00:01:00, memory = 1760.11 (MB)
+  number of violations = 4504
+cpu time = 00:09:20, elapsed time = 00:01:18, memory = 1760.11 (MB), peak = 1768.68 (MB)
+total wire length = 2293160 um
+total wire length on LAYER li1 = 3877 um
+total wire length on LAYER met1 = 1161041 um
+total wire length on LAYER met2 = 1018463 um
+total wire length on LAYER met3 = 107329 um
+total wire length on LAYER met4 = 2449 um
 total wire length on LAYER met5 = 0 um
-total number of vias = 424203
-up-via summary (total 424203):
+total number of vias = 420607
+up-via summary (total 420607):
 
 -------------------------
  FR_MASTERSLICE         0
-            li1    201964
-           met1    213031
-           met2      8885
-           met3       323
+            li1    201766
+           met1    210528
+           met2      8097
+           met3       216
            met4         0
 -------------------------
-                   424203
+                   420607
 
 
 start 4th optimization iteration ...
-    completing 10% with 4281 violations
-    elapsed time = 00:00:02, memory = 1765.96 (MB)
-    completing 20% with 4281 violations
-    elapsed time = 00:00:05, memory = 1766.99 (MB)
-    completing 30% with 3455 violations
-    elapsed time = 00:00:06, memory = 1766.99 (MB)
-    completing 40% with 3455 violations
-    elapsed time = 00:00:09, memory = 1766.99 (MB)
-    completing 50% with 3455 violations
-    elapsed time = 00:00:13, memory = 1775.43 (MB)
-    completing 60% with 2655 violations
-    elapsed time = 00:00:16, memory = 1775.70 (MB)
-    completing 70% with 2655 violations
-    elapsed time = 00:00:19, memory = 1775.70 (MB)
-    completing 80% with 1685 violations
-    elapsed time = 00:00:22, memory = 1775.70 (MB)
-    completing 90% with 1685 violations
-    elapsed time = 00:00:25, memory = 1775.70 (MB)
-    completing 100% with 652 violations
-    elapsed time = 00:00:27, memory = 1775.82 (MB)
-  number of violations = 652
-cpu time = 00:04:23, elapsed time = 00:00:45, memory = 1775.82 (MB), peak = 1775.82 (MB)
-total wire length = 2298844 um
-total wire length on LAYER li1 = 3923 um
-total wire length on LAYER met1 = 1180010 um
-total wire length on LAYER met2 = 1003577 um
-total wire length on LAYER met3 = 104398 um
-total wire length on LAYER met4 = 6934 um
+    completing 10% with 4504 violations
+    elapsed time = 00:00:01, memory = 1760.11 (MB)
+    completing 20% with 4504 violations
+    elapsed time = 00:00:04, memory = 1768.09 (MB)
+    completing 30% with 3657 violations
+    elapsed time = 00:00:07, memory = 1768.09 (MB)
+    completing 40% with 3657 violations
+    elapsed time = 00:00:09, memory = 1770.09 (MB)
+    completing 50% with 3657 violations
+    elapsed time = 00:00:12, memory = 1770.09 (MB)
+    completing 60% with 2778 violations
+    elapsed time = 00:00:14, memory = 1770.10 (MB)
+    completing 70% with 2778 violations
+    elapsed time = 00:00:17, memory = 1770.10 (MB)
+    completing 80% with 1774 violations
+    elapsed time = 00:00:21, memory = 1770.62 (MB)
+    completing 90% with 1774 violations
+    elapsed time = 00:00:23, memory = 1770.62 (MB)
+    completing 100% with 789 violations
+    elapsed time = 00:00:25, memory = 1770.62 (MB)
+  number of violations = 789
+cpu time = 00:04:08, elapsed time = 00:00:43, memory = 1770.62 (MB), peak = 1770.62 (MB)
+total wire length = 2293526 um
+total wire length on LAYER li1 = 3759 um
+total wire length on LAYER met1 = 1151916 um
+total wire length on LAYER met2 = 1016168 um
+total wire length on LAYER met3 = 116719 um
+total wire length on LAYER met4 = 4961 um
 total wire length on LAYER met5 = 0 um
-total number of vias = 425816
-up-via summary (total 425816):
+total number of vias = 422115
+up-via summary (total 422115):
 
 -------------------------
  FR_MASTERSLICE         0
-            li1    201970
-           met1    213601
-           met2      9749
-           met3       496
+            li1    201643
+           met1    211202
+           met2      8907
+           met3       363
            met4         0
 -------------------------
-                   425816
+                   422115
 
 
 start 5th optimization iteration ...
-    completing 10% with 652 violations
-    elapsed time = 00:00:00, memory = 1775.82 (MB)
-    completing 20% with 652 violations
-    elapsed time = 00:00:01, memory = 1775.82 (MB)
-    completing 30% with 491 violations
-    elapsed time = 00:00:02, memory = 1775.82 (MB)
-    completing 40% with 491 violations
-    elapsed time = 00:00:03, memory = 1775.82 (MB)
-    completing 50% with 491 violations
-    elapsed time = 00:00:04, memory = 1775.82 (MB)
-    completing 60% with 335 violations
-    elapsed time = 00:00:05, memory = 1775.82 (MB)
-    completing 70% with 335 violations
-    elapsed time = 00:00:06, memory = 1775.90 (MB)
-    completing 80% with 179 violations
-    elapsed time = 00:00:07, memory = 1775.90 (MB)
-    completing 90% with 179 violations
-    elapsed time = 00:00:08, memory = 1775.90 (MB)
-    completing 100% with 38 violations
-    elapsed time = 00:00:09, memory = 1775.90 (MB)
-  number of violations = 38
-cpu time = 00:01:37, elapsed time = 00:00:28, memory = 1775.90 (MB), peak = 1775.90 (MB)
-total wire length = 2298948 um
-total wire length on LAYER li1 = 3909 um
-total wire length on LAYER met1 = 1178880 um
-total wire length on LAYER met2 = 1002791 um
-total wire length on LAYER met3 = 105628 um
-total wire length on LAYER met4 = 7738 um
+    completing 10% with 789 violations
+    elapsed time = 00:00:00, memory = 1770.62 (MB)
+    completing 20% with 789 violations
+    elapsed time = 00:00:02, memory = 1770.77 (MB)
+    completing 30% with 636 violations
+    elapsed time = 00:00:02, memory = 1770.77 (MB)
+    completing 40% with 636 violations
+    elapsed time = 00:00:03, memory = 1770.77 (MB)
+    completing 50% with 636 violations
+    elapsed time = 00:00:04, memory = 1770.77 (MB)
+    completing 60% with 512 violations
+    elapsed time = 00:00:05, memory = 1770.88 (MB)
+    completing 70% with 512 violations
+    elapsed time = 00:00:07, memory = 1771.07 (MB)
+    completing 80% with 284 violations
+    elapsed time = 00:00:08, memory = 1771.07 (MB)
+    completing 90% with 284 violations
+    elapsed time = 00:00:09, memory = 1771.20 (MB)
+    completing 100% with 154 violations
+    elapsed time = 00:00:11, memory = 1771.20 (MB)
+  number of violations = 154
+cpu time = 00:01:49, elapsed time = 00:00:30, memory = 1771.20 (MB), peak = 1771.20 (MB)
+total wire length = 2293594 um
+total wire length on LAYER li1 = 3745 um
+total wire length on LAYER met1 = 1150596 um
+total wire length on LAYER met2 = 1015365 um
+total wire length on LAYER met3 = 118123 um
+total wire length on LAYER met4 = 5763 um
 total wire length on LAYER met5 = 0 um
-total number of vias = 426043
-up-via summary (total 426043):
+total number of vias = 422345
+up-via summary (total 422345):
 
 -------------------------
  FR_MASTERSLICE         0
-            li1    201960
-           met1    213674
-           met2      9874
-           met3       535
+            li1    201625
+           met1    211274
+           met2      9041
+           met3       405
            met4         0
 -------------------------
-                   426043
+                   422345
 
 
 start 6th optimization iteration ...
-    completing 10% with 38 violations
-    elapsed time = 00:00:00, memory = 1775.90 (MB)
-    completing 20% with 38 violations
-    elapsed time = 00:00:00, memory = 1775.90 (MB)
-    completing 30% with 31 violations
-    elapsed time = 00:00:01, memory = 1775.90 (MB)
-    completing 40% with 31 violations
-    elapsed time = 00:00:01, memory = 1775.90 (MB)
-    completing 50% with 31 violations
-    elapsed time = 00:00:02, memory = 1775.91 (MB)
-    completing 60% with 26 violations
-    elapsed time = 00:00:02, memory = 1775.91 (MB)
-    completing 70% with 26 violations
-    elapsed time = 00:00:03, memory = 1775.91 (MB)
-    completing 80% with 10 violations
-    elapsed time = 00:00:03, memory = 1775.91 (MB)
-    completing 90% with 10 violations
-    elapsed time = 00:00:04, memory = 1775.91 (MB)
-    completing 100% with 3 violations
-    elapsed time = 00:00:04, memory = 1775.91 (MB)
-  number of violations = 3
-cpu time = 00:01:04, elapsed time = 00:00:23, memory = 1775.91 (MB), peak = 1775.91 (MB)
-total wire length = 2298959 um
-total wire length on LAYER li1 = 3900 um
-total wire length on LAYER met1 = 1178828 um
-total wire length on LAYER met2 = 1002747 um
-total wire length on LAYER met3 = 105694 um
-total wire length on LAYER met4 = 7788 um
+    completing 10% with 154 violations
+    elapsed time = 00:00:00, memory = 1771.20 (MB)
+    completing 20% with 154 violations
+    elapsed time = 00:00:01, memory = 1771.20 (MB)
+    completing 30% with 112 violations
+    elapsed time = 00:00:02, memory = 1771.20 (MB)
+    completing 40% with 112 violations
+    elapsed time = 00:00:03, memory = 1771.20 (MB)
+    completing 50% with 112 violations
+    elapsed time = 00:00:03, memory = 1771.20 (MB)
+    completing 60% with 76 violations
+    elapsed time = 00:00:04, memory = 1771.20 (MB)
+    completing 70% with 76 violations
+    elapsed time = 00:00:04, memory = 1771.21 (MB)
+    completing 80% with 30 violations
+    elapsed time = 00:00:05, memory = 1771.21 (MB)
+    completing 90% with 30 violations
+    elapsed time = 00:00:06, memory = 1771.21 (MB)
+    completing 100% with 23 violations
+    elapsed time = 00:00:06, memory = 1771.21 (MB)
+  number of violations = 23
+cpu time = 00:01:15, elapsed time = 00:00:25, memory = 1771.21 (MB), peak = 1771.21 (MB)
+total wire length = 2293614 um
+total wire length on LAYER li1 = 3735 um
+total wire length on LAYER met1 = 1150301 um
+total wire length on LAYER met2 = 1015108 um
+total wire length on LAYER met3 = 118440 um
+total wire length on LAYER met4 = 6029 um
 total wire length on LAYER met5 = 0 um
-total number of vias = 426045
-up-via summary (total 426045):
+total number of vias = 422436
+up-via summary (total 422436):
 
 -------------------------
  FR_MASTERSLICE         0
-            li1    201952
-           met1    213677
-           met2      9881
-           met3       535
+            li1    201616
+           met1    211305
+           met2      9093
+           met3       422
            met4         0
 -------------------------
-                   426045
+                   422436
 
 
 start 7th optimization iteration ...
-    completing 10% with 3 violations
-    elapsed time = 00:00:00, memory = 1775.91 (MB)
-    completing 20% with 3 violations
-    elapsed time = 00:00:00, memory = 1775.91 (MB)
-    completing 30% with 3 violations
-    elapsed time = 00:00:01, memory = 1775.91 (MB)
-    completing 40% with 3 violations
-    elapsed time = 00:00:01, memory = 1775.91 (MB)
-    completing 50% with 3 violations
-    elapsed time = 00:00:02, memory = 1775.91 (MB)
-    completing 60% with 3 violations
-    elapsed time = 00:00:02, memory = 1775.91 (MB)
-    completing 70% with 3 violations
-    elapsed time = 00:00:03, memory = 1775.91 (MB)
-    completing 80% with 3 violations
-    elapsed time = 00:00:03, memory = 1775.91 (MB)
-    completing 90% with 3 violations
-    elapsed time = 00:00:04, memory = 1775.91 (MB)
-    completing 100% with 2 violations
-    elapsed time = 00:00:04, memory = 1775.91 (MB)
-  number of violations = 2
-cpu time = 00:00:44, elapsed time = 00:00:04, memory = 1775.91 (MB), peak = 1775.91 (MB)
-total wire length = 2298957 um
-total wire length on LAYER li1 = 3900 um
-total wire length on LAYER met1 = 1178827 um
-total wire length on LAYER met2 = 1002747 um
-total wire length on LAYER met3 = 105694 um
-total wire length on LAYER met4 = 7788 um
+    completing 10% with 23 violations
+    elapsed time = 00:00:00, memory = 1771.21 (MB)
+    completing 20% with 23 violations
+    elapsed time = 00:00:00, memory = 1771.21 (MB)
+    completing 30% with 20 violations
+    elapsed time = 00:00:01, memory = 1771.21 (MB)
+    completing 40% with 20 violations
+    elapsed time = 00:00:01, memory = 1771.21 (MB)
+    completing 50% with 20 violations
+    elapsed time = 00:00:02, memory = 1771.21 (MB)
+    completing 60% with 9 violations
+    elapsed time = 00:00:02, memory = 1771.21 (MB)
+    completing 70% with 9 violations
+    elapsed time = 00:00:03, memory = 1771.21 (MB)
+    completing 80% with 0 violations
+    elapsed time = 00:00:04, memory = 1771.21 (MB)
+    completing 90% with 0 violations
+    elapsed time = 00:00:04, memory = 1771.21 (MB)
+    completing 100% with 0 violations
+    elapsed time = 00:00:04, memory = 1771.21 (MB)
+  number of violations = 0
+cpu time = 00:01:03, elapsed time = 00:00:23, memory = 1771.21 (MB), peak = 1771.21 (MB)
+total wire length = 2293608 um
+total wire length on LAYER li1 = 3735 um
+total wire length on LAYER met1 = 1150240 um
+total wire length on LAYER met2 = 1015058 um
+total wire length on LAYER met3 = 118487 um
+total wire length on LAYER met4 = 6087 um
 total wire length on LAYER met5 = 0 um
-total number of vias = 426045
-up-via summary (total 426045):
+total number of vias = 422443
+up-via summary (total 422443):
 
 -------------------------
  FR_MASTERSLICE         0
-            li1    201952
-           met1    213677
-           met2      9881
-           met3       535
+            li1    201616
+           met1    211310
+           met2      9093
+           met3       424
            met4         0
 -------------------------
-                   426045
-
-
-start 8th optimization iteration ...
-    completing 10% with 2 violations
-    elapsed time = 00:00:00, memory = 1775.91 (MB)
-    completing 20% with 2 violations
-    elapsed time = 00:00:00, memory = 1775.91 (MB)
-    completing 30% with 2 violations
-    elapsed time = 00:00:01, memory = 1775.91 (MB)
-    completing 40% with 2 violations
-    elapsed time = 00:00:01, memory = 1775.91 (MB)
-    completing 50% with 2 violations
-    elapsed time = 00:00:02, memory = 1775.91 (MB)
-    completing 60% with 2 violations
-    elapsed time = 00:00:02, memory = 1775.91 (MB)
-    completing 70% with 2 violations
-    elapsed time = 00:00:03, memory = 1775.91 (MB)
-    completing 80% with 2 violations
-    elapsed time = 00:00:03, memory = 1775.91 (MB)
-    completing 90% with 2 violations
-    elapsed time = 00:00:04, memory = 1775.91 (MB)
-    completing 100% with 2 violations
-    elapsed time = 00:00:04, memory = 1775.91 (MB)
-  number of violations = 2
-cpu time = 00:00:43, elapsed time = 00:00:04, memory = 1775.91 (MB), peak = 1775.91 (MB)
-total wire length = 2298958 um
-total wire length on LAYER li1 = 3900 um
-total wire length on LAYER met1 = 1178828 um
-total wire length on LAYER met2 = 1002747 um
-total wire length on LAYER met3 = 105694 um
-total wire length on LAYER met4 = 7788 um
-total wire length on LAYER met5 = 0 um
-total number of vias = 426045
-up-via summary (total 426045):
-
--------------------------
- FR_MASTERSLICE         0
-            li1    201952
-           met1    213677
-           met2      9881
-           met3       535
-           met4         0
--------------------------
-                   426045
-
-
-start 9th optimization iteration ...
-    completing 10% with 2 violations
-    elapsed time = 00:00:00, memory = 1775.91 (MB)
-    completing 20% with 2 violations
-    elapsed time = 00:00:00, memory = 1775.91 (MB)
-    completing 30% with 2 violations
-    elapsed time = 00:00:01, memory = 1775.91 (MB)
-    completing 40% with 2 violations
-    elapsed time = 00:00:01, memory = 1775.91 (MB)
-    completing 50% with 2 violations
-    elapsed time = 00:00:02, memory = 1775.91 (MB)
-    completing 60% with 2 violations
-    elapsed time = 00:00:02, memory = 1775.91 (MB)
-    completing 70% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 80% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 90% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 100% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-  number of violations = 2
-cpu time = 00:00:46, elapsed time = 00:00:04, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298957 um
-total wire length on LAYER li1 = 3900 um
-total wire length on LAYER met1 = 1178816 um
-total wire length on LAYER met2 = 1002747 um
-total wire length on LAYER met3 = 105705 um
-total wire length on LAYER met4 = 7788 um
-total wire length on LAYER met5 = 0 um
-total number of vias = 426045
-up-via summary (total 426045):
-
--------------------------
- FR_MASTERSLICE         0
-            li1    201952
-           met1    213677
-           met2      9881
-           met3       535
-           met4         0
--------------------------
-                   426045
-
-
-start 10th optimization iteration ...
-    completing 10% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 20% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 30% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 40% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 50% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 60% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 70% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 80% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 90% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 100% with 2 violations
-    elapsed time = 00:00:05, memory = 1776.13 (MB)
-  number of violations = 2
-cpu time = 00:00:50, elapsed time = 00:00:05, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298958 um
-total wire length on LAYER li1 = 3900 um
-total wire length on LAYER met1 = 1178817 um
-total wire length on LAYER met2 = 1002747 um
-total wire length on LAYER met3 = 105705 um
-total wire length on LAYER met4 = 7788 um
-total wire length on LAYER met5 = 0 um
-total number of vias = 426045
-up-via summary (total 426045):
-
--------------------------
- FR_MASTERSLICE         0
-            li1    201952
-           met1    213677
-           met2      9881
-           met3       535
-           met4         0
--------------------------
-                   426045
-
-
-start 11th optimization iteration ...
-    completing 10% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 20% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 30% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 40% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 50% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 60% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 70% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 80% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 90% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 100% with 2 violations
-    elapsed time = 00:00:05, memory = 1776.13 (MB)
-  number of violations = 2
-cpu time = 00:00:50, elapsed time = 00:00:05, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298957 um
-total wire length on LAYER li1 = 3900 um
-total wire length on LAYER met1 = 1178816 um
-total wire length on LAYER met2 = 1002747 um
-total wire length on LAYER met3 = 105705 um
-total wire length on LAYER met4 = 7788 um
-total wire length on LAYER met5 = 0 um
-total number of vias = 426045
-up-via summary (total 426045):
-
--------------------------
- FR_MASTERSLICE         0
-            li1    201952
-           met1    213677
-           met2      9881
-           met3       535
-           met4         0
--------------------------
-                   426045
-
-
-start 12th optimization iteration ...
-    completing 10% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 20% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 30% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 40% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 50% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 60% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 70% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 80% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 90% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 100% with 2 violations
-    elapsed time = 00:00:05, memory = 1776.13 (MB)
-  number of violations = 2
-cpu time = 00:00:49, elapsed time = 00:00:05, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298959 um
-total wire length on LAYER li1 = 3900 um
-total wire length on LAYER met1 = 1178817 um
-total wire length on LAYER met2 = 1002748 um
-total wire length on LAYER met3 = 105705 um
-total wire length on LAYER met4 = 7788 um
-total wire length on LAYER met5 = 0 um
-total number of vias = 426045
-up-via summary (total 426045):
-
--------------------------
- FR_MASTERSLICE         0
-            li1    201952
-           met1    213677
-           met2      9881
-           met3       535
-           met4         0
--------------------------
-                   426045
-
-
-start 13th optimization iteration ...
-    completing 10% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 20% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 30% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 40% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 50% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 60% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 70% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 80% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 90% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 100% with 2 violations
-    elapsed time = 00:00:05, memory = 1776.13 (MB)
-  number of violations = 2
-cpu time = 00:00:50, elapsed time = 00:00:05, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298957 um
-total wire length on LAYER li1 = 3900 um
-total wire length on LAYER met1 = 1178816 um
-total wire length on LAYER met2 = 1002747 um
-total wire length on LAYER met3 = 105705 um
-total wire length on LAYER met4 = 7788 um
-total wire length on LAYER met5 = 0 um
-total number of vias = 426045
-up-via summary (total 426045):
-
--------------------------
- FR_MASTERSLICE         0
-            li1    201952
-           met1    213677
-           met2      9881
-           met3       535
-           met4         0
--------------------------
-                   426045
-
-
-start 14th optimization iteration ...
-    completing 10% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 20% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 30% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 40% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 50% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 60% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 70% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 80% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 90% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 100% with 2 violations
-    elapsed time = 00:00:05, memory = 1776.13 (MB)
-  number of violations = 2
-cpu time = 00:00:50, elapsed time = 00:00:05, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298958 um
-total wire length on LAYER li1 = 3900 um
-total wire length on LAYER met1 = 1178817 um
-total wire length on LAYER met2 = 1002747 um
-total wire length on LAYER met3 = 105705 um
-total wire length on LAYER met4 = 7788 um
-total wire length on LAYER met5 = 0 um
-total number of vias = 426045
-up-via summary (total 426045):
-
--------------------------
- FR_MASTERSLICE         0
-            li1    201952
-           met1    213677
-           met2      9881
-           met3       535
-           met4         0
--------------------------
-                   426045
-
-
-start 15th optimization iteration ...
-    completing 10% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 20% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 30% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 40% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 50% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 60% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 70% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 80% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 90% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 100% with 2 violations
-    elapsed time = 00:00:05, memory = 1776.13 (MB)
-  number of violations = 2
-cpu time = 00:00:50, elapsed time = 00:00:05, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298957 um
-total wire length on LAYER li1 = 3900 um
-total wire length on LAYER met1 = 1178816 um
-total wire length on LAYER met2 = 1002747 um
-total wire length on LAYER met3 = 105705 um
-total wire length on LAYER met4 = 7788 um
-total wire length on LAYER met5 = 0 um
-total number of vias = 426045
-up-via summary (total 426045):
-
--------------------------
- FR_MASTERSLICE         0
-            li1    201952
-           met1    213677
-           met2      9881
-           met3       535
-           met4         0
--------------------------
-                   426045
-
-
-start 16th optimization iteration ...
-    completing 10% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 20% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 30% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 40% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 50% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 60% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 70% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 80% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 90% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 100% with 2 violations
-    elapsed time = 00:00:05, memory = 1776.13 (MB)
-  number of violations = 2
-cpu time = 00:00:50, elapsed time = 00:00:05, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298958 um
-total wire length on LAYER li1 = 3900 um
-total wire length on LAYER met1 = 1178817 um
-total wire length on LAYER met2 = 1002747 um
-total wire length on LAYER met3 = 105705 um
-total wire length on LAYER met4 = 7788 um
-total wire length on LAYER met5 = 0 um
-total number of vias = 426045
-up-via summary (total 426045):
-
--------------------------
- FR_MASTERSLICE         0
-            li1    201952
-           met1    213677
-           met2      9881
-           met3       535
-           met4         0
--------------------------
-                   426045
+                   422443
 
 
 start 17th optimization iteration ...
-    completing 10% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 20% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 30% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 40% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 50% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 60% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 70% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 80% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 90% with 2 violations
-    elapsed time = 00:00:05, memory = 1776.13 (MB)
-    completing 100% with 2 violations
-    elapsed time = 00:00:05, memory = 1776.13 (MB)
-  number of violations = 2
-cpu time = 00:01:09, elapsed time = 00:00:24, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298958 um
-total wire length on LAYER li1 = 3900 um
-total wire length on LAYER met1 = 1178817 um
-total wire length on LAYER met2 = 1002747 um
-total wire length on LAYER met3 = 105705 um
-total wire length on LAYER met4 = 7788 um
+    completing 10% with 0 violations
+    elapsed time = 00:00:00, memory = 1771.21 (MB)
+    completing 20% with 0 violations
+    elapsed time = 00:00:00, memory = 1771.21 (MB)
+    completing 30% with 0 violations
+    elapsed time = 00:00:01, memory = 1771.21 (MB)
+    completing 40% with 0 violations
+    elapsed time = 00:00:01, memory = 1771.21 (MB)
+    completing 50% with 0 violations
+    elapsed time = 00:00:02, memory = 1771.21 (MB)
+    completing 60% with 0 violations
+    elapsed time = 00:00:02, memory = 1771.21 (MB)
+    completing 70% with 0 violations
+    elapsed time = 00:00:03, memory = 1771.21 (MB)
+    completing 80% with 0 violations
+    elapsed time = 00:00:03, memory = 1771.21 (MB)
+    completing 90% with 0 violations
+    elapsed time = 00:00:04, memory = 1771.21 (MB)
+    completing 100% with 0 violations
+    elapsed time = 00:00:04, memory = 1771.21 (MB)
+  number of violations = 0
+cpu time = 00:00:43, elapsed time = 00:00:04, memory = 1771.21 (MB), peak = 1771.21 (MB)
+total wire length = 2293608 um
+total wire length on LAYER li1 = 3735 um
+total wire length on LAYER met1 = 1150240 um
+total wire length on LAYER met2 = 1015058 um
+total wire length on LAYER met3 = 118487 um
+total wire length on LAYER met4 = 6087 um
 total wire length on LAYER met5 = 0 um
-total number of vias = 426045
-up-via summary (total 426045):
+total number of vias = 422443
+up-via summary (total 422443):
 
 -------------------------
  FR_MASTERSLICE         0
-            li1    201952
-           met1    213677
-           met2      9881
-           met3       535
+            li1    201616
+           met1    211310
+           met2      9093
+           met3       424
            met4         0
 -------------------------
-                   426045
-
-
-start 18th optimization iteration ...
-    completing 10% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 20% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 30% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 40% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 50% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 60% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 70% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 80% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 90% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 100% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-  number of violations = 2
-cpu time = 00:00:43, elapsed time = 00:00:04, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298957 um
-total wire length on LAYER li1 = 3900 um
-total wire length on LAYER met1 = 1178816 um
-total wire length on LAYER met2 = 1002747 um
-total wire length on LAYER met3 = 105705 um
-total wire length on LAYER met4 = 7788 um
-total wire length on LAYER met5 = 0 um
-total number of vias = 426045
-up-via summary (total 426045):
-
--------------------------
- FR_MASTERSLICE         0
-            li1    201952
-           met1    213677
-           met2      9881
-           met3       535
-           met4         0
--------------------------
-                   426045
-
-
-start 19th optimization iteration ...
-    completing 10% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 20% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 30% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 40% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 50% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 60% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 70% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 80% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 90% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 100% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-  number of violations = 2
-cpu time = 00:00:43, elapsed time = 00:00:04, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298958 um
-total wire length on LAYER li1 = 3900 um
-total wire length on LAYER met1 = 1178817 um
-total wire length on LAYER met2 = 1002747 um
-total wire length on LAYER met3 = 105705 um
-total wire length on LAYER met4 = 7788 um
-total wire length on LAYER met5 = 0 um
-total number of vias = 426045
-up-via summary (total 426045):
-
--------------------------
- FR_MASTERSLICE         0
-            li1    201952
-           met1    213677
-           met2      9881
-           met3       535
-           met4         0
--------------------------
-                   426045
-
-
-start 20th optimization iteration ...
-    completing 10% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 20% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 30% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 40% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 50% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 60% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 70% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 80% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 90% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 100% with 2 violations
-    elapsed time = 00:00:05, memory = 1776.13 (MB)
-  number of violations = 2
-cpu time = 00:00:49, elapsed time = 00:00:05, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298958 um
-total wire length on LAYER li1 = 3900 um
-total wire length on LAYER met1 = 1178816 um
-total wire length on LAYER met2 = 1002748 um
-total wire length on LAYER met3 = 105705 um
-total wire length on LAYER met4 = 7788 um
-total wire length on LAYER met5 = 0 um
-total number of vias = 426045
-up-via summary (total 426045):
-
--------------------------
- FR_MASTERSLICE         0
-            li1    201952
-           met1    213677
-           met2      9881
-           met3       535
-           met4         0
--------------------------
-                   426045
-
-
-start 21st optimization iteration ...
-    completing 10% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 20% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 30% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 40% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 50% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 60% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 70% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 80% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 90% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 100% with 2 violations
-    elapsed time = 00:00:05, memory = 1776.13 (MB)
-  number of violations = 2
-cpu time = 00:00:50, elapsed time = 00:00:05, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298958 um
-total wire length on LAYER li1 = 3900 um
-total wire length on LAYER met1 = 1178817 um
-total wire length on LAYER met2 = 1002747 um
-total wire length on LAYER met3 = 105705 um
-total wire length on LAYER met4 = 7788 um
-total wire length on LAYER met5 = 0 um
-total number of vias = 426045
-up-via summary (total 426045):
-
--------------------------
- FR_MASTERSLICE         0
-            li1    201952
-           met1    213677
-           met2      9881
-           met3       535
-           met4         0
--------------------------
-                   426045
-
-
-start 22nd optimization iteration ...
-    completing 10% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 20% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 30% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 40% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 50% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 60% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 70% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 80% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 90% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 100% with 2 violations
-    elapsed time = 00:00:05, memory = 1776.13 (MB)
-  number of violations = 2
-cpu time = 00:00:50, elapsed time = 00:00:05, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298957 um
-total wire length on LAYER li1 = 3900 um
-total wire length on LAYER met1 = 1178816 um
-total wire length on LAYER met2 = 1002747 um
-total wire length on LAYER met3 = 105705 um
-total wire length on LAYER met4 = 7788 um
-total wire length on LAYER met5 = 0 um
-total number of vias = 426045
-up-via summary (total 426045):
-
--------------------------
- FR_MASTERSLICE         0
-            li1    201952
-           met1    213677
-           met2      9881
-           met3       535
-           met4         0
--------------------------
-                   426045
-
-
-start 23rd optimization iteration ...
-    completing 10% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 20% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 30% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 40% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 50% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 60% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 70% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 80% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 90% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 100% with 2 violations
-    elapsed time = 00:00:05, memory = 1776.13 (MB)
-  number of violations = 2
-cpu time = 00:00:50, elapsed time = 00:00:05, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298958 um
-total wire length on LAYER li1 = 3900 um
-total wire length on LAYER met1 = 1178817 um
-total wire length on LAYER met2 = 1002747 um
-total wire length on LAYER met3 = 105705 um
-total wire length on LAYER met4 = 7788 um
-total wire length on LAYER met5 = 0 um
-total number of vias = 426045
-up-via summary (total 426045):
-
--------------------------
- FR_MASTERSLICE         0
-            li1    201952
-           met1    213677
-           met2      9881
-           met3       535
-           met4         0
--------------------------
-                   426045
-
-
-start 24th optimization iteration ...
-    completing 10% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 20% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 30% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 40% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 50% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 60% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 70% with 2 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
-    completing 80% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 90% with 2 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
-    completing 100% with 2 violations
-    elapsed time = 00:00:05, memory = 1776.13 (MB)
-  number of violations = 2
-cpu time = 00:00:50, elapsed time = 00:00:05, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298957 um
-total wire length on LAYER li1 = 3900 um
-total wire length on LAYER met1 = 1178816 um
-total wire length on LAYER met2 = 1002747 um
-total wire length on LAYER met3 = 105705 um
-total wire length on LAYER met4 = 7788 um
-total wire length on LAYER met5 = 0 um
-total number of vias = 426045
-up-via summary (total 426045):
-
--------------------------
- FR_MASTERSLICE         0
-            li1    201952
-           met1    213677
-           met2      9881
-           met3       535
-           met4         0
--------------------------
-                   426045
+                   422443
 
 
 start 25th optimization iteration ...
-    completing 10% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 20% with 2 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
-    completing 30% with 2 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
-    completing 40% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
-    completing 50% with 2 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
+    completing 10% with 0 violations
+    elapsed time = 00:00:00, memory = 1771.21 (MB)
+    completing 20% with 0 violations
+    elapsed time = 00:00:00, memory = 1771.21 (MB)
+    completing 30% with 0 violations
+    elapsed time = 00:00:01, memory = 1771.21 (MB)
+    completing 40% with 0 violations
+    elapsed time = 00:00:01, memory = 1771.21 (MB)
+    completing 50% with 0 violations
+    elapsed time = 00:00:02, memory = 1771.21 (MB)
     completing 60% with 0 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
+    elapsed time = 00:00:02, memory = 1771.21 (MB)
     completing 70% with 0 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
+    elapsed time = 00:00:03, memory = 1771.21 (MB)
     completing 80% with 0 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
+    elapsed time = 00:00:03, memory = 1771.21 (MB)
     completing 90% with 0 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
+    elapsed time = 00:00:04, memory = 1771.21 (MB)
     completing 100% with 0 violations
-    elapsed time = 00:00:05, memory = 1776.13 (MB)
+    elapsed time = 00:00:04, memory = 1771.21 (MB)
   number of violations = 0
-cpu time = 00:00:52, elapsed time = 00:00:05, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298931 um
-total wire length on LAYER li1 = 3895 um
-total wire length on LAYER met1 = 1178674 um
-total wire length on LAYER met2 = 1002690 um
-total wire length on LAYER met3 = 105831 um
-total wire length on LAYER met4 = 7839 um
+cpu time = 00:00:44, elapsed time = 00:00:04, memory = 1771.21 (MB), peak = 1771.21 (MB)
+total wire length = 2293608 um
+total wire length on LAYER li1 = 3735 um
+total wire length on LAYER met1 = 1150240 um
+total wire length on LAYER met2 = 1015058 um
+total wire length on LAYER met3 = 118487 um
+total wire length on LAYER met4 = 6087 um
 total wire length on LAYER met5 = 0 um
-total number of vias = 426051
-up-via summary (total 426051):
+total number of vias = 422443
+up-via summary (total 422443):
 
 -------------------------
  FR_MASTERSLICE         0
-            li1    201948
-           met1    213669
-           met2      9895
-           met3       539
+            li1    201616
+           met1    211310
+           met2      9093
+           met3       424
            met4         0
 -------------------------
-                   426051
+                   422443
 
 
 start 33rd optimization iteration ...
     completing 10% with 0 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
+    elapsed time = 00:00:00, memory = 1771.21 (MB)
     completing 20% with 0 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
+    elapsed time = 00:00:01, memory = 1771.21 (MB)
     completing 30% with 0 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
+    elapsed time = 00:00:01, memory = 1771.21 (MB)
     completing 40% with 0 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
+    elapsed time = 00:00:02, memory = 1771.21 (MB)
     completing 50% with 0 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
+    elapsed time = 00:00:02, memory = 1771.21 (MB)
     completing 60% with 0 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
+    elapsed time = 00:00:03, memory = 1771.21 (MB)
     completing 70% with 0 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
+    elapsed time = 00:00:03, memory = 1771.21 (MB)
     completing 80% with 0 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
+    elapsed time = 00:00:04, memory = 1771.21 (MB)
     completing 90% with 0 violations
-    elapsed time = 00:00:05, memory = 1776.13 (MB)
+    elapsed time = 00:00:04, memory = 1771.21 (MB)
     completing 100% with 0 violations
-    elapsed time = 00:00:06, memory = 1776.13 (MB)
+    elapsed time = 00:00:05, memory = 1771.21 (MB)
   number of violations = 0
-cpu time = 00:01:00, elapsed time = 00:00:06, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298931 um
-total wire length on LAYER li1 = 3895 um
-total wire length on LAYER met1 = 1178674 um
-total wire length on LAYER met2 = 1002690 um
-total wire length on LAYER met3 = 105831 um
-total wire length on LAYER met4 = 7839 um
+cpu time = 00:00:54, elapsed time = 00:00:05, memory = 1771.21 (MB), peak = 1771.21 (MB)
+total wire length = 2293608 um
+total wire length on LAYER li1 = 3735 um
+total wire length on LAYER met1 = 1150240 um
+total wire length on LAYER met2 = 1015058 um
+total wire length on LAYER met3 = 118487 um
+total wire length on LAYER met4 = 6087 um
 total wire length on LAYER met5 = 0 um
-total number of vias = 426051
-up-via summary (total 426051):
+total number of vias = 422443
+up-via summary (total 422443):
 
 -------------------------
  FR_MASTERSLICE         0
-            li1    201948
-           met1    213669
-           met2      9895
-           met3       539
+            li1    201616
+           met1    211310
+           met2      9093
+           met3       424
            met4         0
 -------------------------
-                   426051
+                   422443
 
 
 start 41st optimization iteration ...
     completing 10% with 0 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
+    elapsed time = 00:00:00, memory = 1771.21 (MB)
     completing 20% with 0 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
+    elapsed time = 00:00:01, memory = 1771.21 (MB)
     completing 30% with 0 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
+    elapsed time = 00:00:01, memory = 1771.21 (MB)
     completing 40% with 0 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
+    elapsed time = 00:00:02, memory = 1771.21 (MB)
     completing 50% with 0 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
+    elapsed time = 00:00:02, memory = 1771.21 (MB)
     completing 60% with 0 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
+    elapsed time = 00:00:03, memory = 1771.21 (MB)
     completing 70% with 0 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
+    elapsed time = 00:00:04, memory = 1771.21 (MB)
     completing 80% with 0 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
+    elapsed time = 00:00:04, memory = 1771.21 (MB)
     completing 90% with 0 violations
-    elapsed time = 00:00:05, memory = 1776.13 (MB)
+    elapsed time = 00:00:05, memory = 1771.21 (MB)
     completing 100% with 0 violations
-    elapsed time = 00:00:06, memory = 1776.13 (MB)
+    elapsed time = 00:00:06, memory = 1771.21 (MB)
   number of violations = 0
-cpu time = 00:01:00, elapsed time = 00:00:06, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298931 um
-total wire length on LAYER li1 = 3895 um
-total wire length on LAYER met1 = 1178674 um
-total wire length on LAYER met2 = 1002690 um
-total wire length on LAYER met3 = 105831 um
-total wire length on LAYER met4 = 7839 um
+cpu time = 00:00:59, elapsed time = 00:00:06, memory = 1771.21 (MB), peak = 1771.21 (MB)
+total wire length = 2293608 um
+total wire length on LAYER li1 = 3735 um
+total wire length on LAYER met1 = 1150240 um
+total wire length on LAYER met2 = 1015058 um
+total wire length on LAYER met3 = 118487 um
+total wire length on LAYER met4 = 6087 um
 total wire length on LAYER met5 = 0 um
-total number of vias = 426051
-up-via summary (total 426051):
+total number of vias = 422443
+up-via summary (total 422443):
 
 -------------------------
  FR_MASTERSLICE         0
-            li1    201948
-           met1    213669
-           met2      9895
-           met3       539
+            li1    201616
+           met1    211310
+           met2      9093
+           met3       424
            met4         0
 -------------------------
-                   426051
+                   422443
 
 
 start 49th optimization iteration ...
     completing 10% with 0 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
+    elapsed time = 00:00:00, memory = 1771.21 (MB)
     completing 20% with 0 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
+    elapsed time = 00:00:01, memory = 1771.21 (MB)
     completing 30% with 0 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
+    elapsed time = 00:00:01, memory = 1771.21 (MB)
     completing 40% with 0 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
+    elapsed time = 00:00:02, memory = 1771.21 (MB)
     completing 50% with 0 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
+    elapsed time = 00:00:03, memory = 1771.21 (MB)
     completing 60% with 0 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
+    elapsed time = 00:00:03, memory = 1771.21 (MB)
     completing 70% with 0 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
+    elapsed time = 00:00:04, memory = 1771.21 (MB)
     completing 80% with 0 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
+    elapsed time = 00:00:05, memory = 1771.21 (MB)
     completing 90% with 0 violations
-    elapsed time = 00:00:05, memory = 1776.13 (MB)
+    elapsed time = 00:00:05, memory = 1771.21 (MB)
     completing 100% with 0 violations
-    elapsed time = 00:00:06, memory = 1776.13 (MB)
+    elapsed time = 00:00:06, memory = 1771.21 (MB)
   number of violations = 0
-cpu time = 00:01:00, elapsed time = 00:00:06, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298931 um
-total wire length on LAYER li1 = 3895 um
-total wire length on LAYER met1 = 1178674 um
-total wire length on LAYER met2 = 1002690 um
-total wire length on LAYER met3 = 105831 um
-total wire length on LAYER met4 = 7839 um
+cpu time = 00:01:01, elapsed time = 00:00:06, memory = 1771.21 (MB), peak = 1771.21 (MB)
+total wire length = 2293608 um
+total wire length on LAYER li1 = 3735 um
+total wire length on LAYER met1 = 1150240 um
+total wire length on LAYER met2 = 1015058 um
+total wire length on LAYER met3 = 118487 um
+total wire length on LAYER met4 = 6087 um
 total wire length on LAYER met5 = 0 um
-total number of vias = 426051
-up-via summary (total 426051):
+total number of vias = 422443
+up-via summary (total 422443):
 
 -------------------------
  FR_MASTERSLICE         0
-            li1    201948
-           met1    213669
-           met2      9895
-           met3       539
+            li1    201616
+           met1    211310
+           met2      9093
+           met3       424
            met4         0
 -------------------------
-                   426051
+                   422443
 
 
 start 57th optimization iteration ...
     completing 10% with 0 violations
-    elapsed time = 00:00:00, memory = 1776.13 (MB)
+    elapsed time = 00:00:00, memory = 1771.21 (MB)
     completing 20% with 0 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
+    elapsed time = 00:00:01, memory = 1771.21 (MB)
     completing 30% with 0 violations
-    elapsed time = 00:00:01, memory = 1776.13 (MB)
+    elapsed time = 00:00:01, memory = 1771.21 (MB)
     completing 40% with 0 violations
-    elapsed time = 00:00:02, memory = 1776.13 (MB)
+    elapsed time = 00:00:02, memory = 1771.21 (MB)
     completing 50% with 0 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
+    elapsed time = 00:00:03, memory = 1771.21 (MB)
     completing 60% with 0 violations
-    elapsed time = 00:00:03, memory = 1776.13 (MB)
+    elapsed time = 00:00:03, memory = 1771.21 (MB)
     completing 70% with 0 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
+    elapsed time = 00:00:04, memory = 1771.21 (MB)
     completing 80% with 0 violations
-    elapsed time = 00:00:04, memory = 1776.13 (MB)
+    elapsed time = 00:00:05, memory = 1771.21 (MB)
     completing 90% with 0 violations
-    elapsed time = 00:00:05, memory = 1776.13 (MB)
+    elapsed time = 00:00:05, memory = 1771.21 (MB)
     completing 100% with 0 violations
-    elapsed time = 00:00:06, memory = 1776.13 (MB)
+    elapsed time = 00:00:06, memory = 1771.21 (MB)
   number of violations = 0
-cpu time = 00:01:00, elapsed time = 00:00:06, memory = 1776.13 (MB), peak = 1776.13 (MB)
-total wire length = 2298931 um
-total wire length on LAYER li1 = 3895 um
-total wire length on LAYER met1 = 1178674 um
-total wire length on LAYER met2 = 1002690 um
-total wire length on LAYER met3 = 105831 um
-total wire length on LAYER met4 = 7839 um
+cpu time = 00:01:01, elapsed time = 00:00:06, memory = 1771.21 (MB), peak = 1771.21 (MB)
+total wire length = 2293608 um
+total wire length on LAYER li1 = 3735 um
+total wire length on LAYER met1 = 1150240 um
+total wire length on LAYER met2 = 1015058 um
+total wire length on LAYER met3 = 118487 um
+total wire length on LAYER met4 = 6087 um
 total wire length on LAYER met5 = 0 um
-total number of vias = 426051
-up-via summary (total 426051):
+total number of vias = 422443
+up-via summary (total 422443):
 
 -------------------------
  FR_MASTERSLICE         0
-            li1    201948
-           met1    213669
-           met2      9895
-           met3       539
+            li1    201616
+           met1    211310
+           met2      9093
+           met3       424
            met4         0
 -------------------------
-                   426051
+                   422443
 
 
 complete detail routing
-total wire length = 2298931 um
-total wire length on LAYER li1 = 3895 um
-total wire length on LAYER met1 = 1178674 um
-total wire length on LAYER met2 = 1002690 um
-total wire length on LAYER met3 = 105831 um
-total wire length on LAYER met4 = 7839 um
+total wire length = 2293608 um
+total wire length on LAYER li1 = 3735 um
+total wire length on LAYER met1 = 1150240 um
+total wire length on LAYER met2 = 1015058 um
+total wire length on LAYER met3 = 118487 um
+total wire length on LAYER met4 = 6087 um
 total wire length on LAYER met5 = 0 um
-total number of vias = 426051
-up-via summary (total 426051):
+total number of vias = 422443
+up-via summary (total 422443):
 
 -------------------------
  FR_MASTERSLICE         0
-            li1    201948
-           met1    213669
-           met2      9895
-           met3       539
+            li1    201616
+           met1    211310
+           met2      9093
+           met3       424
            met4         0
 -------------------------
-                   426051
+                   422443
 
-cpu time = 01:17:36, elapsed time = 00:10:38, memory = 1776.13 (MB), peak = 1776.13 (MB)
+cpu time = 01:02:45, elapsed time = 00:09:01, memory = 1771.21 (MB), peak = 1771.21 (MB)
 
 post processing ...
 
-Runtime taken (hrt): 664.402
+Runtime taken (hrt): 566.743
 [36m[INFO]: Changing layout from /project/openlane/user_proj_example/runs/user_proj_example/tmp/routing/addspacers.def to /project/openlane/user_proj_example/runs/user_proj_example/results/routing/user_proj_example.def[37m
 [36m[INFO]: Running SPEF Extraction...[37m
 Start parsing LEF file...
@@ -14422,8 +13718,8 @@ Error: cannot open '/root/.sta'.
 Warning: /project/fun/openlane/pdk_root-mpw-one-a/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__ff_n40C_1v95.lib, line 31 default_operating_condition ff_n40C_1v95 not found.
 Warning: /project/fun/openlane/pdk_root-mpw-one-a/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__ss_100C_1v60.lib, line 32 default_operating_condition ss_100C_1v60 not found.
 Warning: /project/openlane/user_proj_example/runs/user_proj_example/results/synthesis/user_proj_example.synthesis_preroute.v, line 115494 module sky130_fd_sc_hd__tapvpwrvgnd_1 not found.  Creating black box for PHY_866.
-Warning: /project/openlane/user_proj_example/runs/user_proj_example/results/synthesis/user_proj_example.synthesis_preroute.v, line 213300 module sky130_fd_sc_hd__fill_1 not found.  Creating black box for FILLER_0_48.
-Warning: /project/openlane/user_proj_example/runs/user_proj_example/results/synthesis/user_proj_example.synthesis_preroute.v, line 213301 module sky130_fd_sc_hd__fill_2 not found.  Creating black box for FILLER_0_51.
+Warning: /project/openlane/user_proj_example/runs/user_proj_example/results/synthesis/user_proj_example.synthesis_preroute.v, line 213302 module sky130_fd_sc_hd__fill_2 not found.  Creating black box for FILLER_0_71.
+Warning: /project/openlane/user_proj_example/runs/user_proj_example/results/synthesis/user_proj_example.synthesis_preroute.v, line 213316 module sky130_fd_sc_hd__fill_1 not found.  Creating black box for FILLER_0_160.
 create_clock [get_ports $::env(CLOCK_PORT)]  -name $::env(CLOCK_PORT)  -period $::env(CLOCK_PERIOD)
 set input_delay_value [expr $::env(CLOCK_PERIOD) * $::env(IO_PCT)]
 set output_delay_value [expr $::env(CLOCK_PERIOD) * $::env(IO_PCT)]
@@ -14448,7 +13744,7 @@ puts "\[INFO\]: Setting load to: $cap_load"
 set_load  $cap_load [all_outputs]
 tns 0.00
 wns 0.00
-[36m[INFO]: Routing completed for user_proj_example/15-12_23-05 in 0h19m15s[37m
+[36m[INFO]: Routing completed for user_proj_example/16-12_01-36 in 0h17m42s[37m
 [36m[INFO]: Writing Powered Verilog...[37m
 Notice 0: Reading LEF file:  /project/openlane/user_proj_example/runs/user_proj_example/tmp/merged.lef
 Notice 0:     Created 13 technology layers
@@ -14461,7 +13757,7 @@ Notice 0: Design: user_proj_example
 Notice 0: 		Created 100000 Insts
 Notice 0: 		Created 200000 Insts
 Notice 0:     Created 606 pins.
-Notice 0:     Created 274414 components and 1255398 component-terminals.
+Notice 0:     Created 274224 components and 1254638 component-terminals.
 Notice 0:     Created 2 special nets and 0 connections.
 Notice 0:     Created 35620 nets and 194123 connections.
 Notice 0: Finished DEF file: /project/openlane/user_proj_example/runs/user_proj_example/results/routing/user_proj_example.def
@@ -14470,7 +13766,7 @@ Found port VPWR of type SIGNAL
 Found port VGND of type SIGNAL
 Power net:  VPWR
 Ground net: VGND
-Modified power connections of 274414 cells (Remaining: 0 ).
+Modified power connections of 274224 cells (Remaining: 0 ).
 [36m[INFO]: Writing Verilog...[37m
 OpenROAD 0.9.0 d03ebfc244
 This program is licensed under the BSD-3 license. See the LICENSE file for details. 
@@ -14487,9 +13783,9 @@ Notice 0: Design: user_proj_example
 Notice 0: 		Created 100000 Insts
 Notice 0: 		Created 200000 Insts
 Notice 0:     Created 606 pins.
-Notice 0:     Created 274414 components and 1255398 component-terminals.
+Notice 0:     Created 274224 components and 1254638 component-terminals.
 Notice 0:     Created 2 special nets and 0 connections.
-Notice 0:     Created 35622 nets and 1255243 connections.
+Notice 0:     Created 35622 nets and 1254483 connections.
 Notice 0: Finished DEF file: /project/openlane/user_proj_example/runs/user_proj_example/tmp/routing/user_proj_example.powered.def
 [36m[INFO]: Rewriting /project/openlane/user_proj_example/runs/user_proj_example/results/lvs/user_proj_example.lvs.powered.v into /project/openlane/user_proj_example/runs/user_proj_example/results/lvs/user_proj_example.lvs.powered.v[37m
 [36m[INFO]: Changing netlist from /project/openlane/user_proj_example/runs/user_proj_example/results/synthesis/user_proj_example.synthesis_preroute.v to /project/openlane/user_proj_example/runs/user_proj_example/results/lvs/user_proj_example.lvs.powered.v[37m
@@ -14537,13 +13833,13 @@ LEF read: Processed 789 lines.
 Reading DEF data from file /project/openlane/user_proj_example/runs/user_proj_example/results/routing/user_proj_example.def.
 This action cannot be undone.
   Processed 5 vias total.
-  Processed 274414 subcell instances total.
+  Processed 274224 subcell instances total.
   Processed 606 pins total.
   Processed 2 special nets total.
   Processed 35620 nets total.
-DEF read: Processed 1294080 lines.
+DEF read: Processed 1284259 lines.
 [INFO]: Zeroizing Origin
-[INFO]: Current Box Values: 0 0 239540 240000
+[INFO]: Current Box Values: 1 0 239542 240000
 [INFO]: Writing abstract LEF
 Generating LEF output /project/openlane/user_proj_example/runs/user_proj_example/results/magic/user_proj_example.lef for cell user_proj_example:
 Diagnostic:  Write LEF header for cell user_proj_example
@@ -14553,39 +13849,39 @@ Diagnostic:  Scale value is 0.005000
    Writing cell user_proj_example
    Writing cell sky130_fd_sc_hd__decap_12
    Writing cell sky130_fd_sc_hd__decap_3
+   Writing cell sky130_fd_sc_hd__decap_4
+   Writing cell sky130_fd_sc_hd__tapvpwrvgnd_1
    Writing cell sky130_fd_sc_hd__fill_2
    Writing cell sky130_fd_sc_hd__decap_8
-   Writing cell sky130_fd_sc_hd__decap_4
-   Writing cell sky130_fd_sc_hd__diode_2
-   Writing cell sky130_fd_sc_hd__tapvpwrvgnd_1
-   Writing cell sky130_fd_sc_hd__fill_1
-   Writing cell sky130_fd_sc_hd__o22a_4
    Writing cell sky130_fd_sc_hd__decap_6
+   Writing cell sky130_fd_sc_hd__fill_1
+   Writing cell sky130_fd_sc_hd__diode_2
    Writing cell sky130_fd_sc_hd__dfxtp_4
+   Writing cell sky130_fd_sc_hd__o22a_4
    Writing cell sky130_fd_sc_hd__or4_4
+   Writing cell sky130_fd_sc_hd__clkbuf_1
+   Writing cell sky130_fd_sc_hd__and2_4
    Writing cell sky130_fd_sc_hd__inv_2
    Writing cell sky130_fd_sc_hd__nor2_4
-   Writing cell sky130_fd_sc_hd__a2bb2o_4
-   Writing cell sky130_fd_sc_hd__conb_1
-   Writing cell sky130_fd_sc_hd__or2_4
    Writing cell sky130_fd_sc_hd__buf_2
-   Writing cell sky130_fd_sc_hd__and2_4
+   Writing cell sky130_fd_sc_hd__conb_1
+   Writing cell sky130_fd_sc_hd__a2bb2o_4
+   Writing cell sky130_fd_sc_hd__or2_4
    Writing cell sky130_fd_sc_hd__and4_4
-   Writing cell sky130_fd_sc_hd__clkbuf_1
-   Writing cell sky130_fd_sc_hd__a32o_4
    Writing cell sky130_fd_sc_hd__nand2_4
+   Writing cell sky130_fd_sc_hd__a32o_4
    Writing cell sky130_fd_sc_hd__or3_4
    Writing cell sky130_fd_sc_hd__and3_4
-   Writing cell sky130_fd_sc_hd__a22oi_4
    Writing cell sky130_fd_sc_hd__clkbuf_16
    Writing cell sky130_fd_sc_hd__a211o_4
+   Writing cell sky130_fd_sc_hd__a22oi_4
    Writing cell sky130_fd_sc_hd__a21o_4
-   Writing cell sky130_fd_sc_hd__o41a_4
-   Writing cell sky130_fd_sc_hd__o21a_4
    Writing cell sky130_fd_sc_hd__o21ai_4
-   Writing cell sky130_fd_sc_hd__a21boi_4
+   Writing cell sky130_fd_sc_hd__o21a_4
+   Writing cell sky130_fd_sc_hd__o41a_4
    Writing cell sky130_fd_sc_hd__a21oi_4
    Writing cell sky130_fd_sc_hd__a2111o_4
+   Writing cell sky130_fd_sc_hd__a21boi_4
    Writing cell sky130_fd_sc_hd__o32a_4
    Writing cell sky130_fd_sc_hd__dfrtp_4
    Writing cell sky130_fd_sc_hd__dfstp_4
@@ -14651,11 +13947,11 @@ LEF read: Processed 789 lines.
 Reading DEF data from file /project/openlane/user_proj_example/runs/user_proj_example/results/routing/user_proj_example.def.
 This action cannot be undone.
   Processed 5 vias total.
-  Processed 274414 subcell instances total.
+  Processed 274224 subcell instances total.
   Processed 606 pins total.
   Processed 2 special nets total.
   Processed 35620 nets total.
-DEF read: Processed 1294080 lines.
+DEF read: Processed 1284259 lines.
 Extracting sky130_fd_sc_hd__o41a_4 into sky130_fd_sc_hd__o41a_4.ext:
 Extracting sky130_fd_sc_hd__a2111o_4 into sky130_fd_sc_hd__a2111o_4.ext:
 Extracting sky130_fd_sc_hd__a21boi_4 into sky130_fd_sc_hd__a21boi_4.ext:
@@ -14691,13 +13987,13 @@ Extracting sky130_fd_sc_hd__clkbuf_16 into sky130_fd_sc_hd__clkbuf_16.ext:
 Extracting sky130_fd_sc_hd__diode_2 into sky130_fd_sc_hd__diode_2.ext:
 Extracting sky130_fd_sc_hd__decap_8 into sky130_fd_sc_hd__decap_8.ext:
 Extracting sky130_fd_sc_hd__decap_4 into sky130_fd_sc_hd__decap_4.ext:
-Extracting sky130_fd_sc_hd__decap_3 into sky130_fd_sc_hd__decap_3.ext:
 Extracting sky130_fd_sc_hd__fill_2 into sky130_fd_sc_hd__fill_2.ext:
+Extracting sky130_fd_sc_hd__decap_3 into sky130_fd_sc_hd__decap_3.ext:
 Extracting sky130_fd_sc_hd__decap_12 into sky130_fd_sc_hd__decap_12.ext:
 Extracting sky130_fd_sc_hd__decap_6 into sky130_fd_sc_hd__decap_6.ext:
 Extracting sky130_fd_sc_hd__fill_1 into sky130_fd_sc_hd__fill_1.ext:
 Extracting user_proj_example into user_proj_example.ext:
-Created database crash recovery file /tmp//MAG583.4usmNB
+Created database crash recovery file /tmp//MAG584.HySEJq
 exttospice finished.
 Using technology "sky130A", version 1.0.81-0-gb184e85
 [36m[INFO]: Saving Magic Views in /project[37m
@@ -14721,69 +14017,69 @@ Reading "sky130_fd_sc_hd__decap_12".
 Error while reading cell "sky130_fd_sc_hd__decap_12" (byte position 150): Unknown layer/datatype in boundary, layer=236 type=0
 Reading "sky130_fd_sc_hd__decap_3".
 Error while reading cell "sky130_fd_sc_hd__decap_3" (byte position 4284): Unknown layer/datatype in boundary, layer=236 type=0
+Reading "sky130_fd_sc_hd__decap_4".
+Error while reading cell "sky130_fd_sc_hd__decap_4" (byte position 6946): Unknown layer/datatype in boundary, layer=236 type=0
+Reading "sky130_fd_sc_hd__tapvpwrvgnd_1".
 Reading "sky130_fd_sc_hd__fill_2".
 Reading "sky130_fd_sc_hd__decap_8".
-Error while reading cell "sky130_fd_sc_hd__decap_8" (byte position 8358): Unknown layer/datatype in boundary, layer=236 type=0
-Reading "sky130_fd_sc_hd__decap_4".
-Error while reading cell "sky130_fd_sc_hd__decap_4" (byte position 11884): Unknown layer/datatype in boundary, layer=236 type=0
-Reading "sky130_fd_sc_hd__diode_2".
-Error while reading cell "sky130_fd_sc_hd__diode_2" (byte position 14674): Unknown layer/datatype in boundary, layer=236 type=0
-Reading "sky130_fd_sc_hd__tapvpwrvgnd_1".
-Reading "sky130_fd_sc_hd__fill_1".
-Reading "sky130_fd_sc_hd__o22a_4".
-Error while reading cell "sky130_fd_sc_hd__o22a_4" (byte position 21126): Unknown layer/datatype in boundary, layer=236 type=0
+Error while reading cell "sky130_fd_sc_hd__decap_8" (byte position 12830): Unknown layer/datatype in boundary, layer=236 type=0
 Reading "sky130_fd_sc_hd__decap_6".
-Error while reading cell "sky130_fd_sc_hd__decap_6" (byte position 30808): Unknown layer/datatype in boundary, layer=236 type=0
+Error while reading cell "sky130_fd_sc_hd__decap_6" (byte position 16356): Unknown layer/datatype in boundary, layer=236 type=0
+Reading "sky130_fd_sc_hd__fill_1".
+Reading "sky130_fd_sc_hd__diode_2".
+Error while reading cell "sky130_fd_sc_hd__diode_2" (byte position 20782): Unknown layer/datatype in boundary, layer=236 type=0
 Reading "sky130_fd_sc_hd__dfxtp_4".
-Error while reading cell "sky130_fd_sc_hd__dfxtp_4" (byte position 33950): Unknown layer/datatype in boundary, layer=236 type=0
+Error while reading cell "sky130_fd_sc_hd__dfxtp_4" (byte position 24268): Unknown layer/datatype in boundary, layer=236 type=0
+Reading "sky130_fd_sc_hd__o22a_4".
+Error while reading cell "sky130_fd_sc_hd__o22a_4" (byte position 38424): Unknown layer/datatype in boundary, layer=236 type=0
 Reading "sky130_fd_sc_hd__or4_4".
 Error while reading cell "sky130_fd_sc_hd__or4_4" (byte position 48104): Unknown layer/datatype in boundary, layer=236 type=0
-Reading "sky130_fd_sc_hd__inv_2".
-Error while reading cell "sky130_fd_sc_hd__inv_2" (byte position 55404): Unknown layer/datatype in boundary, layer=236 type=0
-Reading "sky130_fd_sc_hd__nor2_4".
-Error while reading cell "sky130_fd_sc_hd__nor2_4" (byte position 59208): Unknown layer/datatype in boundary, layer=236 type=0
-Reading "sky130_fd_sc_hd__a2bb2o_4".
-Error while reading cell "sky130_fd_sc_hd__a2bb2o_4" (byte position 66312): Unknown layer/datatype in boundary, layer=236 type=0
-Reading "sky130_fd_sc_hd__conb_1".
-Error while reading cell "sky130_fd_sc_hd__conb_1" (byte position 77772): Unknown layer/datatype in boundary, layer=236 type=0
-Reading "sky130_fd_sc_hd__or2_4".
-Error while reading cell "sky130_fd_sc_hd__or2_4" (byte position 81130): Unknown layer/datatype in boundary, layer=236 type=0
-Reading "sky130_fd_sc_hd__buf_2".
-Error while reading cell "sky130_fd_sc_hd__buf_2" (byte position 86886): Unknown layer/datatype in boundary, layer=236 type=0
-Reading "sky130_fd_sc_hd__and2_4".
-Error while reading cell "sky130_fd_sc_hd__and2_4" (byte position 91378): Unknown layer/datatype in boundary, layer=236 type=0
-Reading "sky130_fd_sc_hd__and4_4".
-Error while reading cell "sky130_fd_sc_hd__and4_4" (byte position 97120): Unknown layer/datatype in boundary, layer=236 type=0
 Reading "sky130_fd_sc_hd__clkbuf_1".
-Error while reading cell "sky130_fd_sc_hd__clkbuf_1" (byte position 104568): Unknown layer/datatype in boundary, layer=236 type=0
-Reading "sky130_fd_sc_hd__a32o_4".
-Error while reading cell "sky130_fd_sc_hd__a32o_4" (byte position 108374): Unknown layer/datatype in boundary, layer=236 type=0
+Error while reading cell "sky130_fd_sc_hd__clkbuf_1" (byte position 55408): Unknown layer/datatype in boundary, layer=236 type=0
+Reading "sky130_fd_sc_hd__and2_4".
+Error while reading cell "sky130_fd_sc_hd__and2_4" (byte position 59214): Unknown layer/datatype in boundary, layer=236 type=0
+Reading "sky130_fd_sc_hd__inv_2".
+Error while reading cell "sky130_fd_sc_hd__inv_2" (byte position 64954): Unknown layer/datatype in boundary, layer=236 type=0
+Reading "sky130_fd_sc_hd__nor2_4".
+Error while reading cell "sky130_fd_sc_hd__nor2_4" (byte position 68758): Unknown layer/datatype in boundary, layer=236 type=0
+Reading "sky130_fd_sc_hd__buf_2".
+Error while reading cell "sky130_fd_sc_hd__buf_2" (byte position 75858): Unknown layer/datatype in boundary, layer=236 type=0
+Reading "sky130_fd_sc_hd__conb_1".
+Error while reading cell "sky130_fd_sc_hd__conb_1" (byte position 80350): Unknown layer/datatype in boundary, layer=236 type=0
+Reading "sky130_fd_sc_hd__a2bb2o_4".
+Error while reading cell "sky130_fd_sc_hd__a2bb2o_4" (byte position 83712): Unknown layer/datatype in boundary, layer=236 type=0
+Reading "sky130_fd_sc_hd__or2_4".
+Error while reading cell "sky130_fd_sc_hd__or2_4" (byte position 95170): Unknown layer/datatype in boundary, layer=236 type=0
+Reading "sky130_fd_sc_hd__and4_4".
+Error while reading cell "sky130_fd_sc_hd__and4_4" (byte position 100928): Unknown layer/datatype in boundary, layer=236 type=0
 Reading "sky130_fd_sc_hd__nand2_4".
-Error while reading cell "sky130_fd_sc_hd__nand2_4" (byte position 120566): Unknown layer/datatype in boundary, layer=236 type=0
+Error while reading cell "sky130_fd_sc_hd__nand2_4" (byte position 108374): Unknown layer/datatype in boundary, layer=236 type=0
+Reading "sky130_fd_sc_hd__a32o_4".
+Error while reading cell "sky130_fd_sc_hd__a32o_4" (byte position 116012): Unknown layer/datatype in boundary, layer=236 type=0
 Reading "sky130_fd_sc_hd__or3_4".
 Error while reading cell "sky130_fd_sc_hd__or3_4" (byte position 128202): Unknown layer/datatype in boundary, layer=236 type=0
 Reading "sky130_fd_sc_hd__and3_4".
 Error while reading cell "sky130_fd_sc_hd__and3_4" (byte position 135316): Unknown layer/datatype in boundary, layer=236 type=0
-Reading "sky130_fd_sc_hd__a22oi_4".
-Error while reading cell "sky130_fd_sc_hd__a22oi_4" (byte position 142208): Unknown layer/datatype in boundary, layer=236 type=0
 Reading "sky130_fd_sc_hd__clkbuf_16".
-Error while reading cell "sky130_fd_sc_hd__clkbuf_16" (byte position 154258): Unknown layer/datatype in boundary, layer=236 type=0
+Error while reading cell "sky130_fd_sc_hd__clkbuf_16" (byte position 142210): Unknown layer/datatype in boundary, layer=236 type=0
 Reading "sky130_fd_sc_hd__a211o_4".
-Error while reading cell "sky130_fd_sc_hd__a211o_4" (byte position 166986): Unknown layer/datatype in boundary, layer=236 type=0
+Error while reading cell "sky130_fd_sc_hd__a211o_4" (byte position 154938): Unknown layer/datatype in boundary, layer=236 type=0
+Reading "sky130_fd_sc_hd__a22oi_4".
+Error while reading cell "sky130_fd_sc_hd__a22oi_4" (byte position 164054): Unknown layer/datatype in boundary, layer=236 type=0
 Reading "sky130_fd_sc_hd__a21o_4".
 Error while reading cell "sky130_fd_sc_hd__a21o_4" (byte position 176102): Unknown layer/datatype in boundary, layer=236 type=0
-Reading "sky130_fd_sc_hd__o41a_4".
-Error while reading cell "sky130_fd_sc_hd__o41a_4" (byte position 184322): Unknown layer/datatype in boundary, layer=236 type=0
-Reading "sky130_fd_sc_hd__o21a_4".
-Error while reading cell "sky130_fd_sc_hd__o21a_4" (byte position 197482): Unknown layer/datatype in boundary, layer=236 type=0
 Reading "sky130_fd_sc_hd__o21ai_4".
-Error while reading cell "sky130_fd_sc_hd__o21ai_4" (byte position 205462): Unknown layer/datatype in boundary, layer=236 type=0
-Reading "sky130_fd_sc_hd__a21boi_4".
-Error while reading cell "sky130_fd_sc_hd__a21boi_4" (byte position 213574): Unknown layer/datatype in boundary, layer=236 type=0
+Error while reading cell "sky130_fd_sc_hd__o21ai_4" (byte position 184322): Unknown layer/datatype in boundary, layer=236 type=0
+Reading "sky130_fd_sc_hd__o21a_4".
+Error while reading cell "sky130_fd_sc_hd__o21a_4" (byte position 192432): Unknown layer/datatype in boundary, layer=236 type=0
+Reading "sky130_fd_sc_hd__o41a_4".
+Error while reading cell "sky130_fd_sc_hd__o41a_4" (byte position 200412): Unknown layer/datatype in boundary, layer=236 type=0
 Reading "sky130_fd_sc_hd__a21oi_4".
-Error while reading cell "sky130_fd_sc_hd__a21oi_4" (byte position 223062): Unknown layer/datatype in boundary, layer=236 type=0
+Error while reading cell "sky130_fd_sc_hd__a21oi_4" (byte position 213572): Unknown layer/datatype in boundary, layer=236 type=0
 Reading "sky130_fd_sc_hd__a2111o_4".
-Error while reading cell "sky130_fd_sc_hd__a2111o_4" (byte position 231654): Unknown layer/datatype in boundary, layer=236 type=0
+Error while reading cell "sky130_fd_sc_hd__a2111o_4" (byte position 222164): Unknown layer/datatype in boundary, layer=236 type=0
+Reading "sky130_fd_sc_hd__a21boi_4".
+Error while reading cell "sky130_fd_sc_hd__a21boi_4" (byte position 234576): Unknown layer/datatype in boundary, layer=236 type=0
 Reading "sky130_fd_sc_hd__o32a_4".
 Error while reading cell "sky130_fd_sc_hd__o32a_4" (byte position 244064): Unknown layer/datatype in boundary, layer=236 type=0
 Reading "sky130_fd_sc_hd__dfrtp_4".
@@ -17537,8 +16833,6 @@ Reading "user_proj_example".
     274000 uses
     274100 uses
     274200 uses
-    274300 uses
-    274400 uses
 [INFO]: Loading user_proj_example
 
 DRC style is now "drc(full)"
@@ -17559,13 +16853,13 @@ Reading netlist file /project/openlane/user_proj_example/runs/user_proj_example/
 Reading netlist file /project/openlane/user_proj_example/runs/user_proj_example/results/lvs/user_proj_example.lvs.powered.v
 Warning:  A case-insensitive file has been read and so the	verilog file must be treated case-insensitive to match.
 Creating placeholder cell definition for module sky130_fd_sc_hd__diode_2.
-Creating placeholder cell definition for module sky130_fd_sc_hd__fill_2.
-Creating placeholder cell definition for module sky130_fd_sc_hd__decap_12.
-Creating placeholder cell definition for module sky130_fd_sc_hd__decap_6.
-Creating placeholder cell definition for module sky130_fd_sc_hd__fill_1.
-Creating placeholder cell definition for module sky130_fd_sc_hd__decap_3.
-Creating placeholder cell definition for module sky130_fd_sc_hd__decap_4.
 Creating placeholder cell definition for module sky130_fd_sc_hd__decap_8.
+Creating placeholder cell definition for module sky130_fd_sc_hd__decap_3.
+Creating placeholder cell definition for module sky130_fd_sc_hd__fill_2.
+Creating placeholder cell definition for module sky130_fd_sc_hd__decap_4.
+Creating placeholder cell definition for module sky130_fd_sc_hd__fill_1.
+Creating placeholder cell definition for module sky130_fd_sc_hd__decap_6.
+Creating placeholder cell definition for module sky130_fd_sc_hd__decap_12.
 Creating placeholder cell definition for module sky130_fd_sc_hd__tapvpwrvgnd_1.
 Creating placeholder cell definition for module sky130_fd_sc_hd__buf_2.
 Creating placeholder cell definition for module sky130_fd_sc_hd__inv_2.
@@ -17592,18 +16886,6 @@ Creating placeholder cell definition for module sky130_fd_sc_hd__o41a_4.
 Creating placeholder cell definition for module sky130_fd_sc_hd__a22oi_4.
 Creating placeholder cell definition for module sky130_fd_sc_hd__a21boi_4.
 Creating placeholder cell definition for module sky130_fd_sc_hd__conb_1.
-Note:  Implicit pin HI
-Note:  Implicit pin HI
-Note:  Implicit pin HI
-Note:  Implicit pin HI
-Note:  Implicit pin HI
-Note:  Implicit pin HI
-Note:  Implicit pin HI
-Note:  Implicit pin HI
-Note:  Implicit pin HI
-Note:  Implicit pin HI
-Note:  Implicit pin HI
-Note:  Implicit pin HI
 Note:  Implicit pin HI
 Note:  Implicit pin HI
 Note:  Implicit pin HI
@@ -18079,7 +17361,7 @@ Circuit user_proj_example contains 132956 device instances.
   Class: sky130_fd_sc_hd__o21ai_4 instances: 164
   Class: sky130_fd_sc_hd__a21oi_4 instances:  48
   Class: sky130_fd_sc_hd__nor2_4 instances: 407
-Circuit contains 35446 nets, and 319 disconnected pins.
+Circuit contains 35446 nets, and 307 disconnected pins.
 
 Circuit 1 contains 132956 devices, Circuit 2 contains 132956 devices.
 Circuit 1 contains 35446 nets,    Circuit 2 contains 35446 nets.
@@ -18112,13 +17394,13 @@ Notice 0: Design: user_proj_example
 Notice 0: 		Created 100000 Insts
 Notice 0: 		Created 200000 Insts
 Notice 0:     Created 606 pins.
-Notice 0:     Created 274414 components and 1255398 component-terminals.
+Notice 0:     Created 274224 components and 1254638 component-terminals.
 Notice 0:     Created 2 special nets and 0 connections.
 Notice 0:     Created 35620 nets and 194123 connections.
 Notice 0: Finished DEF file: /project/openlane/user_proj_example/runs/user_proj_example/results/routing/user_proj_example.def
-Notice 0: Split top of 19609 T shapes.
-Number of pins violated: 46
-Number of nets violated: 46
+Notice 0: Split top of 19442 T shapes.
+Number of pins violated: 53
+Number of nets violated: 52
 Total number of nets: 35620
 [36m[INFO]: Generating Final Summary Report...[37m
 [32m[SUCCESS]: Flow Completed Without Fatal Errors.[37m
