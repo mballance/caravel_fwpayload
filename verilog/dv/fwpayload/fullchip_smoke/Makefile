@@ -5,7 +5,8 @@ RTL_DIR := $(abspath $(TEST_DIR)/../../../rtl)
 
 TEST_NAME := $(notdir $(TEST_DIR))
 
-TIMEOUT=10ms
+TIMEOUT=2ms
+SIMLEVEL=fullchip
 
 DEFINES += SIM FUNCTIONAL TEST_FIRMWARE_HEX=\"$(TEST_NAME).hex\"
 INCDIRS += $(RTL_DIR)/fwpayload $(RTL_DIR) $(PDK_PATH)

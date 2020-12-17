@@ -36,6 +36,8 @@ lappend vlog_incdirs $script_dir/../../verilog/rtl/fwpayload/fwrisc/rtl
 
 set ::env(VERILOG_FILES) $vlog_files
 set ::env(VERILOG_INCLUDE_DIRS) $vlog_incdirs
+#set ::env(SYNTH_USE_PG_PINS_DEFINES) "USE_POWER_PINS"
+# set ::env(SYNTH_DEFINES) "USE_POWER_PINS"
 
 set ::env(CLOCK_PORT) "wb_clk_i"
 #set ::env(CLOCK_NET) "u_payload.clock"

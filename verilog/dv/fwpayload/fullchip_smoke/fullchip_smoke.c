@@ -81,6 +81,13 @@ void main()
 
 	// Configure LA probes from [63:32] as inputs to disable counter write
 	reg_la1_ena  = 0xFFFFFFFF;
+	{
+		int i, v;
+		for (i=0; i<1000; i++) {
+			*((volatile unsigned int *)0x30000000) = i;
+			v = *((volatile unsigned int *)0x30000000);
+		}
+	}
 
 	print("Hello from test\n");
 

@@ -28,20 +28,14 @@ module user_project_wrapper(user_clock2, wb_clk_i, wb_rst_i, wbs_ack_o, wbs_cyc_
   input wbs_stb_i;
   input wbs_we_i;
   user_proj_example mprj (
+    .VGND(vssd1),
+    .VPWR(vccd1),
     .io_in(io_in),
     .io_oeb(io_oeb),
     .io_out(io_out),
     .la_data_in(la_data_in),
     .la_data_out(la_data_out),
     .la_oen(la_oen),
-    .vccd1(vccd1),
-    .vccd2(vccd2),
-    .vdda1(vdda1),
-    .vdda2(vdda2),
-    .vssa1(vssa1),
-    .vssa2(vssa2),
-    .vssd1(vssd1),
-    .vssd2(vssd2),
     .wb_clk_i(wb_clk_i),
     .wb_rst_i(wb_rst_i),
     .wbs_ack_o(wbs_ack_o),

@@ -44,7 +44,9 @@ SRCS += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hvl/verilog/sky130_fd_sc_hvl.v
 
 DEFINES += FUNCTIONAL USE_POWER_PINS UNIT_DELAY='\#1'
 else
+ifneq (fullchip,$(SIMLEVEL))
 SRCS += $(RTL_DIR)/fwpayload/user_proj_example.v
+endif
 SRCS += $(RTL_DIR)/fwpayload/fwpayload.v
 SRCS += $(RTL_DIR)/fwpayload/fw-wishbone-bridges/verilog/rtl/wb_clockdomain_bridge.v
 SRCS += $(RTL_DIR)/fwpayload/fw-wishbone-interconnect/verilog/rtl/wb_interconnect_NxN.v
@@ -52,8 +54,10 @@ SRCS += $(RTL_DIR)/fwpayload/fw-wishbone-interconnect/verilog/rtl/wb_interconnec
 SRCS += $(RTL_DIR)/fwpayload/spram_32x256.sv
 SRCS += $(RTL_DIR)/fwpayload/spram_32x512.sv
 SRCS += $(RTL_DIR)/fwpayload/spram.v
+ifneq (fullchip,$(SIMLEVEL))
 SRCS += $(RTL_DIR)/fwpayload/simple_spi_master.v
 SRCS += $(RTL_DIR)/fwpayload/simpleuart.v
+endif
 SRCS += $(FWRISC_SRCS) 
 endif
 SRCS += $(TB_SRCS)
