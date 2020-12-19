@@ -97,11 +97,12 @@ module fwpayload_tb(input clk);
 	wire [127:0] la_data_out;
 	wire [127:0] la_oen; //  = 128'hFFFF_FFFF_FFFF_FFFF__FFFF_FFFF_FFFF_FFFF;
 
-	wire la_clk = la_data_in[127];
-	wire la_sys_rst = la_data_in[126];
-	wire la_core_rst = la_data_in[125];
-	wire[31:0] pc = la_data_out[31:0];
-	wire[3:0]  gpio_out = la_data_out[39:36];
+	wire la_clk               = la_data_in[127];
+	wire la_sys_rst           = la_data_in[126];
+	wire la_core_rst          = la_data_in[125];
+	wire[31:0] pc             = la_data_out[95:64];
+	wire       instr_complete = la_data_out[96];
+	wire[3:0]  gpio_out       = la_data_out[39:36];
 	
 	la_initiator_bfm #(
 			.WIDTH(128)

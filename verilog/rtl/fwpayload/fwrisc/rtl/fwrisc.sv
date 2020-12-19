@@ -43,13 +43,15 @@ module fwrisc #(
 		output[3:0]		dwstb,
 		output			dwrite,
 		input[31:0]		drdata,
-		input			dready
+		input			dready,
+		output[31:0]	pc,
+		output			instr_complete
 		);
 	
-	wire[31:0]				pc;
+//	wire[31:0]				pc;
 	wire[31:0]				pc_seq;
 	wire					fetch_valid;
-	wire					instr_complete;
+//	wire					instr_complete;
 	wire[31:0]				instr;
 	wire					instr_c;
 	wire					int_reset;

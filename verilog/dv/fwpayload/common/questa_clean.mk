@@ -8,4 +8,4 @@
 
 clean ::
 	rm -rf work transcript modelsim.ini
-	rm -rf design.bin qwave.db
+	rm -rf design.bin qwave.db *.wlf

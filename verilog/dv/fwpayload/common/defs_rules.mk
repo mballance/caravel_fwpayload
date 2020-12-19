@@ -28,19 +28,27 @@ export PATH
 #********************************************************************
 FWRISC_SRCS = $(wildcard $(RTL_DIR)/fwpayload/fwrisc/rtl/*.sv)
 INCDIRS += $(RTL_DIR)/fwpayload/fwrisc/rtl
+ifeq (gate,$(SIMTYPE))
+INCDIRS += $(GL_DIR)
+else
 INCDIRS += $(RTL_DIR)/fwpayload/fwprotocol-defs/src/sv
+endif
 
 DEFINES += MPRJ_IO_PADS=38
 
 ifeq (gate,$(SIMTYPE))
 INCDIRS += $(PDK_ROOT)/sky130A
-SRCS += $(GL_DIR)/user_project_wrapper.v
+
+ifneq (fullchip,$(SIMLEVEL))
+SRCS += $(GL_DIR)/user_proj_example.v
+
 SRCS += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_io/verilog/sky130_fd_io.v
 SRCS += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_io/verilog/sky130_ef_io.v
 SRCS += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/primitives.v
 SRCS += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/sky130_fd_sc_hd.v
 SRCS += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hvl/verilog/primitives.v
 SRCS += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hvl/verilog/sky130_fd_sc_hvl.v
+endif
 
 DEFINES += FUNCTIONAL USE_POWER_PINS UNIT_DELAY='\#1'
 else
@@ -67,7 +75,7 @@ include $(COMMON_DIR)/$(SIM).mk
 else # Rules
 
 clean ::
-	rm -f results.xml
+	rm -f results.xml *.hex
 
 
 %.elf: %.c $(FIRMWARE_PATH)/sections.lds $(FIRMWARE_PATH)/start.s

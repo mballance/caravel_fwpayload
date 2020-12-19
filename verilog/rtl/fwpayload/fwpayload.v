@@ -164,7 +164,9 @@ module fwpayload(
 				.reset(core_reset),
 
 				`WB_CONNECT_ARR(wbi_,i_ic_,INIT_ID_CORE_I,32,32),
-				`WB_CONNECT_ARR(wbd_,i_ic_,INIT_ID_CORE_D,32,32)
+				`WB_CONNECT_ARR(wbd_,i_ic_,INIT_ID_CORE_D,32,32),
+				.pc(pc),
+				.instr_complete(instr_complete)
 			);
 
 `ifdef UNDEFINED
@@ -190,8 +192,8 @@ module fwpayload(
 	localparam LA_PC      				= 0;
 `endif
 	
-	assign pc = u_core.u_core.u_core.pc;
-	assign instr_complete = u_core.u_core.u_core.instr_complete;
+//	assign pc = u_core.u_core.u_core.pc;
+//	assign instr_complete = u_core.u_core.u_core.instr_complete;
 
 `ifdef UNDEFINED
 	assign la_data_out[127:40] = 0;

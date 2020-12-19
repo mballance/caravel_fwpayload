@@ -31,6 +31,8 @@ async def test(top):
     print("--> reset_cycle_dut")
     await la_utils.reset_cycle_dut(100)
     print("<-- reset_cycle_dut")
+    for i in range(10):
+        await la_utils.clock_dut()
     await la_utils.set_dut_clock_control(False)
     
     # Load a short program that toggles the GPIO lines

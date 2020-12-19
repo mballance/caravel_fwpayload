@@ -45,7 +45,9 @@ set ::env(CLOCK_PERIOD) "30"
 
 set ::env(FP_SIZING) absolute
 #set ::env(DIE_AREA) "0 0 1100 1100"
-set ::env(DIE_AREA) "0 0 1200 1200"
+#
+#set ::env(DIE_AREA) "0 0 1200 1200"
+set ::env(DIE_AREA) "0 0 1100 1100"
 set ::env(DESIGN_IS_CORE) 0
 
 set ::env(FP_PIN_ORDER_CFG) $script_dir/pin_order.cfg
@@ -53,11 +55,13 @@ set ::env(FP_PIN_ORDER_CFG) $script_dir/pin_order.cfg
 # set ::env(FP_CONTEXT_LEF) $script_dir/../user_project_wrapper/runs/user_project_wrapper/tmp/merged_unpadded.lef
 
 #set ::env(PL_BASIC_PLACEMENT) 1
-set ::env(PL_TARGET_DENSITY) 0.32
+#set ::env(PL_TARGET_DENSITY) 0.32
+set ::env(PL_TARGET_DENSITY) 0.40
 
 set ::env(DIODE_INSERTION_STRATEGY) 1
 #set ::env(GLB_RT_MAX_DIODE_INS_ITERS) 4
 
 set ::env(ROUTING_CORES) 10
-set ::env(GLB_RT_MAXLAYER) 4
+# Removed
+#set ::env(GLB_RT_MAXLAYER) 4
 
