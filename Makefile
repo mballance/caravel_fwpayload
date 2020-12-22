@@ -37,8 +37,11 @@ clean:
 
 .PHONY: verify
 verify:
-	echo "verify"
-
+	@if test ! -d packages; then \
+		echo "Fetching required packages for verification"; \
+		./bootstrap.sh ; \
+	fi
+	$(MAKE) -C verilog/dv/fwpayload verify
 
 
 $(LARGE_FILES_GZ): %.gz: %
