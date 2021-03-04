@@ -1,67 +1,16 @@
 # FWPayload
 
-FWPayload is a small processor+peripherals subsystem, targeting the user-project
-area of Caraval.
+FWPayload is a small RISC-V core+peripherals subsystem, 
+targeting the user-project area of Caravel. 
 
 ## Block diagram
 ![FWPayload Block Diagram](doc/images/fwpayload_diagram.png)
 
-## Current Status
-FWPayload is taking Option #1 for integration into Caravel. Specifically,
-FWPayload is integrated into a customized version of user_proj_example
-(stored in verilog/rtl/fwpayload/user_proj_example.v). The config in
-openlane/user_proj_example creates a macro from this description, and
-that macro is integrated into user_project_wrapper using the provided
-configuration.
+The subsystem is accessible from the management processor 
+as a target device, and the subsystem can also be accessed and
+single-stepped using the logic-analyzer interface.
 
-Openlane completes on user_proj_example with no DRC errors, and the 
-following antenna violations:
-
-```
-Number of pins violated: 52
-Number of nets violated: 51
-Total number of nets: 34963
-```
-
-Running with diode-insertion strategy 3 (default) results in the 
-following:
-```
-Number of pins violated: 193
-Number of nets violated: 146
-Total number of nets: 34963
-[INFO]: Generating Final Summary Report...
-[SUCCESS]: Flow Completed Without Fatal Errors.
-```
-
-Integration tests pass for both RTL and gate-level simulations.
-
-### On-boarding FWPayload
-Caravel files (.gds,.lef,etc) have been copied from caravel/mpw-one-a tag
-on 20201206.
-A merged .gds is created by running the 'ship' target. The result is:
-
-```
-221398 problems occurred.  See feedback entries.
-Using technology "sky130A", version 1.0.72-0-gb427e3b
-```
-
-### Pre-Check Status
-- Step 1 -- Pass
-- Step 2 -- Pass
-- Step 3 -- Fail
-    - Documentation  -- Pass
-    - Makefile       -- Pass
-    - Pins           -- Fail
-        - Looks like the script finds arrayed ports in the .v and broken-out in the .lef
-- Step 4 -- Fail
-```
-{{PROGRESS}} Executing Step 4 of 4: Checking DRC Violations.
-{{PROGRESS}} Running DRC Checks...
-{{FAIL}} DRC Checks on GDS-II Failed, Reason: Total # of DRC violations is 21405435
-TEST FAILED AT STEP 4
-```
-
-
+Tests for the subsystem are written in Python using cocotb.
 
 ## External IP
 FWPayload uses several pieces of external IP. Some are bundled with the project,
@@ -231,6 +180,5 @@ Test behavior is controlled using environment variables.
     - vlsim -- Verilator, via the vlsim front-end
 - DEBUG[=1] - Controls whether wave files should be saved
     
-
 
 

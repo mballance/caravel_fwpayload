@@ -1,8 +1,8 @@
 --- 
 project: 
-  description: "A simple core+peripherals payload for the Google-sponsored Open MPW shuttles for SKY130."
+  description: "A simple RISC-V core+peripherals subsystem for the Google-sponsored Open MPW shuttles for SKY130."
   foundry: "SkyWater"
-  git_url: "https://github.com/mballance/fwpayload.git"
+  git_url: "https://github.com/mballance/caravel_fwpayload.git"
   organization: "Matthew Ballance"
   organization_url: "http://github.com/mballance"
   owner: "Matthew Ballance"
